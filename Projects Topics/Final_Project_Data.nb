@@ -1,0 +1,1529 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     90335,       1521]
+NotebookOptionsPosition[     89293,       1495]
+NotebookOutlinePosition[     89695,       1511]
+CellTagsIndexPosition[     89652,       1508]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"-", "1."}]}], " ", "Load", " ", "and", " ", "Clean", " ", 
+     RowBox[{"Data", "--"}]}], "-"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"dsraw", "=", 
+     RowBox[{"Dataset", "[", 
+      RowBox[{"Get", "@", 
+       RowBox[{"Databin", "[", "\"\<1Ah7XTWPi\>\"", "]"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"dsclean", "=", 
+     RowBox[{
+      RowBox[{"DeleteDuplicates", "[", 
+       RowBox[{"dsraw", "[", 
+        RowBox[{"[", 
+         RowBox[{"Complement", "[", 
+          RowBox[{
+           RowBox[{"Range", "[", 
+            RowBox[{"Length", "[", 
+             RowBox[{"Normal", "[", "dsraw", "]"}], "]"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], 
+         "]"}], "]"}], "]"}], "[", 
+      RowBox[{"All", ",", "\"\<Data\>\""}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ds", "=", 
+     RowBox[{"dsclean", "[", 
+      RowBox[{"All", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<title\>\"", ",", "\"\<proposer\>\"", 
+         ",", "\"\<emailproposer\>\"", ",", "\"\<descriptionofproject\>\"", 
+         ",", "\"\<comments\>\""}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Extract", " ", "data", " ", "for", " ", "the", " ", "two", " ", 
+     "different", " ", "tables"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"allData", "=", 
+     RowBox[{"Normal", "[", 
+      RowBox[{"ds", "[", 
+       RowBox[{"All", ",", "Values"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"descData", "=", 
+     RowBox[{"Normal", "[", 
+      RowBox[{
+       RowBox[{"ds", "[", 
+        RowBox[{"All", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<title\>\"", ",", "\"\<descriptionofproject\>\""}], 
+          "}"}]}], "]"}], "//", "Values"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "2."}]}], " ", "Table", " ", "1"}], ":", 
+     RowBox[{
+      RowBox[{"EVERYTHING", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Full", " ", "Data"}], ")"}], "--"}]}], "-"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "We", " ", "use", " ", "narrower", " ", "widths", " ", "here", " ", "to", 
+     " ", "fit", " ", "all", " ", "5", " ", "columns", " ", "on", " ", "one", 
+     " ", "page"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"formattedAll", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "100"}]}], "]"}], ",", 
+          RowBox[{"(*", "Title", "*)"}], 
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "80"}]}], "]"}], ",", 
+          RowBox[{"(*", "Proposer", "*)"}], 
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "3", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "100"}]}], "]"}], ",", 
+          RowBox[{"(*", "Email", "*)"}], 
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "4", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "180"}]}], "]"}], ",", 
+          RowBox[{"(*", 
+           RowBox[{"Description", "-", 
+            RowBox[{"tighter", " ", "to", " ", "fit", " ", "table"}]}], 
+           "*)"}], 
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "5", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "90"}]}], "]"}]}], "   ", 
+         RowBox[{"(*", "Comments", "*)"}], "}"}], "&"}], ",", "allData"}], 
+      "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"Style", "[", 
+      RowBox[{"\"\<Table 1: Full Project Data\>\"", ",", "\"\<Subtitle\>\""}],
+       "]"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"Grid", "[", 
+      RowBox[{
+       RowBox[{"Prepend", "[", 
+        RowBox[{"formattedAll", ",", 
+         RowBox[{"{", 
+          
+          RowBox[{"\"\<Title\>\"", ",", "\"\<Proposer\>\"", 
+           ",", "\"\<Email\>\"", ",", "\"\<Description\>\"", 
+           ",", "\"\<Comments\>\""}], "}"}]}], "]"}], ",", 
+       RowBox[{"Frame", "->", "All"}], ",", 
+       RowBox[{"Alignment", "->", 
+        RowBox[{"{", 
+         RowBox[{"Left", ",", "Top"}], "}"}]}], ",", 
+       RowBox[{"Spacings", "->", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"--", 
+          RowBox[{"-", "3."}]}], " ", "Table", " ", "2"}], ":", 
+        RowBox[{"Project", " ", "Name"}]}], "&"}], " ", "Description", " ", 
+      RowBox[{"Only", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "We", " ", "use", " ", "wide", " ", "widths", " ", "here", " ", "so", " ",
+      "the", " ", "description", " ", "is", " ", "easy", " ", "to", " ", 
+     "read"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"formattedDesc", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "120"}]}], "]"}], ",", 
+          RowBox[{"(*", 
+           RowBox[{"Project", " ", "Name"}], "*)"}], 
+          RowBox[{"Pane", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", 
+            RowBox[{"ImageSize", "->", "430"}]}], "]"}]}], "  ", 
+         RowBox[{"(*", 
+          RowBox[{"Description", "-", "Wide"}], "*)"}], "}"}], "&"}], ",", 
+       "descData"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"Style", "[", 
+      RowBox[{"\"\<\\nTable 2: Project Descriptions\>\"", 
+       ",", "\"\<Subtitle\>\""}], "]"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"Grid", "[", 
+      RowBox[{
+       RowBox[{"Prepend", "[", 
+        RowBox[{"formattedDesc", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<Project Name\>\"", ",", "\"\<Description\>\""}], 
+          "}"}]}], "]"}], ",", 
+       RowBox[{"Frame", "->", "All"}], ",", 
+       RowBox[{"Alignment", "->", 
+        RowBox[{"{", 
+         RowBox[{"Left", ",", "Top"}], "}"}]}], ",", 
+       RowBox[{"Spacings", "->", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}], "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.975363656321741*^9, 3.9753636563237476`*^9}, 
+   3.9753637407509155`*^9, 3.9753638330506134`*^9, {3.9761138883789234`*^9, 
+   3.9761138910934296`*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"b1ab9d44-b8d2-5147-94d2-41c3062ed101"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox["\<\"Table 1: Full Project Data\"\>", "Subtitle",
+  StripOnInput->False]], "Print",
+ CellChangeTimes->{3.9753637434281597`*^9, 3.9753638364193497`*^9, 
+  3.9761136237720394`*^9, 3.9761139000220375`*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"ff0c6bd6-5367-0b47-a77f-520349aefc27"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"Title\"\>", "\<\"Proposer\"\>", "\<\"Email\"\>", "\<\"Description\"\
+\>", "\<\"Comments\"\>"},
+    {
+     PaneBox["\<\"The Science behind Football\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Murilo Baptista & Nicolas Rubido \"\>",
+      ImageSize->80], 
+     PaneBox["\<\"murilo.baptista@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"In recent years, football analysis has seen rapid growth \
+and has greatly impacted the evaluation of football performance \
+[1]\[AHat]\.80\.93[5]. Several clubs are using the insights from the analysis \
+of data of played games to improve on their performance in future matches. \
+Football is a team sport, and the game has 2 teams, with players trying to \
+score a goal.  To analyse a match, it is important to understand the dynamics \
+of passes, the positioning and the movement of not only the individual \
+players but also the whole team. The interest is to find the emergency of \
+patterns in the collective dynamics of players that lead to goals. \
+\\r\\n\\r\\nIn this master project, we will be analysing tracking data \
+provided by the company Statsbomb [6], spanning several decades of tracking \
+data for matches happening in several competitions around the world. The \
+interest will be to construct a network representation of a team, based on \
+the way footballers pass the ball. The players and their average position are \
+the nodes of the network, and the amount of passes one player does to another \
+in the duration of a game representing how well connected a player is with \
+another will be the links of the network.  We hope to find network structures \
+that enhances defensive performance, or those that favours wins. We will also \
+do exploratory, and time-series based analysis of the matches, for example, \
+understanding the properties of the time-series constructed from observing a \
+player or a group of players moving in the pitch during the match. The \
+analysis will firstly be focussed on an individual game (which contains \
+already a very large amount of data), but could also be developed in more \
+than 1 game for example when the interest is to compare the playing styles of \
+the different schools of football happening in different continents and \
+competitions. \\r\\n\\r\\n1. D. Bargiotas, An Analysis of FC Barcelona \
+Through Passing Networks and Event Data Analysis, Master Thesis, University \
+of Aberdeen (2021).\\r\\n2. J. M. Buld\[CapitalATilde]\.ba et al., Defining a \
+Historic Football Team: Using Network Science to Analyze Guardiola\[AHat]\.80\
+\.99s F.C. Barcelona. 9, 13602 (2019). \\r\\n3. S. Caicedo-Parada S, et al. \
+Passing Networks and Tactical Action in Football: A Systematic Review. Int J \
+Environ Res Public Heal 17, 6649 (2020).\\r\\n4. What difference can data \
+make to a football team? - Exasol \
+https://www.exasol.com/what-difference-can-data-make-for-a-football-team/\\r\\\
+n5. \[CapitalATilde]\.81. Novillo. et al, A multilayer network framework for \
+soccer analysis, Chaos, Solitons & Fractals, 178, 114355 (2024).\\r\\n6. \
+https://github.com/statsbomb/open-data/tree/master\\r\\n\\r\\n\"\>",
+      ImageSize->180,
+      ScrollPosition->{0., 0.}], 
+     PaneBox["\<\"no comments \"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Machine-learning guided discovery of novel naturally \
+occurring antimicrobials\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"HAI DENG\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"h.deng@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Bacterial AMR is now the 3rd-leading cause of death \
+globally, behind ischemic heart disease and stroke. The WHO has classified \
+life-threatening community- and hospital-acquired infections due to \
+Gram-negative bacteria, highlighting carbapenem-resistant Enterobacteriaceae \
+(CRE) (including K. pneumoniae and E. coli) and Acinetobacter baumannii \
+(CRAB) as the most critical AMR global health threats.\\r\\nRecent progress \
+in new antibiotic development has been dominated by incremental improvements \
+in well-established drug classes, such as \[CapitalIHat]\.b2-lactam \
+antibiotics, already impacted by resistance. There are few drugs in \
+development that target a new mode of action, which is essential for \
+combatting the ongoing emergence of bacteria resistant to existing classes of \
+antibiotics. \\r\\nAntimicrobial natural products, compounds discovered in \
+nature, have been playing critical roles of human medicines and are critical \
+for the development of new therapeutics against multidrug-resistant \
+pathogens. Recent discoveries of antibiotics, including repurposed compounds \
+like hygromycin A,1 and novel agents such as lolamicin 2 and abaucin,3 \
+suggest that many novel antibiotics remain undiscovered.\\r\\nThe aim of this \
+Master project is to construct training dataset for predictive modelling of \
+antimicrobial compounds against Gram-negative pathogens. \\r\\nResearch \
+objectives: \\r\\n1. To construct training dataset from existing natural \
+product inventory.\\r\\n2. To master the use of Chemprop software4 and \
+customize its training dataset for predictive modelling of new albopeptide \
+derivatives. This will enable a rapid, data-informed approach to identify \
+candidates with enhanced antimicrobial activity.\\r\\nReferences:\\r\\n1. \
+Leimer, N. et al. (2021) Cell. 184, 5405-5418. \\r\\n2. Mu\[CapitalATilde]\
+\[PlusMinus]oz K.A et al. (2024) Nature. 630, 429-441. \\r\\n3. Liu G. et al. \
+(2023) Nat. Chem. Biol. 2023, 19, 1342-1350. \\r\\n4. Heid E. et al. (2024) \
+J. Chem. Inf. Model. 64, 9-17.\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"I am a chemistry academic and will need a colleague from \
+Data Science to help cosupervision.\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Advanced Techniques for Time Series Analysis\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Paco Perez-Reche\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"fperez-reche@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"With the increasing ability to store and process large \
+amounts of data, it is now possible to track a wide range of processes over \
+time. As a result, there is an abundance of data in the form of time series\
+\[AHat]\.80\.94from epidemiological records (e.g. COVID-19 case counts or \
+mortality rates), to physical measurements (e.g. seismic activity), to \
+behavioural data (e.g. the motion of insects).\\r\\n\\r\\nWhile time series \
+can be visualised relatively easily, identifying patterns, trends, or \
+anomalies in large and complex datasets remains a significant challenge. \
+Advanced techniques\[AHat]\.80\.94including machine learning methods\[AHat]\
+\.80\.94can automate aspects of this analysis, providing faster and deeper \
+insights. Additionally, alternative representations of time series, such as \
+networks, can reveal structures and properties that may remain hidden in \
+traditional approaches.\\r\\n\\r\\nThis project will explore modern, \
+data-driven methods for analysing time series. Depending on your interests, \
+you may investigate techniques such as classification, clustering, or \
+forecasting for time series, or explore novel representations like time \
+series networks and their associated metrics.\\r\\n\\r\\nPotential \
+applications include: analysing the motion and interaction of insects, \
+characterising the complexity of physical systems (e.g. material fracture or \
+water flow in porous media), or examining epidemiological data to better \
+understand disease dynamics or mortality patterns.\\r\\n\\r\\nThe specific \
+focus of the project will be chosen in consultation at the start, allowing \
+students some flexibility based on their interests.\\r\\n\\r\\nFurther \
+reading:\\r\\n\\r\\nJan Marcel Kezmann \[AHat]\.80\.9cAll 8 Types of Time \
+Series Classification Methods\[AHat]\.80\.9d \
+https://medium.com/mlearning-ai/all-8-types-of-time-series-classification-\
+methods-2c8e4b323ea2#2fe7.\\r\\n\\r\\nAghabozorgi, S., Seyed Shirkhorshidi, \
+A. & Ying Wah, T. Time-series clustering \[AHat]\.80\.93 A decade review. \
+Inf. Syst. 53, 16\[AHat]\.80\.9338 (2015).\\r\\n\\r\\nSilva, V. F., Silva, M. \
+E., Ribeiro, P., & Silva, F. (2021). Time series analysis via network \
+science: Concepts and algorithms. Wiley Interdisciplinary Reviews: Data \
+Mining and Knowledge Discovery, 11(3), e1404. \
+https://doi.org/10.1002/WIDM.1404\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Developing a Retrieval-Augmented Generation (RAG) System \
+for Extraction and Consolidation of Data from Public Sector PDF Documents\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Paco Perez-Reche\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"fperez-reche@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Government and public sector bodies (e.g., Scottish Health \
+Boards, Local Authorities) routinely publish critical operational and \
+financial data within lengthy, unstructured PDF reports. Analysts are \
+frequently required to synthesize key information across multiple documents \
+to answer specific policy or financial questions. This project proposes the \
+development of a fully automated workflow that combines document scraping and \
+state-of-the-art Artificial Intelligence (AI) techniques to build a robust \
+Retrieval-Augmented Generation (RAG) system, drastically reducing manual \
+analysis time and improving data consistency.\\r\\n\\r\\nThe primary goal is \
+to create a functional, scalable prototype that can efficiently answer \
+complex, cross-document queries based solely on official PDF documents. More \
+specifically, you will:\\r\\n1.\\tDevelop a Multi-Document RAG Pipeline: \
+Implement a pipeline capable of processing multiple PDFs from identified \
+domains and generating consolidated answers.\\r\\n2.\\tEnsure Data Grounding: \
+Guarantee that all extracted summaries and answers are directly traceable and \
+grounded to specific pages and documents within the source \
+material.\\r\\n3.\\tProduce Structured Output: Consolidate extracted data \
+into a clean, queryable format (e.g., Markdown or CSV tables).\\r\\nThe \
+primary data source is left flexible, but a likely focus will be on Scottish \
+Public Sector bodies (e.g., health boards annual accounts or local authority \
+complaints reports.\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No.\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Statistical and Non-linear Analysis of \
+Electroencephalographic signals\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Nicol\[CapitalATilde]\[DownExclamation]s Rubido & Murilo S. \
+Baptista\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"nicolas.rubidoobrer@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Electroencephalography (EEG) is a method to record the \
+spontaneous electrical activity of the brain, which shows a broad range of \
+complex signal behaviours. To understand cortical function, the EEG signal is \
+typically divided into bands by frequency (delta, theta, alpha, beta, and \
+gamma), isolating the rhythmic activity. These bands are related to different \
+physiological functions and produced by different neuronal circuits. However, \
+the bands show different characteristics for different cortical locations and \
+states of mind, such as during the sleep-wake cycle states, which includes \
+the states of wakefulness, rapid-eye movement, and non-rapid-eye movement \
+sleep. Since considerable motivation exists for the development of an \
+adequate statistical model for spontaneous EEG activity, we propose to study \
+the main EEG bands recorded during the sleep-wake state using methods from \
+Statistics and Chaos theory. Those taking on this project will be provided \
+with an EEG dataset, that they will need to filter into frequency bands \
+(pre-processing), obtain the main statistical descriptors for these bands \
+(feature extraction), create surrogate signals for statistical hypothesis \
+testing (statistical modelling), and analyse the phase portraits created by \
+combining some bands (data exploration), which can lead to a state-dependent \
+model for the EEG activity during the sleep-wake cycle and improvements to \
+classification accuracy of machine and deep learning algorithms.\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"For enquiries, please email nicolas.rubidoobrer@abdn.ac.uk \
+or murilo.baptista@abdn.ac.uk\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Artificial Intelligence in Biotechnology\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Dr Andrew Angel\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"andrew.angel@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Background:\\r\\n\\r\\nBiotechnology includes the \
+engineering of biological elements to develop products that can improve human \
+life and the application of machine learning is revolutionizing the field.\\r\
+\\n\\r\\nInspired by a recent industrial collaboration, one potential project \
+is to use machine learning to accelerate the development of high-temperature \
+RNA thermoswitches. RNA thermoswitches are RNA sequences that can control \
+expression - for example, by only becoming active once a certain temperature \
+has been reached - often via temperature-dependent structural changes . \
+Naturally occurring thermoswitches are optimised for temperatures around 37\
+\[CapitalAHat]\[Degree]C and often show undesired basal ('leaky') gene \
+expression at lower temperatures. Owing to their customisable length and base \
+compositions, the ability to design synthetic RNA thermoswitches responsive \
+to higher temperatures (>60\[CapitalAHat]\[Degree]C) with reduced leakiness \
+at lower temperatures has significant industrial applications. This project \
+aims to computationally design and evaluate novel RNA thermoswitches \
+specifically optimised for use in the bacterium Bacillus subtilis, which is \
+widely used in industrial biotechnology.\\r\\n\\r\\nProject \
+Aims:\\r\\n\\r\\nUtilise bioinformatics software (primarily NUPACK and \
+RNAStructure) to design and evaluate RNA thermoswitches.\\r\\nIdentify \
+structural and sequence features of known thermoswitches (e.g., FourU, ROSE, \
+Hsp17, Listeria\[AHat]\.80\.99s PrfA) that correlate with optimal \
+high-temperature performance.\\r\\nGenerate and analyse RNA thermoswitch \
+designs predicted to function effectively at specified industrially relevant \
+high temperatures.\\r\\nExamine how RNA thermoswitch structures interact with \
+essential genetic elements, both upstream (e.g., promoters, untranslated \
+regions) and downstream (e.g., ribosome binding sites, coding sequences) and \
+design riboswitches that factor in the functions of these additional \
+elements.\\r\\nAssess computational predictions to identify designs that \
+minimise leakiness while maintaining efficient gene expression at target \
+temperatures.\\r\\n\\r\\n\\r\\nMethodology:\\r\\n\\r\\nUse NUPACK and \
+RNAstructure software to predict RNA secondary structures and thermal \
+stability at specified high temperatures.\\r\\nGenerate and characterise a \
+set of designed RNA sequences, paying particular attention to structural \
+interactions around key genetic regulatory elements.\\r\\nPerform preliminary \
+validation of select designs using NUPACK\[AHat]\.80\.99s web-based \
+prediction tool.\\r\\nAnalyse datasets to identify RNA sequence and structure \
+characteristics associated with effective high-temperature thermoswitch \
+function.\\r\\n\\r\\n\\r\\nExpected Outcome: This project will provide a \
+proof-of-concept demonstration of computational design of synthetic RNA \
+thermoswitches suitable for industrial use at elevated temperatures. Outcomes \
+will include a dataset of RNA sequences predicted to be robust thermoswitches \
+tuned to enable expression at different temperatures, along with insights \
+into how sequence and structural elements influence thermoswitch performance.\
+\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"There is also scope for projects in other areas of \
+biotechnology, for example in drug design.\\r\\n\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Waves in the Martian atmosphere\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Roland Young\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"roland.young@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"There are many different types of atmospheric wave, which \
+are periodic disturbances in atmospheric fields such as temperature or \
+density. These range from sound waves, with wavelengths measured in metres or \
+less, to planetary-scale Rossby waves, with wavelengths measured in thousands \
+of kilometres. Intermediate are gravity waves; these have gravity as the \
+restoring force, similar to a wave on the surface of the ocean. Waves are an \
+important part of the climate system as they transport momentum and energy \
+from place to place without bulk motion of the air.\\r\\n\\r\\nWaves occur in \
+other planets\[AHat]\.80\.99 atmospheres as well as on Earth. On Mars, the \
+motion of the atmosphere is a major unknown in our understanding of that \
+planet\[AHat]\.80\.99s climate, because it is difficult to measure remotely. \
+Identifying waves can tell us something about how the atmosphere transports \
+momentum and energy, linking remote parts of the atmosphere through the \
+general circulation. \\r\\n\\r\\nWe can identify waves by studying images of \
+clouds taken in visible or ultraviolet wavelengths, filtered using a \
+high-pass filter to remove large-scale structures.\\r\\n\\r\\nThe Emirates \
+Mars Mission (EMM) has been in orbit around Mars since 9 February 2021. Its \
+Emirates eXploration Imager (EXI) instrument is a visible / ultraviolet \
+camera that is unique among Mars orbiters as it takes regular observation \
+sequences that are suitable for tracking clouds and other small-scale \
+phenomena like waves.\\r\\n\\r\\nThis project will use EXI images to look for \
+waves in Mars\[AHat]\.80\.99 atmosphere. Processed EXI images are publicly \
+available from the EMM Science Data Center. As of 3 December 2024, there are \
+229 suitable images in 34 sequences between November 2021 and December 2023. \
+\\r\\n\\r\\nStudents will identify waves and characterise their wavelengths, \
+frequencies, directions, etc. in terms of location, time of day, season, and \
+so on. It may be possible to measure the dispersion relation for some waves, \
+which is related to the properties of the surrounding \
+atmosphere.\\r\\n\\r\\nThis project would suit students interested in image \
+analysis and spectral analysis. A background in physics or mathematics would \
+be quite helpful, but is not essential.\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Evaluating Systemic Inequality in Access to debt advice in \
+Scotland\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Your Financial Wellbeing (YFW)\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.romano@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"About Your Financial Wellbeing (YFW)\\r\\nYour Financial \
+Wellbeing is a social enterprise working to change how financial wellbeing \
+support is offered to people who are struggling with money. We understand \
+that financial stress affects mental, physical and social wellbeing, and can \
+place huge pressure on individuals, families and communities.\\r\\nThis is \
+why we design services that are more accessible, reduce barriers, and help \
+people get support sooner to prevent finances spiralling out of \
+control.\\r\\nWe provide money advice (omni channel), financial wellbeing \
+workshops, and develop ethical, AI tools that support both clients as well as \
+the advisors delivering frontline services. \\r\\n\\r\\nProject \
+Overview\\r\\nThis project will use data-science methods to explore who is \
+and, crucially, who is not accessing money and debt-advice services across \
+Scotland when they need it. By analysing public datasets (e.g., the Financial \
+Conduct Authority\[AHat]\.80\.99s Financial Lives Survey, the Scottish Index \
+of Multiple Deprivation, local-authority crisis-fund data, and Office for \
+National Statistics wellbeing datasets), students will model demographic and \
+geographic patterns of exclusion - comparing factors such as gender, income, \
+housing status and rurality.\\r\\nFindings will help identify underserved \
+groups and inform our approach to designing more accessible and inclusive \
+financial wellbeing services.\\r\\n\\r\\nMethods\\r\\nStudents will:\\r\\n\
+\[AHat]\.80\[Cent]\\tClean and prepare multiple open/public datasets\\r\\n\
+\[AHat]\.80\[Cent]\\tMerge datasets and carry out exploratory data analysis \
+(EDA) to identify patterns of exclusion\\r\\n\[AHat]\.80\[Cent]\\tUse \
+regression modelling (e.g., to examine predictors of non-access)\\r\\n\[AHat]\
+\.80\[Cent]\\tProduce geospatial visualisations (e.g., local authority or \
+data-zone maps) showing where exclusion or under-provision is concentrated\\r\
+\\n\\r\\nKey Datasets & Links\\r\\nMoney and Pensions Service (MaPS) \[AHat]\
+\.80\.93 Financial Wellbeing Survey\\r\\n\[AHat]\.80\[Cent]\\tAccess overview \
+(MaPS): https://www.maps.org.uk/en/publications/research/working-with-our-\
+survey-data\\r\\n\[AHat]\.80\[Cent]\\tSegmentation model PDF (UK Data \
+Service): \
+https://doc.ukdataservice.ac.uk/doc/8454/mrdoc/pdf/8454_maps_fin_wellbeing_\
+segmentation.pdf\\r\\nUniversity of Bristol \[AHat]\.80\.93 Financial \
+Wellbeing / Financial Fairness Tracker\\r\\n\[AHat]\.80\[Cent]\\tTracker \
+homepage & reports: \
+https://www.bristol.ac.uk/geography/research/pfrc/themes/capability-\
+behaviours-wellbeing/financial-fairness-tracker/\\r\\n\[AHat]\.80\[Cent]\\\
+t2025 report (example): \
+https://www.bristol.ac.uk/media-library/sites/geography/pfrc/documents/\
+Financial_fairness_tracker_W12_June2025.pdf\\r\\nFCA \[AHat]\.80\.93 \
+Financial Lives Survey\\r\\n\[AHat]\.80\[Cent]\\tSurvey homepage: \
+https://www.fca.org.uk/financial-lives\\r\\nScottish Index of Multiple \
+Deprivation (SIMD)\\r\\n\[AHat]\.80\[Cent]\\tSIMD homepage: \
+https://simd.scot/\\r\\nOffice for National Statistics (ONS) \[AHat]\.80\.93 \
+Wellbeing Datasets\\r\\n\[AHat]\.80\[Cent]\\tONS wellbeing hub: \
+https://www.ons.gov.uk/peoplepopulationandcommunity/wellbeing\\r\\n\\r\\\
+nExpected Outcomes\\r\\n\[AHat]\.80\[Cent]\\tA brief analytical report \
+summarising demographic and geographic access patterns to debt and wellbeing \
+support\\r\\n\[AHat]\.80\[Cent]\\tVisual outputs (e.g., charts, heatmaps) \
+showing where exclusion or under-provision exists\\r\\n\[AHat]\.80\[Cent]\\tA \
+short recommendations paper (2\[AHat]\.80\.933 pages, plain English) for \
+policymakers and advice-sector partners\\r\\nThese results will provide us \
+with evidence to guide future service design, outreach strategy, and funding \
+proposals focused on inclusion and early intervention.\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No.\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Machine Learning Analysis of Well-Being and Behaviour \
+Data\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Hey Joe (company)\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.romano@abdn.ac.uk\"\>",
+      ImageSize->100,
+      ScrollPosition->{0., 0.}], 
+     PaneBox["\<\"Company Background\\r\\nHey Joey is a digital companion app \
+designed to support parents of neurodivergent children. The app helps parents \
+record daily mood and sensory data, identify patterns, and receive \
+personalised insights to make everyday life easier.\\r\\nCurrently in beta \
+testing, Hey Joey aims to launch a scalable version of the platform in early \
+2026. We are now exploring the use of conversational AI to enhance user \
+experience and engagement.\\r\\n\\r\\n\\r\\nRoles and responsibilities\\r\\n\
+\[AHat]\.80\[Cent]\\tClean and prepare anonymised synthetic datasets for \
+analysis.\\r\\n\[AHat]\.80\[Cent]\\tApply supervised and/or unsupervised \
+learning techniques to detect correlations and trends (e.g. daily patterns, \
+triggers, or positive periods).\\r\\n\[AHat]\.80\[Cent]\\tDevelop a prototype \
+model or dashboard to visualise findings.\\r\\n\[AHat]\.80\[Cent]\\tEvaluate \
+ethical and privacy implications of predictive features in family wellbeing \
+contexts.\\r\\n\[AHat]\.80\[Cent]\\tPresent a final report outlining \
+findings, accuracy, and recommendations for next steps.\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Synthetic Fraud Pattern Modelling & Anomaly Detection for \
+Digital Music Uploads\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"XYNQ / REDFLAG\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.romano@abdn.ac.uk\"\>",
+      ImageSize->100,
+      ScrollPosition->{0., 0.}], 
+     PaneBox["\<\"Brief Abstract\\r\\nXYNQ Ltd is developing REDFLAG, an \
+AI-driven verification engine designed to detect fraudulent \
+or\\r\\nmanipulated music uploads before they reach distributors or streaming \
+platforms. One of the core\\r\\nchallenges in early development is the lack \
+of publicly available fraud-labelled datasets, which \
+limits\\r\\nexperimentation with anomaly detection techniques.\\r\\nThis \
+12-week MSc project will focus on generating synthetic fraud datasets, \
+designing feature\\r\\nrepresentations for music metadata and behavioural \
+patterns, and prototyping anomaly detection\\r\\nmethods (e.g., statistical \
+baselines, clustering, or ML approaches). The outputs will directly support \
+the\\r\\nfeasibility stage of REDFLAG and contribute valuable groundwork for \
+our collaborative Interface\\r\\nresearch project.\\r\\nThe work is highly \
+aligned with applied data science and gives the student exposure to \
+real-world\\r\\nanomaly detection and synthetic data engineering \
+challenges.\\r\\nExpected Outcomes\\r\\n* Synthetic fraud dataset that \
+simulates:\\r\\n* Metadata anomalies (e.g., mismatched names, duplicated \
+ISRCs, suspicious title patterns).\\r\\n* Impersonation attempts (e.g., \
+similar artist names, spoofed profiles).\\r\\n* Behavioural upload \
+irregularities (e.g., burst uploads, repeated catalogue submissions).\\r\\n* \
+Bot-like or mass-generated content behaviours.\\r\\n* Exploratory Data \
+Analysis (EDA) report describing:\\r\\n* Dataset structure and \
+assumptions.\\r\\n* Class distributions and anomaly injection \
+strategies.\\r\\n* Limitations and realism of the synthetic data.\\r\\n* \
+Prototype anomaly detection approaches, such as:\\r\\n* Outlier detection \
+(e.g., isolation forests, LOF, statistical thresholds).\\r\\n* \
+Clustering-based anomaly detection.\\r\\n* Simple supervised/semisupervised \
+models where labelled anomalies exist.\\r\\n* Time-series or sequence-based \
+detection for behaviour over time.\\r\\n* Evaluation and experimentation \
+notebook(s):\\r\\n* Metrics such as precision/recall, false-positive \
+rates.\\r\\n* Comparison of different anomaly detection techniques.\\r\\n* \
+Clear commentary on what works well vs. what fails.\\r\\n* Final \
+recommendations for:\\r\\n* Feature engineering for metadata and behaviour \
+modelling.\\r\\n* Promising model families for REDFLAG\[AHat]\.80\.99s next \
+R&D stage.\\r\\n* How these results can be integrated into a larger ML \
+pipeline.\\r\\n\\r\\nThis work advances REDFLAG from early concept (TRL 2) \
+toward R&D feasibility (TRL 3\[AHat]\.80\.934).\\r\\nParticipation in \
+Supervision\\r\\nXYNQ Ltd will actively support the student and academic \
+supervisor through:\\r\\nFortnightly check-in calls (online) to review \
+progress and unblock issues.\\r\\nTimely feedback on interim outputs (design \
+choices, EDA, model results).\\r\\nEmail/Slack-style communication for short \
+questions between meetings.\\r\\nAttendance at the final \
+presentation/demonstration and feedback on the work.\\r\\nLead industry \
+supervisor:\\r\\nLeo Fakhrul \[AHat]\.80\.93 Founder & CEO, XYNQ \
+Ltd\\r\\nTechnical supervisor:\\r\\nZiyad Alrasbi \[AHat]\.80\.93 Co-founder \
+& CTO, XYNQ Ltd\\r\\n\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Spatial Characterisation of Protein Distribution in Muscle \
+Spindles\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Ekkehard Ullner, Mamen Romano and Guy Bewick\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"e.ullner@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Project Overview\\r\\nUnderstanding the structure and \
+function of muscle fibres is critical for advancing our knowledge of motor \
+control and neuromuscular coordination. Muscle spindles, specialised sensory \
+structures embedded within skeletal muscles, play a vital role in \
+proprioception\[AHat]\.80\.94the sense of body position and movement\[AHat]\
+\.80\.94by providing continuous feedback to the nervous system about muscle \
+stretch and tension. This feedback is essential for maintaining posture, \
+coordinating complex movements, and regulating muscle tone. Despite their \
+critical role, the detailed cellular organisation and protein distribution \
+within muscle spindles remain incompletely understood, particularly in \
+comparison to the more abundant extrafusal fibres that generate muscle force.\
+\\r\\nThis project aims to deepen our understanding of the spatial \
+distribution of proteins within intrafusal fibres of muscle spindles, \
+focusing on their proximity to the cell nuclei, and to compare this \
+distribution with that of the surrounding extrafusal fibres. Such analysis \
+can provide valuable insights into the specialised structure-function \
+relationships in muscle spindles, potentially revealing molecular mechanisms \
+underlying muscle sensitivity and control.\\r\\nResearch Focus\\r\\nAdvances \
+in imaging technologies, particularly fluorescence microscopy, have \
+transformed the way we study cellular structures. Fluorescence techniques \
+allow precise visualisation of protein distribution within cells, making it \
+possible to quantify differences in protein expression across muscle fibre \
+types.\\r\\nIn this project, we will work with sets of three complementary \
+images of muscle cross-sections, capturing different cellular features:\\r\\n\
+\[AHat]\.80\[Cent]\\tBrightfield (light microscopy) image: provides a general \
+structural view of the muscle tissue, highlighting the overall arrangement of \
+muscle fibres.\\r\\n\[AHat]\.80\[Cent]\\tNuclear stain (blue fluorescence) \
+image: shows the distribution and density of cell nuclei within the muscle \
+fibres, which helps distinguish intrafusal fibres within spindles from \
+surrounding extrafusal fibres.\\r\\n\[AHat]\.80\[Cent]\\tProtein of interest \
+(red fluorescence) image: visualises the concentration and spatial \
+distribution of a specific protein, providing insights into its potential \
+functional role within the muscle spindle.\\r\\n\\r\\nProject \
+Objectives\\r\\n\[AHat]\.80\[Cent]\\tProtein localisation analysis: \
+characterise the spatial distribution of the protein of interest relative to \
+the nuclei within intrafusal and extrafusal \
+fibres.\\r\\n\[AHat]\.80\[Cent]\\tQuantitative comparison: measure and \
+compare the relative protein concentrations within spindle (intrafusal) and \
+non-spindle (extrafusal) fibres.\\r\\n\[AHat]\.80\[Cent]\\tSpatial pattern \
+identification: use advanced image processing and statistical methods to \
+identify unique spatial patterns in protein distribution that may reflect \
+functional specialisations.\\r\\n\[AHat]\.80\[Cent]\\tBiological insight \
+generation: interpret the findings in the context of muscle spindle function, \
+potentially uncovering molecular features that contribute to muscle \
+sensitivity and reflex control.\\r\\n\\r\\nImpact and Relevance\\r\\nThe \
+insights gained from this project will enhance our understanding of the \
+cellular architecture of muscle spindles, providing a foundation for future \
+studies on muscle function, neuromuscular diseases, and rehabilitation \
+strategies. \\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No.\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Predicting Length of Stay at Hospital using Natural \
+Language Processing\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Mamen Romano, Alexander Groh and Binod Bhattarai\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.romano@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Developing models that predict the length of stay of \
+patients in hospital is crucial for optimising resource allocation, reducing \
+healthcare costs, and improving patient flow. Accurate predictions enable \
+hospitals to better manage bed availability, staffing, and treatment plans, \
+ultimately enhancing the efficiency and quality of patient care.\\r\\nIn this \
+project we will apply a Natural Language Processing (NLP) approach to predict \
+the length of stay in hospital of patients. We will use the publicly \
+available MIMIC-III dataset, which comprises deidentified health-related data \
+associated with over forty thousand patients admitted to the Beth Israel \
+Deaconess Medical Center (Boston, USA) between 2001 and 2012.\\r\\nThe \
+project aims at generating a summary text report from the existing tabular \
+data for each patient. These summaries will then be converted into numerical \
+representations (embeddings) using a language model such as BioBERT. Finally, \
+these embeddings will be input into a neural network model trained to predict \
+each patient\[AHat]\.80\.99s expected length of hospital stay.\\r\\nThe main \
+objectives of the project are:\\r\\n\[AHat]\.80\[Cent]\\tTo evaluate the \
+effectiveness of Large Language Models (LLMs) in generating text from tabular \
+data, compared to deterministic template-based methods.\\r\\n\[AHat]\.80\
+\[Cent]\\tTo analyse the influence of various demographic and clinical \
+variables on length-of-stay predictions.\\r\\n\[AHat]\.80\[Cent]\\tTo compare \
+the performance of this integrated NLP approach with a more traditional \
+random forest model.\\r\\nReferences:\\r\\nJohnson, A., Pollard, T., & Mark, \
+R. (2016). MIMIC-III Clinical Database (version 1.4). PhysioNet. \
+https://doi.org/10.13026/C2XW26.\\r\\nJinhyuk Lee, Wonjin Yoon, Sungdong Kim, \
+Donghyeon Kim, Sunkyu Kim, Chan Ho So, Jaewoo Kang, BioBERT: a pre-trained \
+biomedical language representation model for biomedical text mining, \
+Bioinformatics, Volume 36, Issue 4, February 2020, Pages \
+1234\[AHat]\.80\.931240, \
+https://doi.org/10.1093/bioinformatics/btz682\\r\\n\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"No.\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Smart Home Sensing, Time-Series Analytics, and a Digital \
+Twin for Indoor Climate & Energy\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Marco Thiel\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.thiel@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"The student will design and deploy a small-scale smart-home \
+sensing platform (Arduino/ESP32-based) and build an end-to-end data pipeline \
+to ingest, store, visualise, and analyse multi-sensor time series. The core \
+aim is to turn raw sensor readings into actionable inferences (state \
+estimation, prediction, anomaly detection) \
+and\[AHat]\.80\.94optionally\[AHat]\.80\.94into a digital twin of a \
+room/house subsystem (e.g., indoor thermal dynamics), calibrated from the \
+collected data.\\r\\n\\r\\nCore tasks\\r\\nSensing layer: build 1\[AHat]\.80\
+\.93N sensor nodes (e.g., temperature/humidity, light; optional: \
+CO\[AHat]\.82\.82 proxy / air quality, motion/occupancy proxy) with \
+timestamped telemetry.\\r\\n\\r\\nData engineering: stream data to a central \
+machine (laptop/mini-PC) via a message broker/protocol, store in a \
+time-series database, and produce dashboards for live \
+monitoring.\\r\\n\\r\\nData science layer: develop and evaluate items \
+like:\\r\\nshort-horizon forecasting (temperature/humidity),\\r\\nanomaly \
+detection (sensor drift, \[AHat]\.80\.9cwindow open\[AHat]\.80\.9d events, \
+abnormal heating behaviour),\\r\\noccupancy inference (privacy-preserving \
+proxies),\\r\\nmissing-data robustness and sensor fusion.\\r\\n\\r\\nDigital \
+twin extension (recommended): construct a simple physics-based model (e.g., \
+RC thermal network), calibrate parameters from data, and use it for \
+prediction and/or control-oriented what-if simulation.\\r\\n\\r\\nEvaluation \
+/ success criteria\\r\\nQuantitative metrics (forecast error, detection \
+delay/false alarm rates, calibration error, energy/comfort trade-offs if \
+control is attempted).\\r\\nReproducible pipeline (documented deployment, \
+scripts/containers, logged experiments).\\r\\nClear failure-mode analysis \
+(when/why the models break).\\r\\n\\r\\nDeliverables\\r\\nWorking sensor \
+node(s) + data pipeline, a curated dataset, dashboards, and a well-documented \
+GitHub repository.\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"None\"\>",
+      ImageSize->90]},
+    {
+     PaneBox["\<\"Optical Microphone (Laser Mic): Recover Spoken \
+Language/Music from a Photodiode Signal via DSP and System Identification\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"Marco Thiel\"\>",
+      ImageSize->80], 
+     PaneBox["\<\"m.thiel@abdn.ac.uk\"\>",
+      ImageSize->100], 
+     PaneBox["\<\"The student will build a controlled \[AHat]\.80\.9claser \
+microphone\[AHat]\.80\.9d style experiment and develop signal processing \
+methods to recover spoken language or music from an optically measured \
+signal. The experimental setup is intentionally benign and reproducible: \
+build a small box with a plexiglas window, place a phone playing music (or \
+speech) inside, and record the optical receiver output while the measurement \
+system (laser + photodiode/receiver) is located at a distance. The main \
+scientific objective is to reconstruct intelligible audio on a computer by \
+modelling and inverting the measurement chain, then applying modern \
+denoising/enhancement techniques.\\r\\n\\r\\nCore tasks\\r\\nExperimental \
+design: build the plexiglas-window enclosure and create repeatable \
+measurement protocols (distance, angle, surfaces, ambient light \
+conditions).\\r\\n\\r\\nData acquisition: collect paired recordings \
+(reference audio from the phone track and the measured optical/receiver \
+signal) to enable objective evaluation.\\r\\n\\r\\nSignal processing (minimum \
+expected):\\r\\npreprocessing (DC drift removal, filtering, \
+normalisation),\\r\\ndemodulation / reconstruction (envelope/Hilbert \
+approaches as appropriate),\\r\\ndenoising and enhancement (e.g., \
+Wiener/spectral subtraction; optional learned denoiser on CPU),\\r\\nsystem \
+identification (estimate an effective transfer function from optical signal \
+\[AHat]\.86\.92 audio).\\r\\nEvaluation: compare reconstruction pipelines \
+using objective measures (SNR improvement, spectral distortion metrics; \
+intelligibility-focused metrics where feasible) and structured listening \
+tests.\\r\\n\\r\\nEthical boundary\\r\\nThe work must be done only on \
+self-generated signals in a controlled setup (music/speech from the student\
+\[AHat]\.80\.99s own phone in the box), explicitly avoiding any covert or \
+non-consensual recording.\\r\\n\\r\\nDeliverables\\r\\nHardware setup \
+documentation (photos/diagrams, bill of materials, calibration procedure).\\r\
+\\nDataset (raw measurements + reference audio) and a reproducible \
+reconstruction pipeline.\"\>",
+      ImageSize->180], 
+     PaneBox["\<\"None\"\>",
+      ImageSize->90]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{1}}, "Rows" -> {{1}}}],
+  "Grid"]], "Print",
+ CellChangeTimes->{3.9753637434281597`*^9, 3.9753638364193497`*^9, 
+  3.9761136237720394`*^9, 3.9761139000290985`*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"2da01e7c-f6b1-eb4a-892c-e4733dc897f2"],
+
+Cell[BoxData[
+ StyleBox["\<\"\\nTable 2: Project Descriptions\"\>", "Subtitle",
+  StripOnInput->False]], "Print",
+ CellChangeTimes->{3.9753637434281597`*^9, 3.9753638364193497`*^9, 
+  3.9761136237720394`*^9, 3.976113900056816*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"fab7ed42-b178-c444-b8ed-2e736b1cb138"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"Project Name\"\>", "\<\"Description\"\>"},
+    {
+     PaneBox["\<\"The Science behind Football\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"In recent years, football analysis has seen rapid growth \
+and has greatly impacted the evaluation of football performance \
+[1]\[AHat]\.80\.93[5]. Several clubs are using the insights from the analysis \
+of data of played games to improve on their performance in future matches. \
+Football is a team sport, and the game has 2 teams, with players trying to \
+score a goal.  To analyse a match, it is important to understand the dynamics \
+of passes, the positioning and the movement of not only the individual \
+players but also the whole team. The interest is to find the emergency of \
+patterns in the collective dynamics of players that lead to goals. \
+\\r\\n\\r\\nIn this master project, we will be analysing tracking data \
+provided by the company Statsbomb [6], spanning several decades of tracking \
+data for matches happening in several competitions around the world. The \
+interest will be to construct a network representation of a team, based on \
+the way footballers pass the ball. The players and their average position are \
+the nodes of the network, and the amount of passes one player does to another \
+in the duration of a game representing how well connected a player is with \
+another will be the links of the network.  We hope to find network structures \
+that enhances defensive performance, or those that favours wins. We will also \
+do exploratory, and time-series based analysis of the matches, for example, \
+understanding the properties of the time-series constructed from observing a \
+player or a group of players moving in the pitch during the match. The \
+analysis will firstly be focussed on an individual game (which contains \
+already a very large amount of data), but could also be developed in more \
+than 1 game for example when the interest is to compare the playing styles of \
+the different schools of football happening in different continents and \
+competitions. \\r\\n\\r\\n1. D. Bargiotas, An Analysis of FC Barcelona \
+Through Passing Networks and Event Data Analysis, Master Thesis, University \
+of Aberdeen (2021).\\r\\n2. J. M. Buld\[CapitalATilde]\.ba et al., Defining a \
+Historic Football Team: Using Network Science to Analyze Guardiola\[AHat]\.80\
+\.99s F.C. Barcelona. 9, 13602 (2019). \\r\\n3. S. Caicedo-Parada S, et al. \
+Passing Networks and Tactical Action in Football: A Systematic Review. Int J \
+Environ Res Public Heal 17, 6649 (2020).\\r\\n4. What difference can data \
+make to a football team? - Exasol \
+https://www.exasol.com/what-difference-can-data-make-for-a-football-team/\\r\\\
+n5. \[CapitalATilde]\.81. Novillo. et al, A multilayer network framework for \
+soccer analysis, Chaos, Solitons & Fractals, 178, 114355 (2024).\\r\\n6. \
+https://github.com/statsbomb/open-data/tree/master\\r\\n\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Machine-learning guided discovery of novel naturally \
+occurring antimicrobials\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Bacterial AMR is now the 3rd-leading cause of death \
+globally, behind ischemic heart disease and stroke. The WHO has classified \
+life-threatening community- and hospital-acquired infections due to \
+Gram-negative bacteria, highlighting carbapenem-resistant Enterobacteriaceae \
+(CRE) (including K. pneumoniae and E. coli) and Acinetobacter baumannii \
+(CRAB) as the most critical AMR global health threats.\\r\\nRecent progress \
+in new antibiotic development has been dominated by incremental improvements \
+in well-established drug classes, such as \[CapitalIHat]\.b2-lactam \
+antibiotics, already impacted by resistance. There are few drugs in \
+development that target a new mode of action, which is essential for \
+combatting the ongoing emergence of bacteria resistant to existing classes of \
+antibiotics. \\r\\nAntimicrobial natural products, compounds discovered in \
+nature, have been playing critical roles of human medicines and are critical \
+for the development of new therapeutics against multidrug-resistant \
+pathogens. Recent discoveries of antibiotics, including repurposed compounds \
+like hygromycin A,1 and novel agents such as lolamicin 2 and abaucin,3 \
+suggest that many novel antibiotics remain undiscovered.\\r\\nThe aim of this \
+Master project is to construct training dataset for predictive modelling of \
+antimicrobial compounds against Gram-negative pathogens. \\r\\nResearch \
+objectives: \\r\\n1. To construct training dataset from existing natural \
+product inventory.\\r\\n2. To master the use of Chemprop software4 and \
+customize its training dataset for predictive modelling of new albopeptide \
+derivatives. This will enable a rapid, data-informed approach to identify \
+candidates with enhanced antimicrobial activity.\\r\\nReferences:\\r\\n1. \
+Leimer, N. et al. (2021) Cell. 184, 5405-5418. \\r\\n2. Mu\[CapitalATilde]\
+\[PlusMinus]oz K.A et al. (2024) Nature. 630, 429-441. \\r\\n3. Liu G. et al. \
+(2023) Nat. Chem. Biol. 2023, 19, 1342-1350. \\r\\n4. Heid E. et al. (2024) \
+J. Chem. Inf. Model. 64, 9-17.\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Advanced Techniques for Time Series Analysis\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"With the increasing ability to store and process large \
+amounts of data, it is now possible to track a wide range of processes over \
+time. As a result, there is an abundance of data in the form of time series\
+\[AHat]\.80\.94from epidemiological records (e.g. COVID-19 case counts or \
+mortality rates), to physical measurements (e.g. seismic activity), to \
+behavioural data (e.g. the motion of insects).\\r\\n\\r\\nWhile time series \
+can be visualised relatively easily, identifying patterns, trends, or \
+anomalies in large and complex datasets remains a significant challenge. \
+Advanced techniques\[AHat]\.80\.94including machine learning methods\[AHat]\
+\.80\.94can automate aspects of this analysis, providing faster and deeper \
+insights. Additionally, alternative representations of time series, such as \
+networks, can reveal structures and properties that may remain hidden in \
+traditional approaches.\\r\\n\\r\\nThis project will explore modern, \
+data-driven methods for analysing time series. Depending on your interests, \
+you may investigate techniques such as classification, clustering, or \
+forecasting for time series, or explore novel representations like time \
+series networks and their associated metrics.\\r\\n\\r\\nPotential \
+applications include: analysing the motion and interaction of insects, \
+characterising the complexity of physical systems (e.g. material fracture or \
+water flow in porous media), or examining epidemiological data to better \
+understand disease dynamics or mortality patterns.\\r\\n\\r\\nThe specific \
+focus of the project will be chosen in consultation at the start, allowing \
+students some flexibility based on their interests.\\r\\n\\r\\nFurther \
+reading:\\r\\n\\r\\nJan Marcel Kezmann \[AHat]\.80\.9cAll 8 Types of Time \
+Series Classification Methods\[AHat]\.80\.9d \
+https://medium.com/mlearning-ai/all-8-types-of-time-series-classification-\
+methods-2c8e4b323ea2#2fe7.\\r\\n\\r\\nAghabozorgi, S., Seyed Shirkhorshidi, \
+A. & Ying Wah, T. Time-series clustering \[AHat]\.80\.93 A decade review. \
+Inf. Syst. 53, 16\[AHat]\.80\.9338 (2015).\\r\\n\\r\\nSilva, V. F., Silva, M. \
+E., Ribeiro, P., & Silva, F. (2021). Time series analysis via network \
+science: Concepts and algorithms. Wiley Interdisciplinary Reviews: Data \
+Mining and Knowledge Discovery, 11(3), e1404. \
+https://doi.org/10.1002/WIDM.1404\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Developing a Retrieval-Augmented Generation (RAG) System \
+for Extraction and Consolidation of Data from Public Sector PDF Documents\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Government and public sector bodies (e.g., Scottish Health \
+Boards, Local Authorities) routinely publish critical operational and \
+financial data within lengthy, unstructured PDF reports. Analysts are \
+frequently required to synthesize key information across multiple documents \
+to answer specific policy or financial questions. This project proposes the \
+development of a fully automated workflow that combines document scraping and \
+state-of-the-art Artificial Intelligence (AI) techniques to build a robust \
+Retrieval-Augmented Generation (RAG) system, drastically reducing manual \
+analysis time and improving data consistency.\\r\\n\\r\\nThe primary goal is \
+to create a functional, scalable prototype that can efficiently answer \
+complex, cross-document queries based solely on official PDF documents. More \
+specifically, you will:\\r\\n1.\\tDevelop a Multi-Document RAG Pipeline: \
+Implement a pipeline capable of processing multiple PDFs from identified \
+domains and generating consolidated answers.\\r\\n2.\\tEnsure Data Grounding: \
+Guarantee that all extracted summaries and answers are directly traceable and \
+grounded to specific pages and documents within the source \
+material.\\r\\n3.\\tProduce Structured Output: Consolidate extracted data \
+into a clean, queryable format (e.g., Markdown or CSV tables).\\r\\nThe \
+primary data source is left flexible, but a likely focus will be on Scottish \
+Public Sector bodies (e.g., health boards annual accounts or local authority \
+complaints reports.\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Statistical and Non-linear Analysis of \
+Electroencephalographic signals\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Electroencephalography (EEG) is a method to record the \
+spontaneous electrical activity of the brain, which shows a broad range of \
+complex signal behaviours. To understand cortical function, the EEG signal is \
+typically divided into bands by frequency (delta, theta, alpha, beta, and \
+gamma), isolating the rhythmic activity. These bands are related to different \
+physiological functions and produced by different neuronal circuits. However, \
+the bands show different characteristics for different cortical locations and \
+states of mind, such as during the sleep-wake cycle states, which includes \
+the states of wakefulness, rapid-eye movement, and non-rapid-eye movement \
+sleep. Since considerable motivation exists for the development of an \
+adequate statistical model for spontaneous EEG activity, we propose to study \
+the main EEG bands recorded during the sleep-wake state using methods from \
+Statistics and Chaos theory. Those taking on this project will be provided \
+with an EEG dataset, that they will need to filter into frequency bands \
+(pre-processing), obtain the main statistical descriptors for these bands \
+(feature extraction), create surrogate signals for statistical hypothesis \
+testing (statistical modelling), and analyse the phase portraits created by \
+combining some bands (data exploration), which can lead to a state-dependent \
+model for the EEG activity during the sleep-wake cycle and improvements to \
+classification accuracy of machine and deep learning algorithms.\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Artificial Intelligence in Biotechnology\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Background:\\r\\n\\r\\nBiotechnology includes the \
+engineering of biological elements to develop products that can improve human \
+life and the application of machine learning is revolutionizing the field.\\r\
+\\n\\r\\nInspired by a recent industrial collaboration, one potential project \
+is to use machine learning to accelerate the development of high-temperature \
+RNA thermoswitches. RNA thermoswitches are RNA sequences that can control \
+expression - for example, by only becoming active once a certain temperature \
+has been reached - often via temperature-dependent structural changes . \
+Naturally occurring thermoswitches are optimised for temperatures around 37\
+\[CapitalAHat]\[Degree]C and often show undesired basal ('leaky') gene \
+expression at lower temperatures. Owing to their customisable length and base \
+compositions, the ability to design synthetic RNA thermoswitches responsive \
+to higher temperatures (>60\[CapitalAHat]\[Degree]C) with reduced leakiness \
+at lower temperatures has significant industrial applications. This project \
+aims to computationally design and evaluate novel RNA thermoswitches \
+specifically optimised for use in the bacterium Bacillus subtilis, which is \
+widely used in industrial biotechnology.\\r\\n\\r\\nProject \
+Aims:\\r\\n\\r\\nUtilise bioinformatics software (primarily NUPACK and \
+RNAStructure) to design and evaluate RNA thermoswitches.\\r\\nIdentify \
+structural and sequence features of known thermoswitches (e.g., FourU, ROSE, \
+Hsp17, Listeria\[AHat]\.80\.99s PrfA) that correlate with optimal \
+high-temperature performance.\\r\\nGenerate and analyse RNA thermoswitch \
+designs predicted to function effectively at specified industrially relevant \
+high temperatures.\\r\\nExamine how RNA thermoswitch structures interact with \
+essential genetic elements, both upstream (e.g., promoters, untranslated \
+regions) and downstream (e.g., ribosome binding sites, coding sequences) and \
+design riboswitches that factor in the functions of these additional \
+elements.\\r\\nAssess computational predictions to identify designs that \
+minimise leakiness while maintaining efficient gene expression at target \
+temperatures.\\r\\n\\r\\n\\r\\nMethodology:\\r\\n\\r\\nUse NUPACK and \
+RNAstructure software to predict RNA secondary structures and thermal \
+stability at specified high temperatures.\\r\\nGenerate and characterise a \
+set of designed RNA sequences, paying particular attention to structural \
+interactions around key genetic regulatory elements.\\r\\nPerform preliminary \
+validation of select designs using NUPACK\[AHat]\.80\.99s web-based \
+prediction tool.\\r\\nAnalyse datasets to identify RNA sequence and structure \
+characteristics associated with effective high-temperature thermoswitch \
+function.\\r\\n\\r\\n\\r\\nExpected Outcome: This project will provide a \
+proof-of-concept demonstration of computational design of synthetic RNA \
+thermoswitches suitable for industrial use at elevated temperatures. Outcomes \
+will include a dataset of RNA sequences predicted to be robust thermoswitches \
+tuned to enable expression at different temperatures, along with insights \
+into how sequence and structural elements influence thermoswitch performance.\
+\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Waves in the Martian atmosphere\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"There are many different types of atmospheric wave, which \
+are periodic disturbances in atmospheric fields such as temperature or \
+density. These range from sound waves, with wavelengths measured in metres or \
+less, to planetary-scale Rossby waves, with wavelengths measured in thousands \
+of kilometres. Intermediate are gravity waves; these have gravity as the \
+restoring force, similar to a wave on the surface of the ocean. Waves are an \
+important part of the climate system as they transport momentum and energy \
+from place to place without bulk motion of the air.\\r\\n\\r\\nWaves occur in \
+other planets\[AHat]\.80\.99 atmospheres as well as on Earth. On Mars, the \
+motion of the atmosphere is a major unknown in our understanding of that \
+planet\[AHat]\.80\.99s climate, because it is difficult to measure remotely. \
+Identifying waves can tell us something about how the atmosphere transports \
+momentum and energy, linking remote parts of the atmosphere through the \
+general circulation. \\r\\n\\r\\nWe can identify waves by studying images of \
+clouds taken in visible or ultraviolet wavelengths, filtered using a \
+high-pass filter to remove large-scale structures.\\r\\n\\r\\nThe Emirates \
+Mars Mission (EMM) has been in orbit around Mars since 9 February 2021. Its \
+Emirates eXploration Imager (EXI) instrument is a visible / ultraviolet \
+camera that is unique among Mars orbiters as it takes regular observation \
+sequences that are suitable for tracking clouds and other small-scale \
+phenomena like waves.\\r\\n\\r\\nThis project will use EXI images to look for \
+waves in Mars\[AHat]\.80\.99 atmosphere. Processed EXI images are publicly \
+available from the EMM Science Data Center. As of 3 December 2024, there are \
+229 suitable images in 34 sequences between November 2021 and December 2023. \
+\\r\\n\\r\\nStudents will identify waves and characterise their wavelengths, \
+frequencies, directions, etc. in terms of location, time of day, season, and \
+so on. It may be possible to measure the dispersion relation for some waves, \
+which is related to the properties of the surrounding \
+atmosphere.\\r\\n\\r\\nThis project would suit students interested in image \
+analysis and spectral analysis. A background in physics or mathematics would \
+be quite helpful, but is not essential.\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Evaluating Systemic Inequality in Access to debt advice in \
+Scotland\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"About Your Financial Wellbeing (YFW)\\r\\nYour Financial \
+Wellbeing is a social enterprise working to change how financial wellbeing \
+support is offered to people who are struggling with money. We understand \
+that financial stress affects mental, physical and social wellbeing, and can \
+place huge pressure on individuals, families and communities.\\r\\nThis is \
+why we design services that are more accessible, reduce barriers, and help \
+people get support sooner to prevent finances spiralling out of \
+control.\\r\\nWe provide money advice (omni channel), financial wellbeing \
+workshops, and develop ethical, AI tools that support both clients as well as \
+the advisors delivering frontline services. \\r\\n\\r\\nProject \
+Overview\\r\\nThis project will use data-science methods to explore who is \
+and, crucially, who is not accessing money and debt-advice services across \
+Scotland when they need it. By analysing public datasets (e.g., the Financial \
+Conduct Authority\[AHat]\.80\.99s Financial Lives Survey, the Scottish Index \
+of Multiple Deprivation, local-authority crisis-fund data, and Office for \
+National Statistics wellbeing datasets), students will model demographic and \
+geographic patterns of exclusion - comparing factors such as gender, income, \
+housing status and rurality.\\r\\nFindings will help identify underserved \
+groups and inform our approach to designing more accessible and inclusive \
+financial wellbeing services.\\r\\n\\r\\nMethods\\r\\nStudents will:\\r\\n\
+\[AHat]\.80\[Cent]\\tClean and prepare multiple open/public datasets\\r\\n\
+\[AHat]\.80\[Cent]\\tMerge datasets and carry out exploratory data analysis \
+(EDA) to identify patterns of exclusion\\r\\n\[AHat]\.80\[Cent]\\tUse \
+regression modelling (e.g., to examine predictors of non-access)\\r\\n\[AHat]\
+\.80\[Cent]\\tProduce geospatial visualisations (e.g., local authority or \
+data-zone maps) showing where exclusion or under-provision is concentrated\\r\
+\\n\\r\\nKey Datasets & Links\\r\\nMoney and Pensions Service (MaPS) \[AHat]\
+\.80\.93 Financial Wellbeing Survey\\r\\n\[AHat]\.80\[Cent]\\tAccess overview \
+(MaPS): https://www.maps.org.uk/en/publications/research/working-with-our-\
+survey-data\\r\\n\[AHat]\.80\[Cent]\\tSegmentation model PDF (UK Data \
+Service): \
+https://doc.ukdataservice.ac.uk/doc/8454/mrdoc/pdf/8454_maps_fin_wellbeing_\
+segmentation.pdf\\r\\nUniversity of Bristol \[AHat]\.80\.93 Financial \
+Wellbeing / Financial Fairness Tracker\\r\\n\[AHat]\.80\[Cent]\\tTracker \
+homepage & reports: \
+https://www.bristol.ac.uk/geography/research/pfrc/themes/capability-\
+behaviours-wellbeing/financial-fairness-tracker/\\r\\n\[AHat]\.80\[Cent]\\\
+t2025 report (example): \
+https://www.bristol.ac.uk/media-library/sites/geography/pfrc/documents/\
+Financial_fairness_tracker_W12_June2025.pdf\\r\\nFCA \[AHat]\.80\.93 \
+Financial Lives Survey\\r\\n\[AHat]\.80\[Cent]\\tSurvey homepage: \
+https://www.fca.org.uk/financial-lives\\r\\nScottish Index of Multiple \
+Deprivation (SIMD)\\r\\n\[AHat]\.80\[Cent]\\tSIMD homepage: \
+https://simd.scot/\\r\\nOffice for National Statistics (ONS) \[AHat]\.80\.93 \
+Wellbeing Datasets\\r\\n\[AHat]\.80\[Cent]\\tONS wellbeing hub: \
+https://www.ons.gov.uk/peoplepopulationandcommunity/wellbeing\\r\\n\\r\\\
+nExpected Outcomes\\r\\n\[AHat]\.80\[Cent]\\tA brief analytical report \
+summarising demographic and geographic access patterns to debt and wellbeing \
+support\\r\\n\[AHat]\.80\[Cent]\\tVisual outputs (e.g., charts, heatmaps) \
+showing where exclusion or under-provision exists\\r\\n\[AHat]\.80\[Cent]\\tA \
+short recommendations paper (2\[AHat]\.80\.933 pages, plain English) for \
+policymakers and advice-sector partners\\r\\nThese results will provide us \
+with evidence to guide future service design, outreach strategy, and funding \
+proposals focused on inclusion and early intervention.\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Machine Learning Analysis of Well-Being and Behaviour \
+Data\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Company Background\\r\\nHey Joey is a digital companion app \
+designed to support parents of neurodivergent children. The app helps parents \
+record daily mood and sensory data, identify patterns, and receive \
+personalised insights to make everyday life easier.\\r\\nCurrently in beta \
+testing, Hey Joey aims to launch a scalable version of the platform in early \
+2026. We are now exploring the use of conversational AI to enhance user \
+experience and engagement.\\r\\n\\r\\n\\r\\nRoles and responsibilities\\r\\n\
+\[AHat]\.80\[Cent]\\tClean and prepare anonymised synthetic datasets for \
+analysis.\\r\\n\[AHat]\.80\[Cent]\\tApply supervised and/or unsupervised \
+learning techniques to detect correlations and trends (e.g. daily patterns, \
+triggers, or positive periods).\\r\\n\[AHat]\.80\[Cent]\\tDevelop a prototype \
+model or dashboard to visualise findings.\\r\\n\[AHat]\.80\[Cent]\\tEvaluate \
+ethical and privacy implications of predictive features in family wellbeing \
+contexts.\\r\\n\[AHat]\.80\[Cent]\\tPresent a final report outlining \
+findings, accuracy, and recommendations for next steps.\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Synthetic Fraud Pattern Modelling & Anomaly Detection for \
+Digital Music Uploads\"\>",
+      ImageSize->120,
+      ScrollPosition->{0., 0.}], 
+     PaneBox["\<\"Brief Abstract\\r\\nXYNQ Ltd is developing REDFLAG, an \
+AI-driven verification engine designed to detect fraudulent \
+or\\r\\nmanipulated music uploads before they reach distributors or streaming \
+platforms. One of the core\\r\\nchallenges in early development is the lack \
+of publicly available fraud-labelled datasets, which \
+limits\\r\\nexperimentation with anomaly detection techniques.\\r\\nThis \
+12-week MSc project will focus on generating synthetic fraud datasets, \
+designing feature\\r\\nrepresentations for music metadata and behavioural \
+patterns, and prototyping anomaly detection\\r\\nmethods (e.g., statistical \
+baselines, clustering, or ML approaches). The outputs will directly support \
+the\\r\\nfeasibility stage of REDFLAG and contribute valuable groundwork for \
+our collaborative Interface\\r\\nresearch project.\\r\\nThe work is highly \
+aligned with applied data science and gives the student exposure to \
+real-world\\r\\nanomaly detection and synthetic data engineering \
+challenges.\\r\\nExpected Outcomes\\r\\n* Synthetic fraud dataset that \
+simulates:\\r\\n* Metadata anomalies (e.g., mismatched names, duplicated \
+ISRCs, suspicious title patterns).\\r\\n* Impersonation attempts (e.g., \
+similar artist names, spoofed profiles).\\r\\n* Behavioural upload \
+irregularities (e.g., burst uploads, repeated catalogue submissions).\\r\\n* \
+Bot-like or mass-generated content behaviours.\\r\\n* Exploratory Data \
+Analysis (EDA) report describing:\\r\\n* Dataset structure and \
+assumptions.\\r\\n* Class distributions and anomaly injection \
+strategies.\\r\\n* Limitations and realism of the synthetic data.\\r\\n* \
+Prototype anomaly detection approaches, such as:\\r\\n* Outlier detection \
+(e.g., isolation forests, LOF, statistical thresholds).\\r\\n* \
+Clustering-based anomaly detection.\\r\\n* Simple supervised/semisupervised \
+models where labelled anomalies exist.\\r\\n* Time-series or sequence-based \
+detection for behaviour over time.\\r\\n* Evaluation and experimentation \
+notebook(s):\\r\\n* Metrics such as precision/recall, false-positive \
+rates.\\r\\n* Comparison of different anomaly detection techniques.\\r\\n* \
+Clear commentary on what works well vs. what fails.\\r\\n* Final \
+recommendations for:\\r\\n* Feature engineering for metadata and behaviour \
+modelling.\\r\\n* Promising model families for REDFLAG\[AHat]\.80\.99s next \
+R&D stage.\\r\\n* How these results can be integrated into a larger ML \
+pipeline.\\r\\n\\r\\nThis work advances REDFLAG from early concept (TRL 2) \
+toward R&D feasibility (TRL 3\[AHat]\.80\.934).\\r\\nParticipation in \
+Supervision\\r\\nXYNQ Ltd will actively support the student and academic \
+supervisor through:\\r\\nFortnightly check-in calls (online) to review \
+progress and unblock issues.\\r\\nTimely feedback on interim outputs (design \
+choices, EDA, model results).\\r\\nEmail/Slack-style communication for short \
+questions between meetings.\\r\\nAttendance at the final \
+presentation/demonstration and feedback on the work.\\r\\nLead industry \
+supervisor:\\r\\nLeo Fakhrul \[AHat]\.80\.93 Founder & CEO, XYNQ \
+Ltd\\r\\nTechnical supervisor:\\r\\nZiyad Alrasbi \[AHat]\.80\.93 Co-founder \
+& CTO, XYNQ Ltd\\r\\n\\r\\n\"\>",
+      ImageSize->430,
+      ScrollPosition->{0., 0.}]},
+    {
+     PaneBox["\<\"Spatial Characterisation of Protein Distribution in Muscle \
+Spindles\"\>",
+      ImageSize->120,
+      ScrollPosition->{0., 0.}], 
+     PaneBox["\<\"Project Overview\\r\\nUnderstanding the structure and \
+function of muscle fibres is critical for advancing our knowledge of motor \
+control and neuromuscular coordination. Muscle spindles, specialised sensory \
+structures embedded within skeletal muscles, play a vital role in \
+proprioception\[AHat]\.80\.94the sense of body position and movement\[AHat]\
+\.80\.94by providing continuous feedback to the nervous system about muscle \
+stretch and tension. This feedback is essential for maintaining posture, \
+coordinating complex movements, and regulating muscle tone. Despite their \
+critical role, the detailed cellular organisation and protein distribution \
+within muscle spindles remain incompletely understood, particularly in \
+comparison to the more abundant extrafusal fibres that generate muscle force.\
+\\r\\nThis project aims to deepen our understanding of the spatial \
+distribution of proteins within intrafusal fibres of muscle spindles, \
+focusing on their proximity to the cell nuclei, and to compare this \
+distribution with that of the surrounding extrafusal fibres. Such analysis \
+can provide valuable insights into the specialised structure-function \
+relationships in muscle spindles, potentially revealing molecular mechanisms \
+underlying muscle sensitivity and control.\\r\\nResearch Focus\\r\\nAdvances \
+in imaging technologies, particularly fluorescence microscopy, have \
+transformed the way we study cellular structures. Fluorescence techniques \
+allow precise visualisation of protein distribution within cells, making it \
+possible to quantify differences in protein expression across muscle fibre \
+types.\\r\\nIn this project, we will work with sets of three complementary \
+images of muscle cross-sections, capturing different cellular features:\\r\\n\
+\[AHat]\.80\[Cent]\\tBrightfield (light microscopy) image: provides a general \
+structural view of the muscle tissue, highlighting the overall arrangement of \
+muscle fibres.\\r\\n\[AHat]\.80\[Cent]\\tNuclear stain (blue fluorescence) \
+image: shows the distribution and density of cell nuclei within the muscle \
+fibres, which helps distinguish intrafusal fibres within spindles from \
+surrounding extrafusal fibres.\\r\\n\[AHat]\.80\[Cent]\\tProtein of interest \
+(red fluorescence) image: visualises the concentration and spatial \
+distribution of a specific protein, providing insights into its potential \
+functional role within the muscle spindle.\\r\\n\\r\\nProject \
+Objectives\\r\\n\[AHat]\.80\[Cent]\\tProtein localisation analysis: \
+characterise the spatial distribution of the protein of interest relative to \
+the nuclei within intrafusal and extrafusal \
+fibres.\\r\\n\[AHat]\.80\[Cent]\\tQuantitative comparison: measure and \
+compare the relative protein concentrations within spindle (intrafusal) and \
+non-spindle (extrafusal) fibres.\\r\\n\[AHat]\.80\[Cent]\\tSpatial pattern \
+identification: use advanced image processing and statistical methods to \
+identify unique spatial patterns in protein distribution that may reflect \
+functional specialisations.\\r\\n\[AHat]\.80\[Cent]\\tBiological insight \
+generation: interpret the findings in the context of muscle spindle function, \
+potentially uncovering molecular features that contribute to muscle \
+sensitivity and reflex control.\\r\\n\\r\\nImpact and Relevance\\r\\nThe \
+insights gained from this project will enhance our understanding of the \
+cellular architecture of muscle spindles, providing a foundation for future \
+studies on muscle function, neuromuscular diseases, and rehabilitation \
+strategies. \\r\\n\"\>",
+      ImageSize->430,
+      ScrollPosition->{0., 0.}]},
+    {
+     PaneBox["\<\"Predicting Length of Stay at Hospital using Natural \
+Language Processing\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"Developing models that predict the length of stay of \
+patients in hospital is crucial for optimising resource allocation, reducing \
+healthcare costs, and improving patient flow. Accurate predictions enable \
+hospitals to better manage bed availability, staffing, and treatment plans, \
+ultimately enhancing the efficiency and quality of patient care.\\r\\nIn this \
+project we will apply a Natural Language Processing (NLP) approach to predict \
+the length of stay in hospital of patients. We will use the publicly \
+available MIMIC-III dataset, which comprises deidentified health-related data \
+associated with over forty thousand patients admitted to the Beth Israel \
+Deaconess Medical Center (Boston, USA) between 2001 and 2012.\\r\\nThe \
+project aims at generating a summary text report from the existing tabular \
+data for each patient. These summaries will then be converted into numerical \
+representations (embeddings) using a language model such as BioBERT. Finally, \
+these embeddings will be input into a neural network model trained to predict \
+each patient\[AHat]\.80\.99s expected length of hospital stay.\\r\\nThe main \
+objectives of the project are:\\r\\n\[AHat]\.80\[Cent]\\tTo evaluate the \
+effectiveness of Large Language Models (LLMs) in generating text from tabular \
+data, compared to deterministic template-based methods.\\r\\n\[AHat]\.80\
+\[Cent]\\tTo analyse the influence of various demographic and clinical \
+variables on length-of-stay predictions.\\r\\n\[AHat]\.80\[Cent]\\tTo compare \
+the performance of this integrated NLP approach with a more traditional \
+random forest model.\\r\\nReferences:\\r\\nJohnson, A., Pollard, T., & Mark, \
+R. (2016). MIMIC-III Clinical Database (version 1.4). PhysioNet. \
+https://doi.org/10.13026/C2XW26.\\r\\nJinhyuk Lee, Wonjin Yoon, Sungdong Kim, \
+Donghyeon Kim, Sunkyu Kim, Chan Ho So, Jaewoo Kang, BioBERT: a pre-trained \
+biomedical language representation model for biomedical text mining, \
+Bioinformatics, Volume 36, Issue 4, February 2020, Pages \
+1234\[AHat]\.80\.931240, \
+https://doi.org/10.1093/bioinformatics/btz682\\r\\n\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Smart Home Sensing, Time-Series Analytics, and a Digital \
+Twin for Indoor Climate & Energy\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"The student will design and deploy a small-scale smart-home \
+sensing platform (Arduino/ESP32-based) and build an end-to-end data pipeline \
+to ingest, store, visualise, and analyse multi-sensor time series. The core \
+aim is to turn raw sensor readings into actionable inferences (state \
+estimation, prediction, anomaly detection) \
+and\[AHat]\.80\.94optionally\[AHat]\.80\.94into a digital twin of a \
+room/house subsystem (e.g., indoor thermal dynamics), calibrated from the \
+collected data.\\r\\n\\r\\nCore tasks\\r\\nSensing layer: build 1\[AHat]\.80\
+\.93N sensor nodes (e.g., temperature/humidity, light; optional: \
+CO\[AHat]\.82\.82 proxy / air quality, motion/occupancy proxy) with \
+timestamped telemetry.\\r\\n\\r\\nData engineering: stream data to a central \
+machine (laptop/mini-PC) via a message broker/protocol, store in a \
+time-series database, and produce dashboards for live \
+monitoring.\\r\\n\\r\\nData science layer: develop and evaluate items \
+like:\\r\\nshort-horizon forecasting (temperature/humidity),\\r\\nanomaly \
+detection (sensor drift, \[AHat]\.80\.9cwindow open\[AHat]\.80\.9d events, \
+abnormal heating behaviour),\\r\\noccupancy inference (privacy-preserving \
+proxies),\\r\\nmissing-data robustness and sensor fusion.\\r\\n\\r\\nDigital \
+twin extension (recommended): construct a simple physics-based model (e.g., \
+RC thermal network), calibrate parameters from data, and use it for \
+prediction and/or control-oriented what-if simulation.\\r\\n\\r\\nEvaluation \
+/ success criteria\\r\\nQuantitative metrics (forecast error, detection \
+delay/false alarm rates, calibration error, energy/comfort trade-offs if \
+control is attempted).\\r\\nReproducible pipeline (documented deployment, \
+scripts/containers, logged experiments).\\r\\nClear failure-mode analysis \
+(when/why the models break).\\r\\n\\r\\nDeliverables\\r\\nWorking sensor \
+node(s) + data pipeline, a curated dataset, dashboards, and a well-documented \
+GitHub repository.\"\>",
+      ImageSize->430]},
+    {
+     PaneBox["\<\"Optical Microphone (Laser Mic): Recover Spoken \
+Language/Music from a Photodiode Signal via DSP and System Identification\"\>",
+      ImageSize->120], 
+     PaneBox["\<\"The student will build a controlled \[AHat]\.80\.9claser \
+microphone\[AHat]\.80\.9d style experiment and develop signal processing \
+methods to recover spoken language or music from an optically measured \
+signal. The experimental setup is intentionally benign and reproducible: \
+build a small box with a plexiglas window, place a phone playing music (or \
+speech) inside, and record the optical receiver output while the measurement \
+system (laser + photodiode/receiver) is located at a distance. The main \
+scientific objective is to reconstruct intelligible audio on a computer by \
+modelling and inverting the measurement chain, then applying modern \
+denoising/enhancement techniques.\\r\\n\\r\\nCore tasks\\r\\nExperimental \
+design: build the plexiglas-window enclosure and create repeatable \
+measurement protocols (distance, angle, surfaces, ambient light \
+conditions).\\r\\n\\r\\nData acquisition: collect paired recordings \
+(reference audio from the phone track and the measured optical/receiver \
+signal) to enable objective evaluation.\\r\\n\\r\\nSignal processing (minimum \
+expected):\\r\\npreprocessing (DC drift removal, filtering, \
+normalisation),\\r\\ndemodulation / reconstruction (envelope/Hilbert \
+approaches as appropriate),\\r\\ndenoising and enhancement (e.g., \
+Wiener/spectral subtraction; optional learned denoiser on CPU),\\r\\nsystem \
+identification (estimate an effective transfer function from optical signal \
+\[AHat]\.86\.92 audio).\\r\\nEvaluation: compare reconstruction pipelines \
+using objective measures (SNR improvement, spectral distortion metrics; \
+intelligibility-focused metrics where feasible) and structured listening \
+tests.\\r\\n\\r\\nEthical boundary\\r\\nThe work must be done only on \
+self-generated signals in a controlled setup (music/speech from the student\
+\[AHat]\.80\.99s own phone in the box), explicitly avoiding any covert or \
+non-consensual recording.\\r\\n\\r\\nDeliverables\\r\\nHardware setup \
+documentation (photos/diagrams, bill of materials, calibration procedure).\\r\
+\\nDataset (raw measurements + reference audio) and a reproducible \
+reconstruction pipeline.\"\>",
+      ImageSize->430]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{1}}, "Rows" -> {{1}}}],
+  "Grid"]], "Print",
+ CellChangeTimes->{3.9753637434281597`*^9, 3.9753638364193497`*^9, 
+  3.9761136237720394`*^9, 3.976113900056816*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"32cc6d50-adb8-e141-a010-71a53fc2354b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"formattedAll", "[", 
+  RowBox[{"[", "1", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.976113906529421*^9, 3.9761139090268135`*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"85401a4c-daff-3047-bcae-38ad801b3bd7"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   PaneBox["\<\"The Science behind Football\"\>",
+    ImageSize->100], ",", 
+   PaneBox["\<\"Murilo Baptista & Nicolas Rubido \"\>",
+    ImageSize->80], ",", 
+   PaneBox["\<\"murilo.baptista@abdn.ac.uk\"\>",
+    ImageSize->100], ",", 
+   PaneBox["\<\"In recent years, football analysis has seen rapid growth and \
+has greatly impacted the evaluation of football performance \
+[1]\[AHat]\.80\.93[5]. Several clubs are using the insights from the analysis \
+of data of played games to improve on their performance in future matches. \
+Football is a team sport, and the game has 2 teams, with players trying to \
+score a goal.  To analyse a match, it is important to understand the dynamics \
+of passes, the positioning and the movement of not only the individual \
+players but also the whole team. The interest is to find the emergency of \
+patterns in the collective dynamics of players that lead to goals. \
+\\r\\n\\r\\nIn this master project, we will be analysing tracking data \
+provided by the company Statsbomb [6], spanning several decades of tracking \
+data for matches happening in several competitions around the world. The \
+interest will be to construct a network representation of a team, based on \
+the way footballers pass the ball. The players and their average position are \
+the nodes of the network, and the amount of passes one player does to another \
+in the duration of a game representing how well connected a player is with \
+another will be the links of the network.  We hope to find network structures \
+that enhances defensive performance, or those that favours wins. We will also \
+do exploratory, and time-series based analysis of the matches, for example, \
+understanding the properties of the time-series constructed from observing a \
+player or a group of players moving in the pitch during the match. The \
+analysis will firstly be focussed on an individual game (which contains \
+already a very large amount of data), but could also be developed in more \
+than 1 game for example when the interest is to compare the playing styles of \
+the different schools of football happening in different continents and \
+competitions. \\r\\n\\r\\n1. D. Bargiotas, An Analysis of FC Barcelona \
+Through Passing Networks and Event Data Analysis, Master Thesis, University \
+of Aberdeen (2021).\\r\\n2. J. M. Buld\[CapitalATilde]\.ba et al., Defining a \
+Historic Football Team: Using Network Science to Analyze Guardiola\[AHat]\.80\
+\.99s F.C. Barcelona. 9, 13602 (2019). \\r\\n3. S. Caicedo-Parada S, et al. \
+Passing Networks and Tactical Action in Football: A Systematic Review. Int J \
+Environ Res Public Heal 17, 6649 (2020).\\r\\n4. What difference can data \
+make to a football team? - Exasol \
+https://www.exasol.com/what-difference-can-data-make-for-a-football-team/\\r\\\
+n5. \[CapitalATilde]\.81. Novillo. et al, A multilayer network framework for \
+soccer analysis, Chaos, Solitons & Fractals, 178, 114355 (2024).\\r\\n6. \
+https://github.com/statsbomb/open-data/tree/master\\r\\n\\r\\n\"\>",
+    ImageSize->180,
+    ScrollPosition->{0., 0.}], ",", 
+   PaneBox["\<\"no comments \"\>",
+    ImageSize->90]}], "}"}]], "Output",
+ CellChangeTimes->{3.9761139092970905`*^9},
+ CellLabel->"Out[28]=",ExpressionUUID->"cce0dcae-6fea-3849-9756-d8539b73476f"]
+}, Open  ]]
+},
+WindowSize->{1140, 567.6},
+WindowMargins->{{0.6, Automatic}, {Automatic, 0.6}},
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"3d8c9dd0-edf7-5e48-89bc-69618ae87b2a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 7326, 199, 503, "Input",ExpressionUUID->"b1ab9d44-b8d2-5147-94d2-41c3062ed101"],
+Cell[CellGroupData[{
+Cell[7927, 225, 331, 7, 38, "Print",ExpressionUUID->"ff0c6bd6-5367-0b47-a77f-520349aefc27"],
+Cell[8261, 234, 40044, 636, 30061, "Print",ExpressionUUID->"2da01e7c-f6b1-eb4a-892c-e4733dc897f2"],
+Cell[48308, 872, 335, 7, 75, "Print",ExpressionUUID->"fab7ed42-b178-c444-b8ed-2e736b1cb138"],
+Cell[48646, 881, 37026, 548, 15975, "Print",ExpressionUUID->"32cc6d50-adb8-e141-a010-71a53fc2354b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[85721, 1435, 235, 4, 28, "Input",ExpressionUUID->"85401a4c-daff-3047-bcae-38ad801b3bd7"],
+Cell[85959, 1441, 3318, 51, 2620, "Output",ExpressionUUID->"cce0dcae-6fea-3849-9756-d8539b73476f"]
+}, Open  ]]
+}
+]
+*)
+

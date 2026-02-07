@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORIGIN API - Distributor Integration Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            display: flex;
+        }
+        
+        /* Sidebar TOC */
+        #sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #2c3e50;
+            color: #ecf0f1;
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 1000;
+        }
+        
+        #sidebar h2 {
+            padding: 0 20px 15px;
+            font-size: 18px;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 15px;
+        }
+        
+        #sidebar ul {
+            list-style: none;
+        }
+        
+        #sidebar ul li {
+            margin: 0;
+        }
+        
+        #sidebar a {
+            display: block;
+            padding: 8px 20px;
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        #sidebar a:hover {
+            background: #34495e;
+            color: #fff;
+            border-left-color: #3498db;
+        }
+        
+        #sidebar a.active {
+            background: #34495e;
+            color: #fff;
+            border-left-color: #3498db;
+        }
+        
+        /* Main content */
+        #content {
+            margin-left: 280px;
+            flex: 1;
+            background: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .meta {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+        
+        h3 {
+            font-size: 22px;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            font-size: 18px;
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #34495e;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .endpoint {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .method.get { background: #28a745; color: #fff; }
+        .method.post { background: #007bff; color: #fff; }
+        .method.put { background: #ffc107; color: #000; }
+        .method.delete { background: #dc3545; color: #fff; }
+        
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .test-vector {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .test-vector h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overview">1. Overview</a></li>
+            <li><a href="#authentication">2. Authentication Model</a></li>
+            <li><a href="#hmac-spec">3. HMAC Request Signing</a></li>
+            <li><a href="#replay-protection">4. Replay Protection</a></li>
+            <li><a href="#test-vectors">5. Test Vectors</a></li>
+            <li><a href="#code-examples">6. Code Examples</a></li>
+            <li><a href="#postman">7. Postman Support</a></li>
+            <li><a href="#rate-limits">8. Rate Limits</a></li>
+            <li><a href="#idempotency">9. Idempotency</a></li>
+            <li><a href="#key-management">10. Key Management</a></li>
+            <li><a href="#error-handling">11. Error Handling</a></li>
+            <li><a href="#endpoints">12. Endpoint Reference</a></li>
+        </ul>
+    </div>
+    
+    <div id="content">
+        <div class="container">
+            <h1>ORIGIN API - Distributor Integration Guide</h1>
+            <div class="meta">
+                <strong>Version:</strong> 1.0.0 | <strong>Last Updated:</strong> 2026-02-03 | <strong>API Base URL:</strong> https://origin-api-nejzss3lfq-uc.a.run.app
+            </div>
+            
+            <div class="info">
+                <strong>Quick Start:</strong> This guide provides everything you need to integrate with the ORIGIN API. Start with <a href="#authentication">Authentication</a> and <a href="#test-vectors">Test Vectors</a> to verify your implementation, then proceed to <a href="#code-examples">Code Examples</a> for your language.
+            </div>
+            
+            <h2 id="overview">1. Overview</h2>
+            
+            <h3>What is ORIGIN API?</h3>
+            <p>The ORIGIN API is an enterprise-grade Upload Governance System designed for music distributors and other UGC (User-Generated Content) platforms. It provides real-time content risk assessment and decision-making at ingest time.</p>
+            
+            <h3>Use Case for Distributors</h3>
+            <p>As a distributor, you integrate ORIGIN into your upload pipeline to:</p>
+            <ul>
+                <li>Receive binding decisions (ALLOW, REVIEW, QUARANTINE, REJECT) for each upload</li>
+                <li>Get ML-driven risk signals and policy-based reasoning</li>
+                <li>Obtain tamper-evident Decision Certificates with Evidence Packs for audit trails</li>
+                <li>Ensure compliance and content safety before distribution</li>
+            </ul>
+            
+            <h3>Integration Flow</h3>
+            <ol>
+                <li><strong>Onboarding:</strong> ORIGIN provides you with API credentials (API Key + Secret)</li>
+                <li><strong>Integration:</strong> Implement HMAC request signing in your upload pipeline</li>
+                <li><strong>Submission:</strong> For each upload, call <code>POST /v1/ingest</code> with content metadata</li>
+                <li><strong>Decision:</strong> Receive immediate decision with risk scores and reasoning</li>
+                <li><strong>Evidence:</strong> Optionally request Evidence Packs for audit/compliance needs</li>
+            </ol>
+            
+            <div class="warning">
+                <strong>Server-to-Server Only:</strong> This API is designed for server-to-server integration. API keys and secrets must NEVER be exposed in browser/client-side code. All requests must use HTTPS (TLS 1.2+).
+            </div>
+            
+            <h2 id="authentication">2. Authentication Model</h2>
+            
+            <h3>API Key Format</h3>
+            <p>Your API key has the format:</p>
+            <pre><code>org_&lt;env&gt;_&lt;public_id&gt;.&lt;secret&gt;</code></pre>
+            <p>Example:</p>
+            <pre><code>org_prod_AbCdEf123456.XyZ789SecretKeyBase64Encoded</code></pre>
+            
+            <h3>Key Components</h3>
+            <ul>
+                <li><strong>API Key (Identifier):</strong> The full string including the secret part. This is sent in the <code>x-api-key</code> header.</li>
+                <li><strong>API Secret (Signing Secret):</strong> The part after the dot (<code>.</code>). This is used for HMAC signing and must NEVER be sent in requests or logged.</li>
+            </ul>
+            
+            <div class="error">
+                <strong>Security Warning:</strong> The secret portion of your API key is used to sign requests. Treat it as a password:
+                <ul>
+                    <li>Store in secure vaults (AWS Secrets Manager, Azure Key Vault, HashiCorp Vault, etc.)</li>
+                    <li>Never commit to version control</li>
+                    <li>Never log in plain text</li>
+                    <li>Never expose in browser/client code</li>
+                    <li>Rotate immediately if compromised</li>
+                </ul>
+            </div>
+            
+            <h3>Required Headers</h3>
+            <p>Every authenticated request must include these headers:</p>
+            <table>
+                <tr>
+                    <th>Header</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>x-api-key</code></td>
+                    <td>Your full API key (identifier + secret)</td>
+                    <td><code>org_prod_AbCdEf123456.XyZ789SecretKey</code></td>
+                </tr>
+                <tr>
+                    <td><code>x-timestamp</code></td>
+                    <td>Unix timestamp in seconds (UTC)</td>
+                    <td><code>1704326400</code></td>
+                </tr>
+                <tr>
+                    <td><code>x-nonce</code></td>
+                    <td>Unique random string (UUIDv4 recommended)</td>
+                    <td><code>550e8400-e29b-41d4-a716-446655440000</code></td>
+                </tr>
+                <tr>
+                    <td><code>x-signature</code></td>
+                    <td>HMAC-SHA256 signature (base64-encoded)</td>
+                    <td><code>dGhpcyBpcyBhIHNpZ25hdHVyZQ==</code></td>
+                </tr>
+            </table>
+            
+            <h3>TLS Requirement</h3>
+            <p>All API requests MUST use HTTPS (TLS 1.2 or higher). The API will reject HTTP requests. Ensure your HTTP client verifies SSL certificates.</p>
+            
+            <h2 id="hmac-spec">3. HMAC Request Signing Spec (V1)</h2>
+            
+            <h3>Step 1: Extract the Secret</h3>
+            <p>From your API key <code>org_prod_AbCdEf123456.XyZ789SecretKey</code>, extract the secret (everything after the last dot):</p>
+            <pre><code>secret = "XyZ789SecretKey"</code></pre>
+            
+            <h3>Step 2: Compute Request Body Hash</h3>
+            <p>Compute SHA256 hash of the raw request body (as bytes, before JSON encoding if applicable):</p>
+            <pre><code>body_hash = SHA256(body_bytes).hexdigest()</code></pre>
+            <p>For empty bodies (GET requests), use an empty byte string:</p>
+            <pre><code>body_hash = SHA256(b"").hexdigest()
+// Result: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"</code></pre>
+            
+            <h3>Step 3: Build Canonical String</h3>
+            <p>Create a canonical string using pipe (<code>|</code>) as delimiter:</p>
+            <pre><code>canonical_string = method + "|" + path + "|" + body_hash + "|" + timestamp + "|" + nonce</code></pre>
+            <p><strong>Important:</strong></p>
+            <ul>
+                <li><code>method</code>: Uppercase HTTP method (GET, POST, PUT, DELETE)</li>
+                <li><code>path</code>: Request path including query string if present (e.g., <code>/v1/ingest?foo=bar</code>)</li>
+                <li><code>body_hash</code>: Lowercase hex string from Step 2</li>
+                <li><code>timestamp</code>: Unix timestamp as string (e.g., <code>"1704326400"</code>)</li>
+                <li><code>nonce</code>: Unique nonce string</li>
+            </ul>
+            
+            <h3>Step 4: Compute HMAC-SHA256 Signature</h3>
+            <p>Compute HMAC-SHA256 using the secret and canonical string:</p>
+            <pre><code>signature_bytes = HMAC-SHA256(secret, canonical_string)
+signature = base64_encode(signature_bytes)</code></pre>
+            
+            <h3>Step 5: Include Headers in Request</h3>
+            <p>Add all required headers to your HTTP request:</p>
+            <pre><code>Headers:
+  x-api-key: org_prod_AbCdEf123456.XyZ789SecretKey
+  x-timestamp: 1704326400
+  x-nonce: 550e8400-e29b-41d4-a716-446655440000
+  x-signature: dGhpcyBpcyBhIHNpZ25hdHVyZQ==
+  Content-Type: application/json</code></pre>
+            
+            <h2 id="replay-protection">4. Replay Protection Requirements</h2>
+            
+            <h3>Timestamp Window</h3>
+            <p>The API accepts timestamps within <strong>±300 seconds (5 minutes)</strong> of the server's current time.</p>
+            <ul>
+                <li>If timestamp is too old (>5 minutes in past): Request rejected with <code>401 Unauthorized</code></li>
+                <li>If timestamp is too far in future (>5 minutes): Request rejected with <code>401 Unauthorized</code></li>
+                <li>Ensure your server clock is synchronized (use NTP)</li>
+            </ul>
+            
+            <h3>Nonce Uniqueness</h3>
+            <p>Each nonce must be unique within the timestamp window (10 minutes). The API tracks nonces to prevent replay attacks:</p>
+            <ul>
+                <li>If a nonce is reused within the window: Request rejected with <code>401 Unauthorized</code> ("Nonce already used")</li>
+                <li><strong>Recommendation:</strong> Use UUIDv4 for nonces to ensure uniqueness</li>
+                <li>Nonces are tracked for 10 minutes (600 seconds) after first use</li>
+            </ul>
+            
+            <h3>Client Guidance</h3>
+            <ul>
+                <li><strong>Nonce Generation:</strong> Use cryptographically secure random generators (UUIDv4, SecureRandom, etc.)</li>
+                <li><strong>Retries:</strong> Generate a new nonce for each retry attempt</li>
+                <li><strong>Clock Sync:</strong> Ensure system clock is synchronized via NTP</li>
+                <li><strong>Timestamp:</strong> Use current Unix timestamp (seconds since epoch, UTC)</li>
+            </ul>
+            
+            <h2 id="test-vectors">5. Test Vectors (Mandatory)</h2>
+            
+            <p>Use these test vectors to verify your HMAC implementation. All values are fixed and the expected signatures are computed correctly.</p>
+            
+            <div class="test-vector">
+                <h4>Test Vector 1: POST /v1/ingest</h4>
+                <table>
+                    <tr><td><strong>Method</strong></td><td>POST</td></tr>
+                    <tr><td><strong>Path</strong></td><td>/v1/ingest</td></tr>
+                    <tr><td><strong>Timestamp</strong></td><td>1704326400</td></tr>
+                    <tr><td><strong>Nonce</strong></td><td>abc123xyz</td></tr>
+                    <tr><td><strong>Secret</strong></td><td>test_secret_key_12345</td></tr>
+                    <tr><td><strong>Raw Body</strong></td><td><code>{"account_external_id":"test-001","upload_external_id":"upload-001"}</code></td></tr>
+                    <tr><td><strong>Expected Body Hash</strong></td><td><code>752b1a9129437acbf1d7a37109a959cc2d4d7de7738a7a055b1fd7fa3add42d1</code></td></tr>
+                    <tr><td><strong>Canonical String</strong></td><td><code>POST|/v1/ingest|752b1a9129437acbf1d7a37109a959cc2d4d7de7738a7a055b1fd7fa3add42d1|1704326400|abc123xyz</code></td></tr>
+                    <tr><td><strong>Expected Signature</strong></td><td><code>kgOs2CK6EroCvrVNCHEBXA3vQYh7LWHpi5m7Ys5thQw=</code></td></tr>
+                </table>
+            </div>
+            
+            <div class="test-vector">
+                <h4>Test Vector 2: GET /health</h4>
+                <table>
+                    <tr><td><strong>Method</strong></td><td>GET</td></tr>
+                    <tr><td><strong>Path</strong></td><td>/health</td></tr>
+                    <tr><td><strong>Timestamp</strong></td><td>1704326400</td></tr>
+                    <tr><td><strong>Nonce</strong></td><td>def456uvw</td></tr>
+                    <tr><td><strong>Secret</strong></td><td>test_secret_key_12345</td></tr>
+                    <tr><td><strong>Raw Body</strong></td><td><em>(empty)</em></td></tr>
+                    <tr><td><strong>Expected Body Hash</strong></td><td><code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code></td></tr>
+                    <tr><td><strong>Canonical String</strong></td><td><code>GET|/health|e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|1704326400|def456uvw</code></td></tr>
+                    <tr><td><strong>Expected Signature</strong></td><td><code>PKVJkOyd/jLTH2Qd70Vlh/kIm+OmhrtS6UiGImQx5Uc=</code></td></tr>
+                </table>
+            </div>
+            
+            <div class="info">
+                <strong>Verification:</strong> Compute the signature using your implementation and compare with the expected values above. If they match, your HMAC implementation is correct.
+            </div>
+            
+            <h2 id="code-examples">6. Code Examples (Copy-Paste Ready)</h2>
+            
+            <h3>Node.js / TypeScript</h3>
+            <pre><code>import crypto from 'crypto';
+import https from 'https';
+
+interface HMACConfig {
+  apiKey: string;
+  secret: string;
+  baseUrl: string;
+}
+
+function computeSignature(
+  method: string,
+  path: string,
+  body: string,
+  timestamp: string,
+  nonce: string,
+  secret: string
+): string {
+  // Step 1: Compute body hash
+  const bodyHash = crypto.createHash('sha256')
+    .update(body)
+    .digest('hex');
+  
+  // Step 2: Build canonical string
+  const canonical = `${method}|${path}|${bodyHash}|${timestamp}|${nonce}`;
+  
+  // Step 3: Compute HMAC-SHA256
+  const signature = crypto.createHmac('sha256', secret)
+    .update(canonical)
+    .digest('base64');
+  
+  return signature;
+}
+
+function makeRequest(config: HMACConfig, method: string, path: string, body?: any): Promise&lt;any&gt; {
+  return new Promise((resolve, reject) => {
+    const bodyStr = body ? JSON.stringify(body) : '';
+    const timestamp = Math.floor(Date.now() / 1000).toString();
+    const nonce = crypto.randomUUID();
+    
+    const signature = computeSignature(
+      method,
+      path,
+      bodyStr,
+      timestamp,
+      nonce,
+      config.secret
+    );
+    
+    const url = new URL(path, config.baseUrl);
+    const options = {
+      hostname: url.hostname,
+      path: url.pathname + url.search,
+      method: method,
+      headers: {
+        'x-api-key': config.apiKey,
+        'x-timestamp': timestamp,
+        'x-nonce': nonce,
+        'x-signature': signature,
+        'Content-Type': 'application/json'
+      }
+    };
+    
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(JSON.parse(data));
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${data}`));
+        }
+      });
+    });
+    
+    req.on('error', reject);
+    if (bodyStr) {
+      req.write(bodyStr);
+    }
+    req.end();
+  });
+}
+
+// Usage
+const config = {
+  apiKey: 'org_prod_AbCdEf123456.XyZ789SecretKey',
+  secret: 'XyZ789SecretKey', // Extract from API key
+  baseUrl: 'https://origin-api-nejzss3lfq-uc.a.run.app'
+};
+
+// Test with health endpoint
+makeRequest(config, 'GET', '/health')
+  .then(result => console.log('Health:', result))
+  .catch(err => console.error('Error:', err));
+
+// Ingest request
+makeRequest(config, 'POST', '/v1/ingest', {
+  account_external_id: 'user-001',
+  upload_external_id: 'upload-001',
+  account_type: 'user',
+  content_ref: 'https://example.com/content.mp3'
+})
+  .then(result => console.log('Ingest result:', result))
+  .catch(err => console.error('Error:', err));</code></pre>
+            
+            <h3>Python</h3>
+            <pre><code>import base64
+import hashlib
+import hmac
+import json
+import secrets
+import time
+import urllib.request
+import urllib.parse
+
+class OriginClient:
+    def __init__(self, api_key: str, base_url: str):
+        self.api_key = api_key
+        self.base_url = base_url.rstrip('/')
+        # Extract secret (everything after last dot)
+        self.secret = api_key.rsplit('.', 1)[1]
+    
+    def _compute_signature(self, method: str, path: str, body: bytes, 
+                          timestamp: str, nonce: str) -> str:
+        # Step 1: Compute body hash
+        body_hash = hashlib.sha256(body).hexdigest()
+        
+        # Step 2: Build canonical string
+        canonical = f"{method}|{path}|{body_hash}|{timestamp}|{nonce}"
+        
+        # Step 3: Compute HMAC-SHA256
+        signature_bytes = hmac.new(
+            self.secret.encode('utf-8'),
+            canonical.encode('utf-8'),
+            hashlib.sha256
+        ).digest()
+        
+        # Step 4: Base64 encode
+        return base64.b64encode(signature_bytes).decode('utf-8')
+    
+    def _make_request(self, method: str, path: str, body: dict = None) -> dict:
+        # Prepare body
+        body_bytes = json.dumps(body, sort_keys=True).encode('utf-8') if body else b''
+        
+        # Generate timestamp and nonce
+        timestamp = str(int(time.time()))
+        nonce = secrets.token_urlsafe(16)
+        
+        # Compute signature
+        signature = self._compute_signature(method, path, body_bytes, timestamp, nonce)
+        
+        # Build URL
+        url = f"{self.base_url}{path}"
+        
+        # Create request
+        req = urllib.request.Request(url, data=body_bytes, method=method)
+        req.add_header('x-api-key', self.api_key)
+        req.add_header('x-timestamp', timestamp)
+        req.add_header('x-nonce', nonce)
+        req.add_header('x-signature', signature)
+        req.add_header('Content-Type', 'application/json')
+        
+        # Make request
+        try:
+            with urllib.request.urlopen(req) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            error_body = e.read().decode('utf-8')
+            raise Exception(f"HTTP {e.code}: {error_body}")
+
+# Usage
+client = OriginClient(
+    api_key='org_prod_AbCdEf123456.XyZ789SecretKey',
+    base_url='https://origin-api-nejzss3lfq-uc.a.run.app'
+)
+
+# Test with health endpoint
+health = client._make_request('GET', '/health')
+print('Health:', health)
+
+# Ingest request
+result = client._make_request('POST', '/v1/ingest', {
+    'account_external_id': 'user-001',
+    'upload_external_id': 'upload-001',
+    'account_type': 'user',
+    'content_ref': 'https://example.com/content.mp3'
+})
+print('Ingest result:', result)</code></pre>
+            
+            <h3>Java</h3>
+            <pre><code>import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.time.Instant;
+import java.util.Base64;
+import java.util.UUID;
+import com.google.gson.Gson;
+
+public class OriginClient {
+    private final String apiKey;
+    private final String secret;
+    private final String baseUrl;
+    private final HttpClient httpClient;
+    private final Gson gson;
+    
+    public OriginClient(String apiKey, String baseUrl) {
+        this.apiKey = apiKey;
+        this.secret = apiKey.substring(apiKey.lastIndexOf('.') + 1);
+        this.baseUrl = baseUrl.replaceAll("/$", "");
+        this.httpClient = HttpClient.newHttpClient();
+        this.gson = new Gson();
+    }
+    
+    private String computeSignature(String method, String path, byte[] body,
+                                   String timestamp, String nonce) throws Exception {
+        // Step 1: Compute body hash
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = digest.digest(body);
+        String bodyHash = bytesToHex(hashBytes);
+        
+        // Step 2: Build canonical string
+        String canonical = method + "|" + path + "|" + bodyHash + "|" + timestamp + "|" + nonce;
+        
+        // Step 3: Compute HMAC-SHA256
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKey);
+        byte[] signatureBytes = mac.doFinal(canonical.getBytes(StandardCharsets.UTF_8));
+        
+        // Step 4: Base64 encode
+        return Base64.getEncoder().encodeToString(signatureBytes);
+    }
+    
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(String.format("%02x", b));
+        }
+        return result.toString();
+    }
+    
+    public String makeRequest(String method, String path, Object body) throws Exception {
+        // Prepare body
+        String bodyStr = body != null ? gson.toJson(body) : "";
+        byte[] bodyBytes = bodyStr.getBytes(StandardCharsets.UTF_8);
+        
+        // Generate timestamp and nonce
+        String timestamp = String.valueOf(Instant.now().getEpochSecond());
+        String nonce = UUID.randomUUID().toString();
+        
+        // Compute signature
+        String signature = computeSignature(method, path, bodyBytes, timestamp, nonce);
+        
+        // Build request
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+            .uri(URI.create(baseUrl + path))
+            .method(method, bodyBytes.length > 0 
+                ? HttpRequest.BodyPublishers.ofByteArray(bodyBytes)
+                : HttpRequest.BodyPublishers.noBody())
+            .header("x-api-key", apiKey)
+            .header("x-timestamp", timestamp)
+            .header("x-nonce", nonce)
+            .header("x-signature", signature)
+            .header("Content-Type", "application/json");
+        
+        // Make request
+        HttpResponse&lt;String&gt; response = httpClient.send(
+            requestBuilder.build(),
+            HttpResponse.BodyHandlers.ofString()
+        );
+        
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            return response.body();
+        } else {
+            throw new Exception("HTTP " + response.statusCode() + ": " + response.body());
+        }
+    }
+    
+    // Usage example
+    public static void main(String[] args) throws Exception {
+        OriginClient client = new OriginClient(
+            "org_prod_AbCdEf123456.XyZ789SecretKey",
+            "https://origin-api-nejzss3lfq-uc.a.run.app"
+        );
+        
+        // Health check
+        String health = client.makeRequest("GET", "/health", null);
+        System.out.println("Health: " + health);
+        
+        // Ingest request
+        Map&lt;String, Object&gt; ingestBody = new HashMap&lt;&gt;();
+        ingestBody.put("account_external_id", "user-001");
+        ingestBody.put("upload_external_id", "upload-001");
+        ingestBody.put("account_type", "user");
+        ingestBody.put("content_ref", "https://example.com/content.mp3");
+        
+        String result = client.makeRequest("POST", "/v1/ingest", ingestBody);
+        System.out.println("Ingest result: " + result);
+    }
+}</code></pre>
+            
+            <h3>C# (.NET)</h3>
+            <pre><code>using System;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+public class OriginClient
+{
+    private readonly string apiKey;
+    private readonly string secret;
+    private readonly string baseUrl;
+    private readonly HttpClient httpClient;
+    
+    public OriginClient(string apiKey, string baseUrl)
+    {
+        this.apiKey = apiKey;
+        this.secret = apiKey.Substring(apiKey.LastIndexOf('.') + 1);
+        this.baseUrl = baseUrl.TrimEnd('/');
+        this.httpClient = new HttpClient();
+    }
+    
+    private string ComputeSignature(string method, string path, byte[] body,
+                                   string timestamp, string nonce)
+    {
+        // Step 1: Compute body hash
+        using (var sha256 = SHA256.Create())
+        {
+            byte[] hashBytes = sha256.ComputeHash(body);
+            string bodyHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+            
+            // Step 2: Build canonical string
+            string canonical = $"{method}|{path}|{bodyHash}|{timestamp}|{nonce}";
+            
+            // Step 3: Compute HMAC-SHA256
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+            {
+                byte[] signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(canonical));
+                
+                // Step 4: Base64 encode
+                return Convert.ToBase64String(signatureBytes);
+            }
+        }
+    }
+    
+    public async Task&lt;string&gt; MakeRequestAsync(string method, string path, object body = null)
+    {
+        // Prepare body
+        string bodyStr = body != null ? JsonSerializer.Serialize(body) : "";
+        byte[] bodyBytes = Encoding.UTF8.GetBytes(bodyStr);
+        
+        // Generate timestamp and nonce
+        string timestamp = ((long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds).ToString();
+        string nonce = Guid.NewGuid().ToString();
+        
+        // Compute signature
+        string signature = ComputeSignature(method, path, bodyBytes, timestamp, nonce);
+        
+        // Build request
+        var request = new HttpRequestMessage(new HttpMethod(method), baseUrl + path);
+        request.Headers.Add("x-api-key", apiKey);
+        request.Headers.Add("x-timestamp", timestamp);
+        request.Headers.Add("x-nonce", nonce);
+        request.Headers.Add("x-signature", signature);
+        
+        if (bodyBytes.Length > 0)
+        {
+            request.Content = new ByteArrayContent(bodyBytes);
+            request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        }
+        
+        // Make request
+        var response = await httpClient.SendAsync(request);
+        string responseBody = await response.Content.ReadAsStringAsync();
+        
+        if (response.IsSuccessStatusCode)
+        {
+            return responseBody;
+        }
+        else
+        {
+            throw new Exception($"HTTP {(int)response.StatusCode}: {responseBody}");
+        }
+    }
+}
+
+// Usage
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        var client = new OriginClient(
+            "org_prod_AbCdEf123456.XyZ789SecretKey",
+            "https://origin-api-nejzss3lfq-uc.a.run.app"
+        );
+        
+        // Health check
+        string health = await client.MakeRequestAsync("GET", "/health");
+        Console.WriteLine($"Health: {health}");
+        
+        // Ingest request
+        var ingestBody = new
+        {
+            account_external_id = "user-001",
+            upload_external_id = "upload-001",
+            account_type = "user",
+            content_ref = "https://example.com/content.mp3"
+        };
+        
+        string result = await client.MakeRequestAsync("POST", "/v1/ingest", ingestBody);
+        Console.WriteLine($"Ingest result: {result}");
+    }
+}</code></pre>
+            
+            <h2 id="postman">7. Postman Support</h2>
+            
+            <p>Use this Pre-request Script in Postman to automatically sign requests:</p>
+            
+            <h3>Environment Variables</h3>
+            <p>Set these in your Postman environment:</p>
+            <ul>
+                <li><code>API_KEY</code>: Your full API key (e.g., <code>org_prod_AbCdEf123456.XyZ789SecretKey</code>)</li>
+                <li><code>API_SECRET</code>: The secret part (extracted from API key, everything after the dot)</li>
+                <li><code>BASE_URL</code>: <code>https://origin-api-nejzss3lfq-uc.a.run.app</code></li>
+            </ul>
+            
+            <h3>Pre-request Script</h3>
+            <pre><code>// Extract secret from API key if not set separately
+const apiKey = pm.environment.get("API_KEY");
+let secret = pm.environment.get("API_SECRET");
+
+if (!secret && apiKey) {
+    // Extract secret (everything after last dot)
+    const parts = apiKey.split('.');
+    if (parts.length > 1) {
+        secret = parts[parts.length - 1];
+    }
+}
+
+if (!secret) {
+    throw new Error("API_SECRET or API_KEY with secret required");
+}
+
+// Get request details
+const method = pm.request.method;
+const url = pm.request.url;
+const path = url.getPath() + (url.getQueryString() ? '?' + url.getQueryString() : '');
+
+// Get request body
+let bodyStr = '';
+if (pm.request.body && pm.request.body.raw) {
+    bodyStr = pm.request.body.raw;
+}
+
+// Compute body hash (SHA256)
+const bodyHash = CryptoJS.SHA256(bodyStr).toString();
+
+// Generate timestamp and nonce
+const timestamp = Math.floor(Date.now() / 1000).toString();
+const nonce = pm.variables.replaceIn('{{$randomUUID}}');
+
+// Build canonical string
+const canonical = `${method}|${path}|${bodyHash}|${timestamp}|${nonce}`;
+
+// Compute HMAC-SHA256 signature
+const signature = CryptoJS.HmacSHA256(canonical, secret).toString(CryptoJS.enc.Base64);
+
+// Set headers
+pm.request.headers.add({
+    key: 'x-api-key',
+    value: apiKey
+});
+pm.request.headers.add({
+    key: 'x-timestamp',
+    value: timestamp
+});
+pm.request.headers.add({
+    key: 'x-nonce',
+    value: nonce
+});
+pm.request.headers.add({
+    key: 'x-signature',
+    value: signature
+});
+
+// Log for debugging (remove in production)
+console.log('Canonical:', canonical);
+console.log('Signature:', signature);</code></pre>
+            
+            <div class="info">
+                <strong>Note:</strong> Postman uses CryptoJS library. The script above uses <code>CryptoJS.SHA256</code> and <code>CryptoJS.HmacSHA256</code> which are available in Postman's sandbox.
+            </div>
+            
+            <h2 id="rate-limits">8. Rate Limits & Abuse Controls</h2>
+            
+            <h3>Rate Limit Policy</h3>
+            <p>Rate limits are applied per tenant (API key) using a token bucket algorithm:</p>
+            <ul>
+                <li><strong>Default Limit:</strong> 1000 requests per minute per tenant</li>
+                <li><strong>Algorithm:</strong> Token bucket with automatic refill</li>
+                <li><strong>Scope:</strong> Per API key (tenant-level)</li>
+            </ul>
+            
+            <h3>Rate Limit Headers</h3>
+            <p>Every response includes rate limit information:</p>
+            <table>
+                <tr>
+                    <th>Header</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>X-RateLimit-Limit</code></td>
+                    <td>Maximum requests allowed per minute</td>
+                </tr>
+                <tr>
+                    <td><code>X-RateLimit-Remaining</code></td>
+                    <td>Remaining requests in current window</td>
+                </tr>
+                <tr>
+                    <td><code>X-RateLimit-Reset</code></td>
+                    <td>Unix timestamp when the limit resets</td>
+                </tr>
+            </table>
+            
+            <h3>Rate Limit Exceeded</h3>
+            <p>When rate limit is exceeded, you'll receive:</p>
+            <ul>
+                <li><strong>Status Code:</strong> <code>429 Too Many Requests</code></li>
+                <li><strong>Response Body:</strong> <code>{"detail": "Rate limit exceeded. Please try again later."}</code></li>
+                <li><strong>Retry-After Header:</strong> <code>60</code> (seconds to wait)</li>
+            </ul>
+            
+            <h3>Best Practices</h3>
+            <ul>
+                <li><strong>Exponential Backoff:</strong> When receiving 429, wait with exponential backoff (1s, 2s, 4s, 8s, etc.)</li>
+                <li><strong>Jitter:</strong> Add random jitter to avoid thundering herd</li>
+                <li><strong>Retry Logic:</strong> Implement retry logic with max attempts (e.g., 3-5 retries)</li>
+                <li><strong>Monitor Headers:</strong> Track <code>X-RateLimit-Remaining</code> to avoid hitting limits</li>
+            </ul>
+            
+            <h2 id="idempotency">9. Idempotency</h2>
+            
+            <h3>Supported Endpoints</h3>
+            <p>Idempotency is supported for <code>POST</code>, <code>PUT</code>, and <code>PATCH</code> requests.</p>
+            
+            <h3>How It Works</h3>
+            <p>Include the <code>idempotency-key</code> header in your request:</p>
+            <pre><code>idempotency-key: 550e8400-e29b-41d4-a716-446655440000</code></pre>
+            
+            <h3>Behavior</h3>
+            <ul>
+                <li><strong>First Request:</strong> Processed normally, response cached for 24 hours</li>
+                <li><strong>Duplicate Request:</strong> Returns cached response with <code>X-Idempotency-Replayed: true</code> header</li>
+                <li><strong>Cache Duration:</strong> 24 hours</li>
+                <li><strong>Scope:</strong> Per tenant (idempotency keys are tenant-scoped)</li>
+            </ul>
+            
+            <h3>Response Headers</h3>
+            <ul>
+                <li><code>X-Idempotency-Key</code>: Echoes your idempotency key</li>
+                <li><code>X-Idempotency-Replayed</code>: Set to <code>true</code> if response was replayed from cache</li>
+            </ul>
+            
+            <h3>Best Practices</h3>
+            <ul>
+                <li>Use UUIDv4 for idempotency keys</li>
+                <li>Generate idempotency key before making request</li>
+                <li>Store idempotency key with your request for retries</li>
+                <li>Use same idempotency key for retries of the same logical operation</li>
+            </ul>
+            
+            <h2 id="key-management">10. Key Management & Rotation</h2>
+            
+            <h3>Storage Guidance</h3>
+            <p>Store API keys securely:</p>
+            <ul>
+                <li><strong>Production:</strong> Use secrets management services (AWS Secrets Manager, Azure Key Vault, HashiCorp Vault, Google Secret Manager)</li>
+                <li><strong>Development:</strong> Use environment variables (never commit to version control)</li>
+                <li><strong>Never:</strong> Hardcode in source code, commit to Git, log in plain text, expose in client-side code</li>
+            </ul>
+            
+            <h3>Rotation Strategy</h3>
+            <p>ORIGIN supports key rotation:</p>
+            <ul>
+                <li><strong>Multiple Active Keys:</strong> You can have up to 2 active API keys per tenant during rotation</li>
+                <li><strong>Recommended Cadence:</strong> Rotate keys every 90 days or immediately if compromised</li>
+                <li><strong>Process:</strong>
+                    <ol>
+                        <li>Request new API key from ORIGIN</li>
+                        <li>Update your application to use new key</li>
+                        <li>Verify new key works</li>
+                        <li>Revoke old key</li>
+                    </ol>
+                </li>
+            </ul>
+            
+            <h3>If Key is Compromised</h3>
+            <ol>
+                <li><strong>Immediately:</strong> Contact ORIGIN support to revoke the compromised key</li>
+                <li><strong>Request:</strong> New API key</li>
+                <li><strong>Update:</strong> All systems using the compromised key</li>
+                <li><strong>Audit:</strong> Review logs for unauthorized access</li>
+            </ol>
+            
+            <h2 id="error-handling">11. Error Handling</h2>
+            
+            <h3>Common Authentication Errors</h3>
+            <table>
+                <tr>
+                    <th>Status Code</th>
+                    <th>Error Message</th>
+                    <th>Cause</th>
+                    <th>Resolution</th>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>"Missing API key. Provide x-api-key header."</td>
+                    <td>Missing x-api-key header</td>
+                    <td>Include x-api-key header in request</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>"Missing HMAC headers. Required: x-timestamp, x-nonce, x-signature"</td>
+                    <td>Missing one or more HMAC headers</td>
+                    <td>Include all required headers</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>"Invalid or revoked API key."</td>
+                    <td>API key not found or revoked</td>
+                    <td>Verify API key is correct and active</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>"Invalid HMAC signature or expired timestamp."</td>
+                    <td>Signature mismatch or timestamp outside window</td>
+                    <td>Verify signature computation and clock sync</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>"Nonce already used. Possible replay attack."</td>
+                    <td>Nonce reused within time window</td>
+                    <td>Generate new nonce for each request</td>
+                </tr>
+                <tr>
+                    <td>403</td>
+                    <td>"Tenant status is inactive."</td>
+                    <td>Tenant account disabled</td>
+                    <td>Contact ORIGIN support</td>
+                </tr>
+                <tr>
+                    <td>429</td>
+                    <td>"Rate limit exceeded. Please try again later."</td>
+                    <td>Too many requests</td>
+                    <td>Wait and retry with exponential backoff</td>
+                </tr>
+            </table>
+            
+            <h3>Error Response Format</h3>
+            <p>All errors return JSON in this format:</p>
+            <pre><code>{
+  "detail": "Error message describing what went wrong"
+}</code></pre>
+            
+            <h3>Example Error Responses</h3>
+            <pre><code>// 401 Unauthorized - Invalid signature
+{
+  "detail": "Invalid HMAC signature or expired timestamp."
+}
+
+// 401 Unauthorized - Missing headers
+{
+  "detail": "Missing HMAC headers. Required: x-timestamp, x-nonce, x-signature"
+}
+
+// 429 Too Many Requests
+{
+  "detail": "Rate limit exceeded. Please try again later."
+}</code></pre>
+            
+            <h2 id="endpoints">12. Endpoint Reference</h2>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /health</h3>
+                <p><strong>Description:</strong> Health check endpoint. No authentication required.</p>
+                <p><strong>Response:</strong></p>
+                <pre><code>{
+  "status": "healthy",
+  "service": "origin-api",
+  "version": "0.1.0"
+}</code></pre>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /v1/ingest</h3>
+                <p><strong>Description:</strong> Submit a content upload for risk assessment and decision.</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Request Body:</strong></p>
+                <pre><code>{
+  "account_external_id": "string (required)",
+  "upload_external_id": "string (required)",
+  "account_type": "string (default: 'user')",
+  "display_name": "string (optional)",
+  "content_ref": "string (optional)",
+  "metadata": {
+    "title": "string",
+    "genre": "string"
+  },
+  "fingerprints": {
+    "audio_hash": "string",
+    "perceptual_hash": "string"
+  },
+  "device_context": {
+    "device_hash": "string",
+    "ip": "string",
+    "user_agent": "string"
+  }
+}</code></pre>
+                <p><strong>Response (200 OK):</strong></p>
+                <pre><code>{
+  "ingestion_id": "uuid",
+  "decision": "ALLOW|REVIEW|QUARANTINE|REJECT",
+  "policy_version": "string",
+  "risk_score": 0.0-100.0,
+  "assurance_score": 0.0-100.0,
+  "certificate_id": "string",
+  "ledger_hash": "string",
+  "reasons": ["string"],
+  "reason_codes": ["string"],
+  "triggered_rules": ["string"],
+  "decision_rationale": "string",
+  "ml_signals": {
+    "risk_score": 0.0-100.0,
+    "assurance_score": 0.0-100.0,
+    "anomaly_score": 0.0-100.0,
+    "synthetic_likelihood": 0.0-100.0,
+    "primary_label": "string",
+    "class_probabilities": {
+      "ALLOW": 0.0-1.0,
+      "REVIEW": 0.0-1.0,
+      "QUARANTINE": 0.0-1.0,
+      "REJECT": 0.0-1.0
+    }
+  },
+  "evidence_pack_status": "pending",
+  "evidence_pack_request_url": "/v1/evidence-packs/{certificate_id}"
+}</code></pre>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /v1/evidence-packs</h3>
+                <p><strong>Description:</strong> Request generation of an evidence pack for a decision certificate.</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Request Body:</strong></p>
+                <pre><code>{
+  "certificate_id": "string (required)",
+  "format": "json|pdf|html (default: 'json')",
+  "audience": "INTERNAL|DSP|REGULATOR (optional, determined from scopes)"
+}</code></pre>
+                <p><strong>Response (202 Accepted - Pending):</strong></p>
+                <pre><code>{
+  "status": "pending",
+  "certificate_id": "string",
+  "task_id": "string",
+  "task_status": "PENDING",
+  "pipeline_event": "ENQUEUED",
+  "poll_url": "/v1/evidence-packs/{certificate_id}",
+  "retry_after_seconds": 30
+}</code></pre>
+                <p><strong>Response (200 OK - Ready):</strong></p>
+                <pre><code>{
+  "status": "ready",
+  "certificate_id": "string",
+  "signed_urls": {
+    "json": "https://...",
+    "pdf": "https://...",
+    "html": "https://..."
+  },
+  "download_urls": {
+    "json": "https://...",
+    "pdf": "https://...",
+    "html": "https://..."
+  },
+  "task_status": "SUCCESS",
+  "pipeline_event": "UPDATED_FROM_TASK_RESULT"
+}</code></pre>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /v1/evidence-packs/{certificate_id}</h3>
+                <p><strong>Description:</strong> Poll for evidence pack status and retrieve URLs when ready.</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Response:</strong> Same as POST /v1/evidence-packs (returns 202 if pending, 200 if ready)</p>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /v1/evidence-packs/{certificate_id}/download/{format}</h3>
+                <p><strong>Description:</strong> Direct download of evidence pack artifact (json, pdf, or html).</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Response:</strong> Binary file content with appropriate Content-Type header</p>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /v1/webhooks</h3>
+                <p><strong>Description:</strong> Register a webhook endpoint to receive event notifications.</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Request Body:</strong></p>
+                <pre><code>{
+  "url": "https://your-endpoint.com/webhook",
+  "secret": "webhook_secret_for_verification",
+  "events": ["decision.created", "decision.updated"]
+}</code></pre>
+                <p><strong>Response (201 Created):</strong></p>
+                <pre><code>{
+  "id": 1,
+  "url": "https://your-endpoint.com/webhook",
+  "events": ["decision.created", "decision.updated"],
+  "enabled": true
+}</code></pre>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /v1/webhooks/test</h3>
+                <p><strong>Description:</strong> Test webhook delivery (sends a test event to the webhook).</p>
+                <p><strong>Authentication:</strong> Required (HMAC)</p>
+                <p><strong>Query Parameters:</strong> <code>webhook_id</code> (integer, required)</p>
+                <p><strong>Response (200 OK):</strong> Test event sent successfully</p>
+            </div>
+            
+            <hr style="margin: 40px 0; border: none; border-top: 2px solid #ecf0f1;">
+            
+            <div class="info">
+                <p><strong>Support:</strong> For technical questions or issues, contact ORIGIN support at <a href="mailto:support@xynq.io">support@xynq.io</a></p>
+                <p><strong>Documentation Version:</strong> 1.0.0 | <strong>Last Updated:</strong> 2026-02-03</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple TOC highlighting
+        const sidebarLinks = document.querySelectorAll('#sidebar a');
+        const sections = document.querySelectorAll('h2[id], h3[id]');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
