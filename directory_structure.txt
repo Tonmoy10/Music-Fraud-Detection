@@ -1,0 +1,135 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 8A70-6925
+E:.
+|   .gitignore
+|   directory_structure.txt
+|   
++---Company Files
+|       distributor-integration-guide.html
+|       ORIGIN - Tag Specification_v1[96].docx
+|       origin_tag_spec[10].xlsx
+|       raw_metadata_samples.csv
+|       synthetic_dataset.csv
+|       
++---Data
+|   +---Final_Synthetic_Data
+|   |       gagan_ult_new.csv
+|   |       mark_ult_new.csv
+|   |       tonmoy_ult_new2.csv
+|   |       
+|   \---Historical_Datasets
+|           dataset_gpt_5000rows.csv
+|           dataset_gpt_5000_V2-2.csv
+|           dataset_gpt_5000_V2.1.csv
+|           dataset_gpt_5000_v2.csv
+|           dataset_gpt_5000_V3.csv
+|           dataset_gpt_5000_V4.csv
+|           dataset_gpt_5000_V5.csv
+|           raw_metadata_samples.csv
+|           synthetic_dataset.csv
+|           synthetic_data_copilot.csv
+|           synthetic_data_gem.csv
+|           synthetic_data_gpt.csv
+|           synthetic_data_gpt_v2.csv
+|           synthetic_data_gpt_v5_endgame.csv
+|           synthetic_music_fraud_data.pdf
+|           ultimate_dataset_gpt.csv
+|           ultimate_tonmoy_new.csv
+|           
++---Documents
+|       Basic Notes.docx
+|       Combined_Dataset_Report.docx
+|       Combined_Report.docx
+|       Dataset_Comparison.docx
+|       Data_Generation.docx
+|       Data_Generation_Summary.docx
+|       FinalProjectsMScDataScienceJan2026-share.nb
+|       Final_Project_Data.nb
+|       Final_Project_Data.pdf
+|       Fraud Hypothesis.docx
+|       Hypothesis Graph.nb
+|       Proposal and Hypothesis.docx
+|       
++---Results
+|   |   B&W_copilot.png
+|   |   B&W_gem.png
+|   |   B&W_gpt.png
+|   |   B&W_original.png
+|   |   Correlation_Heatmap_copilot.png
+|   |   Correlation_Heatmap_gem.png
+|   |   Correlation_Heatmap_gpt.png
+|   |   Correlation_Heatmap_original.png
+|   |   Fraudster_Detection_Pattern_gpt.png
+|   |   Fraud_Logic_Validation_copilot&gemini.png
+|   |   Fraud_Logic_Validation_gpt&claude.png
+|   |   model_benchmark_comparison.png
+|   |   Model_Comparison.png
+|   |   Model_Dist_Comparison.png
+|   |   Model_Dist_copilot.png
+|   |   Model_Dist_gem.png
+|   |   Model_Dist_gpt.png
+|   |   Model_Dist_original.png
+|   |   Stat_Table_copilot.png
+|   |   Stat_Table_gem.png
+|   |   Stat_Table_gpt.png
+|   |   Stat_Table_original.png
+|   |   
+|   +---Combined
+|   |       Combined_Dist.png
+|   |       Combined_F&L.png
+|   |       Combined_Heatmap.png
+|   |       Combined_stats_table.png
+|   |       Comb_Dist.png
+|   |       Com_F&L.png
+|   |       Com_Stats.png
+|   |       Com_Year&Type.png
+|   |       
+|   +---Gagan
+|   +---Mark
+|   |       First4_distribution.png
+|   |       First4_heatmap.png
+|   |       FvL_claude.png
+|   |       FvL_gemini.png
+|   |       FvL_gpt1.png
+|   |       FvL_gpt2.png
+|   |       
+|   \---Ultimate
+|           Data_Types.png
+|           Distribution_Bitrate_Duration.png
+|           Gagan_heatmap.png
+|           Mark_Heatmap.png
+|           new_distribution_bitrate.png
+|           new_plot_fraud_legit.png
+|           new_plot_time_formatpng.png
+|           new_stat_table.png
+|           Plot_Fraud_Legit.png
+|           Plot_Time_Format.png
+|           Stat_Table.png
+|           Tonmoy_Heatmap.png
+|           
+\---Scripts
+    +---Archive
+    |       analyze_distributions.py
+    |       benchmark_distributions.py
+    |       benchmark_ranking.py
+    |       data_visualization.py
+    |       find.py
+    |       generator_copilot.py
+    |       generator_gem.py
+    |       generator_gpt.py
+    |       generator_gpt_5000_V2.py
+    |       generator_gpt_5000_V3.py
+    |       generator_gpt_5000_V4.py
+    |       generator_gpt_v2.py
+    |       generator_ultimate_gpt.py
+    |       genrator_ultimate_gpt_v2.py
+    |       get_stats.py
+    |       inspect_dataset.py
+    |       orginal_dataset_visualization.py
+    |       validate_fraud_logic.py
+    |       
+    \---Codebase
+            Final_Data_Generator.py
+            mixed_correlation_plot.py
+            visualize_comparison.py
+            

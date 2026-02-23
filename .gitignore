@@ -7,3 +7,17 @@
 "*.jpg" 
 "*.jpeg" 
 ".DS_Store" 
+
+# Python environment and cache
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Ignore historical and archive folders to keep GitHub clean
+Scripts/Archive/
+Data/Historical_Datasets/
+
+# OS generated files
+.DS_Store
+Thumbs.db

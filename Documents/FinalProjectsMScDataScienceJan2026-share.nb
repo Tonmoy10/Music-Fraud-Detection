@@ -1,0 +1,2264 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    129494,       2256]
+NotebookOptionsPosition[    127530,       2213]
+NotebookOutlinePosition[    127955,       2230]
+CellTagsIndexPosition[    127912,       2227]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[" This is the datasets of projects ", "Section",
+ CellChangeTimes->{{3.799499066980516*^9, 3.799499099930842*^9}, {
+  3.975228262675064*^9, 
+  3.9752282661330233`*^9}},ExpressionUUID->"5a38cfba-19ee-4482-b15e-\
+4703226c3a6d"],
+
+Cell["\<\
+This document contains a dataset of projects for January 2026. Please read \
+the descriptions carefully, then try to identify some literature or websites \
+that might give you additional information about a project and perhaps how \
+people have approached similar questions before. You will be given a form to \
+rank the projects according to your preference and we will then assign \
+projects based on the choices of all students. \
+\>", "Text",
+ CellChangeTimes->{{3.858090599857999*^9, 3.8580907669130087`*^9}, {
+  3.911378553221253*^9, 3.911378579892449*^9}, {3.975228162324877*^9, 
+  3.975228162390704*^9}},ExpressionUUID->"599070be-1519-491e-99b4-\
+3a03b6968bf6"],
+
+Cell[CellGroupData[{
+
+Cell["Access the dataset", "Subsection",
+ CellChangeTimes->{{3.858090592826135*^9, 
+  3.858090596594132*^9}},ExpressionUUID->"67b7bf98-7534-44fe-8277-\
+5766eb383959"],
+
+Cell["First we download the current set of projects:", "Text",
+ CellChangeTimes->{{3.799499335969799*^9, 
+  3.79949934471396*^9}},ExpressionUUID->"3cc79731-3c5e-44b7-97a2-\
+b6d2eec16b3f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dsraw", "=", 
+   RowBox[{"Dataset", "[", 
+    RowBox[{"Get", "@", 
+     RowBox[{"Databin", "[", "\"\<1Ah7XTWPi\>\"", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dsclean", "=", 
+   RowBox[{
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{"dsraw", "[", 
+      RowBox[{"[", 
+       RowBox[{"Complement", "[", 
+        RowBox[{
+         RowBox[{"Range", "[", 
+          RowBox[{"Length", "[", 
+           RowBox[{"Normal", "[", "dsraw", "]"}], "]"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], "]"}], 
+      "]"}], "]"}], "[", 
+    RowBox[{"All", ",", "\"\<Data\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ds", "=", 
+   RowBox[{"dsclean", "[", 
+    RowBox[{"All", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<title\>\"", ",", "\"\<proposer\>\"", 
+       ",", "\"\<emailproposer\>\"", ",", "\"\<descriptionofproject\>\"", 
+       ",", "\"\<comments\>\""}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.799523858128205*^9, 3.799523859659329*^9}, 
+   3.858090566948216*^9, 3.911377402766836*^9, {3.911377440379279*^9, 
+   3.9113775332082872`*^9}, {3.911377572864129*^9, 3.9113775806516047`*^9}, {
+   3.9113776981695623`*^9, 3.911377717394225*^9}, {3.911378030297574*^9, 
+   3.9113780750989637`*^9}, {3.91137812294707*^9, 3.911378123065526*^9}, {
+   3.9113781593164673`*^9, 3.911378171285626*^9}, {3.911378379570909*^9, 
+   3.911378383350469*^9}, {3.975228165503937*^9, 3.975228186047896*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"1c1087ac-dc27-4907-8be1-9fc2559eadfa"],
+
+Cell["Then we display the dataset:", "Text",
+ CellChangeTimes->{{3.799499347570729*^9, 
+  3.799499351711451*^9}},ExpressionUUID->"7fe6ca40-dec0-42a8-9907-\
+0b035350c93a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["ds"], "Input",
+ CellChangeTimes->{{3.799499295036113*^9, 3.799499295153111*^9}, {
+  3.9113781530795393`*^9, 3.911378153437696*^9}, {3.911378409366551*^9, 
+  3.9113784094827223`*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"47c64114-628d-45bc-b05d-c33396de1a2c"],
+
+Cell[BoxData[
+ TagBox[
+  TagBox[
+   DynamicModuleBox[{TypeSystem`NestedGrid`PackagePrivate`$state$$ = <|
+    "InitialData" -> {<|
+       "title" -> "The Science behind Football", "proposer" -> 
+        "Murilo Baptista & Nicolas Rubido ", "emailproposer" -> 
+        "murilo.baptista@abdn.ac.uk", "descriptionofproject" -> 
+        "In recent years, football analysis has seen rapid growth and has \
+greatly impacted the evaluation of football performance \
+[1]\[AHat]\.80\.93[5]. Several clubs are using the insights from the analysis \
+of data of played games to improve on their performance in future matches. \
+Football is a team sport, and the game has 2 teams, with players trying to \
+score a goal.  To analyse a match, it is important to understand the dynamics \
+of passes, the positioning and the movement of not only the individual \
+players but also the whole team. The interest is to find the emergency of \
+patterns in the collective dynamics of players that lead to goals. \n\n\n\nIn \
+this master project, we will be analysing tracking data provided by the \
+company Statsbomb [6], spanning several decades of tracking data for matches \
+happening in several competitions around the world. The interest will be to \
+construct a network representation of a team, based on the way footballers \
+pass the ball. The players and their average position are the nodes of the \
+network, and the amount of passes one player does to another in the duration \
+of a game representing how well connected a player is with another will be \
+the links of the network.  We hope to find network structures that enhances \
+defensive performance, or those that favours wins. We will also do \
+exploratory, and time-series based analysis of the matches, for example, \
+understanding the properties of the time-series constructed from observing a \
+player or a group of players moving in the pitch during the match. The \
+analysis will firstly be focussed on an individual game (which contains \
+already a very large amount of data), but could also be developed in more \
+than 1 game for example when the interest is to compare the playing styles of \
+the different schools of football happening in different continents and \
+competitions. \n\n\n\n1. D. Bargiotas, An Analysis of FC Barcelona Through \
+Passing Networks and Event Data Analysis, Master Thesis, University of \
+Aberdeen (2021).\n\n2. J. M. Buld\[CapitalATilde]\.ba et al., Defining a \
+Historic Football Team: Using Network Science to Analyze Guardiola\[AHat]\.80\
+\.99s F.C. Barcelona. 9, 13602 (2019). \n\n3. S. Caicedo-Parada S, et al. \
+Passing Networks and Tactical Action in Football: A Systematic Review. Int J \
+Environ Res Public Heal 17, 6649 (2020).\n\n4. What difference can data make \
+to a football team? - Exasol \
+https://www.exasol.com/what-difference-can-data-make-for-a-football-team/\n\n\
+5. \[CapitalATilde]\.81. Novillo. et al, A multilayer network framework for \
+soccer analysis, Chaos, Solitons & Fractals, 178, 114355 (2024).\n\n6. \
+https://github.com/statsbomb/open-data/tree/master\n\n\n\n", "comments" -> 
+        "no comments "|>, <|
+       "title" -> 
+        "Machine-learning guided discovery of novel naturally occurring \
+antimicrobials", "proposer" -> "HAI DENG", "emailproposer" -> 
+        "h.deng@abdn.ac.uk", "descriptionofproject" -> 
+        "Bacterial AMR is now the 3rd-leading cause of death globally, behind \
+ischemic heart disease and stroke. The WHO has classified life-threatening \
+community- and hospital-acquired infections due to Gram-negative bacteria, \
+highlighting carbapenem-resistant Enterobacteriaceae (CRE) (including K. \
+pneumoniae and E. coli) and Acinetobacter baumannii (CRAB) as the most \
+critical AMR global health threats.\n\nRecent progress in new antibiotic \
+development has been dominated by incremental improvements in \
+well-established drug classes, such as \[CapitalIHat]\.b2-lactam antibiotics, \
+already impacted by resistance. There are few drugs in development that \
+target a new mode of action, which is essential for combatting the ongoing \
+emergence of bacteria resistant to existing classes of antibiotics. \n\n\
+Antimicrobial natural products, compounds discovered in nature, have been \
+playing critical roles of human medicines and are critical for the \
+development of new therapeutics against multidrug-resistant pathogens. Recent \
+discoveries of antibiotics, including repurposed compounds like hygromycin \
+A,1 and novel agents such as lolamicin 2 and abaucin,3 suggest that many \
+novel antibiotics remain undiscovered.\n\nThe aim of this Master project is \
+to construct training dataset for predictive modelling of antimicrobial \
+compounds against Gram-negative pathogens. \n\nResearch objectives: \n\n1. To \
+construct training dataset from existing natural product inventory.\n\n2. To \
+master the use of Chemprop software4 and customize its training dataset for \
+predictive modelling of new albopeptide derivatives. This will enable a \
+rapid, data-informed approach to identify candidates with enhanced \
+antimicrobial activity.\n\nReferences:\n\n1. Leimer, N. et al. (2021) Cell. \
+184, 5405-5418. \n\n2. Mu\[CapitalATilde]\[PlusMinus]oz K.A et al. (2024) \
+Nature. 630, 429-441. \n\n3. Liu G. et al. (2023) Nat. Chem. Biol. 2023, 19, \
+1342-1350. \n\n4. Heid E. et al. (2024) J. Chem. Inf. Model. 64, 9-17.\n\n", 
+        "comments" -> 
+        "I am a chemistry academic and will need a colleague from Data \
+Science to help cosupervision."|>, <|
+       "title" -> "Advanced Techniques for Time Series Analysis", "proposer" -> 
+        "Paco Perez-Reche", "emailproposer" -> "fperez-reche@abdn.ac.uk", 
+        "descriptionofproject" -> 
+        "With the increasing ability to store and process large amounts of \
+data, it is now possible to track a wide range of processes over time. As a \
+result, there is an abundance of data in the form of time series\[AHat]\.80\
+\.94from epidemiological records (e.g. COVID-19 case counts or mortality \
+rates), to physical measurements (e.g. seismic activity), to behavioural data \
+(e.g. the motion of insects).\n\n\n\nWhile time series can be visualised \
+relatively easily, identifying patterns, trends, or anomalies in large and \
+complex datasets remains a significant challenge. Advanced techniques\[AHat]\
+\.80\.94including machine learning methods\[AHat]\.80\.94can automate aspects \
+of this analysis, providing faster and deeper insights. Additionally, \
+alternative representations of time series, such as networks, can reveal \
+structures and properties that may remain hidden in traditional approaches.\n\
+\n\n\nThis project will explore modern, data-driven methods for analysing \
+time series. Depending on your interests, you may investigate techniques such \
+as classification, clustering, or forecasting for time series, or explore \
+novel representations like time series networks and their associated metrics.\
+\n\n\n\nPotential applications include: analysing the motion and interaction \
+of insects, characterising the complexity of physical systems (e.g. material \
+fracture or water flow in porous media), or examining epidemiological data to \
+better understand disease dynamics or mortality patterns.\n\n\n\nThe specific \
+focus of the project will be chosen in consultation at the start, allowing \
+students some flexibility based on their interests.\n\n\n\nFurther reading:\n\
+\n\n\nJan Marcel Kezmann \[AHat]\.80\.9cAll 8 Types of Time Series \
+Classification Methods\[AHat]\.80\.9d \
+https://medium.com/mlearning-ai/all-8-types-of-time-series-classification-\
+methods-2c8e4b323ea2#2fe7.\n\n\n\nAghabozorgi, S., Seyed Shirkhorshidi, A. & \
+Ying Wah, T. Time-series clustering \[AHat]\.80\.93 A decade review. Inf. \
+Syst. 53, 16\[AHat]\.80\.9338 (2015).\n\n\n\nSilva, V. F., Silva, M. E., \
+Ribeiro, P., & Silva, F. (2021). Time series analysis via network science: \
+Concepts and algorithms. Wiley Interdisciplinary Reviews: Data Mining and \
+Knowledge Discovery, 11(3), e1404. https://doi.org/10.1002/WIDM.1404\n\n", 
+        "comments" -> "No"|>, <|
+       "title" -> 
+        "Developing a Retrieval-Augmented Generation (RAG) System for \
+Extraction and Consolidation of Data from Public Sector PDF Documents", 
+        "proposer" -> "Paco Perez-Reche", "emailproposer" -> 
+        "fperez-reche@abdn.ac.uk", "descriptionofproject" -> 
+        "Government and public sector bodies (e.g., Scottish Health Boards, \
+Local Authorities) routinely publish critical operational and financial data \
+within lengthy, unstructured PDF reports. Analysts are frequently required to \
+synthesize key information across multiple documents to answer specific \
+policy or financial questions. This project proposes the development of a \
+fully automated workflow that combines document scraping and state-of-the-art \
+Artificial Intelligence (AI) techniques to build a robust Retrieval-Augmented \
+Generation (RAG) system, drastically reducing manual analysis time and \
+improving data consistency.\n\n\n\nThe primary goal is to create a \
+functional, scalable prototype that can efficiently answer complex, \
+cross-document queries based solely on official PDF documents. More \
+specifically, you will:\n\n1.\tDevelop a Multi-Document RAG Pipeline: \
+Implement a pipeline capable of processing multiple PDFs from identified \
+domains and generating consolidated answers.\n\n2.\tEnsure Data Grounding: \
+Guarantee that all extracted summaries and answers are directly traceable and \
+grounded to specific pages and documents within the source material.\n\n3.\t\
+Produce Structured Output: Consolidate extracted data into a clean, queryable \
+format (e.g., Markdown or CSV tables).\n\nThe primary data source is left \
+flexible, but a likely focus will be on Scottish Public Sector bodies (e.g., \
+health boards annual accounts or local authority complaints reports.", 
+        "comments" -> "No."|>, <|
+       "title" -> 
+        "Statistical and Non-linear Analysis of Electroencephalographic \
+signals", "proposer" -> 
+        "Nicol\[CapitalATilde]\[DownExclamation]s Rubido & Murilo S. \
+Baptista", "emailproposer" -> "nicolas.rubidoobrer@abdn.ac.uk", 
+        "descriptionofproject" -> 
+        "Electroencephalography (EEG) is a method to record the spontaneous \
+electrical activity of the brain, which shows a broad range of complex signal \
+behaviours. To understand cortical function, the EEG signal is typically \
+divided into bands by frequency (delta, theta, alpha, beta, and gamma), \
+isolating the rhythmic activity. These bands are related to different \
+physiological functions and produced by different neuronal circuits. However, \
+the bands show different characteristics for different cortical locations and \
+states of mind, such as during the sleep-wake cycle states, which includes \
+the states of wakefulness, rapid-eye movement, and non-rapid-eye movement \
+sleep. Since considerable motivation exists for the development of an \
+adequate statistical model for spontaneous EEG activity, we propose to study \
+the main EEG bands recorded during the sleep-wake state using methods from \
+Statistics and Chaos theory. Those taking on this project will be provided \
+with an EEG dataset, that they will need to filter into frequency bands \
+(pre-processing), obtain the main statistical descriptors for these bands \
+(feature extraction), create surrogate signals for statistical hypothesis \
+testing (statistical modelling), and analyse the phase portraits created by \
+combining some bands (data exploration), which can lead to a state-dependent \
+model for the EEG activity during the sleep-wake cycle and improvements to \
+classification accuracy of machine and deep learning algorithms.", "comments" -> 
+        "For enquiries, please email nicolas.rubidoobrer@abdn.ac.uk or \
+murilo.baptista@abdn.ac.uk"|>, <|
+       "title" -> "Artificial Intelligence in Biotechnology", "proposer" -> 
+        "Dr Andrew Angel", "emailproposer" -> "andrew.angel@abdn.ac.uk", 
+        "descriptionofproject" -> 
+        "Background:\n\n\n\nBiotechnology includes the engineering of \
+biological elements to develop products that can improve human life and the \
+application of machine learning is revolutionizing the field.\n\n\n\nInspired \
+by a recent industrial collaboration, one potential project is to use machine \
+learning to accelerate the development of high-temperature RNA \
+thermoswitches. RNA thermoswitches are RNA sequences that can control \
+expression - for example, by only becoming active once a certain temperature \
+has been reached - often via temperature-dependent structural changes . \
+Naturally occurring thermoswitches are optimised for temperatures around 37\
+\[CapitalAHat]\[Degree]C and often show undesired basal ('leaky') gene \
+expression at lower temperatures. Owing to their customisable length and base \
+compositions, the ability to design synthetic RNA thermoswitches responsive \
+to higher temperatures (>60\[CapitalAHat]\[Degree]C) with reduced leakiness \
+at lower temperatures has significant industrial applications. This project \
+aims to computationally design and evaluate novel RNA thermoswitches \
+specifically optimised for use in the bacterium Bacillus subtilis, which is \
+widely used in industrial biotechnology.\n\n\n\nProject Aims:\n\n\n\nUtilise \
+bioinformatics software (primarily NUPACK and RNAStructure) to design and \
+evaluate RNA thermoswitches.\n\nIdentify structural and sequence features of \
+known thermoswitches (e.g., FourU, ROSE, Hsp17, Listeria\[AHat]\.80\.99s \
+PrfA) that correlate with optimal high-temperature performance.\n\nGenerate \
+and analyse RNA thermoswitch designs predicted to function effectively at \
+specified industrially relevant high temperatures.\n\nExamine how RNA \
+thermoswitch structures interact with essential genetic elements, both \
+upstream (e.g., promoters, untranslated regions) and downstream (e.g., \
+ribosome binding sites, coding sequences) and design riboswitches that factor \
+in the functions of these additional elements.\n\nAssess computational \
+predictions to identify designs that minimise leakiness while maintaining \
+efficient gene expression at target temperatures.\n\n\n\n\n\nMethodology:\n\n\
+\n\nUse NUPACK and RNAstructure software to predict RNA secondary structures \
+and thermal stability at specified high temperatures.\n\nGenerate and \
+characterise a set of designed RNA sequences, paying particular attention to \
+structural interactions around key genetic regulatory elements.\n\nPerform \
+preliminary validation of select designs using NUPACK\[AHat]\.80\.99s \
+web-based prediction tool.\n\nAnalyse datasets to identify RNA sequence and \
+structure characteristics associated with effective high-temperature \
+thermoswitch function.\n\n\n\n\n\nExpected Outcome: This project will provide \
+a proof-of-concept demonstration of computational design of synthetic RNA \
+thermoswitches suitable for industrial use at elevated temperatures. Outcomes \
+will include a dataset of RNA sequences predicted to be robust thermoswitches \
+tuned to enable expression at different temperatures, along with insights \
+into how sequence and structural elements influence thermoswitch performance.\
+\n\n", "comments" -> 
+        "There is also scope for projects in other areas of biotechnology, \
+for example in drug design.\n\n"|>, <|
+       "title" -> "Waves in the Martian atmosphere", "proposer" -> 
+        "Roland Young", "emailproposer" -> "roland.young@abdn.ac.uk", 
+        "descriptionofproject" -> 
+        "There are many different types of atmospheric wave, which are \
+periodic disturbances in atmospheric fields such as temperature or density. \
+These range from sound waves, with wavelengths measured in metres or less, to \
+planetary-scale Rossby waves, with wavelengths measured in thousands of \
+kilometres. Intermediate are gravity waves; these have gravity as the \
+restoring force, similar to a wave on the surface of the ocean. Waves are an \
+important part of the climate system as they transport momentum and energy \
+from place to place without bulk motion of the air.\n\n\n\nWaves occur in \
+other planets\[AHat]\.80\.99 atmospheres as well as on Earth. On Mars, the \
+motion of the atmosphere is a major unknown in our understanding of that \
+planet\[AHat]\.80\.99s climate, because it is difficult to measure remotely. \
+Identifying waves can tell us something about how the atmosphere transports \
+momentum and energy, linking remote parts of the atmosphere through the \
+general circulation. \n\n\n\nWe can identify waves by studying images of \
+clouds taken in visible or ultraviolet wavelengths, filtered using a \
+high-pass filter to remove large-scale structures.\n\n\n\nThe Emirates Mars \
+Mission (EMM) has been in orbit around Mars since 9 February 2021. Its \
+Emirates eXploration Imager (EXI) instrument is a visible / ultraviolet \
+camera that is unique among Mars orbiters as it takes regular observation \
+sequences that are suitable for tracking clouds and other small-scale \
+phenomena like waves.\n\n\n\nThis project will use EXI images to look for \
+waves in Mars\[AHat]\.80\.99 atmosphere. Processed EXI images are publicly \
+available from the EMM Science Data Center. As of 3 December 2024, there are \
+229 suitable images in 34 sequences between November 2021 and December 2023. \
+\n\n\n\nStudents will identify waves and characterise their wavelengths, \
+frequencies, directions, etc. in terms of location, time of day, season, and \
+so on. It may be possible to measure the dispersion relation for some waves, \
+which is related to the properties of the surrounding atmosphere.\n\n\n\nThis \
+project would suit students interested in image analysis and spectral \
+analysis. A background in physics or mathematics would be quite helpful, but \
+is not essential.\n\n", "comments" -> "No"|>, <|
+       "title" -> 
+        "Evaluating Systemic Inequality in Access to debt advice in Scotland",
+         "proposer" -> "Your Financial Wellbeing (YFW)", "emailproposer" -> 
+        "m.romano@abdn.ac.uk", "descriptionofproject" -> 
+        "About Your Financial Wellbeing (YFW)\n\nYour Financial Wellbeing is \
+a social enterprise working to change how financial wellbeing support is \
+offered to people who are struggling with money. We understand that financial \
+stress affects mental, physical and social wellbeing, and can place huge \
+pressure on individuals, families and communities.\n\nThis is why we design \
+services that are more accessible, reduce barriers, and help people get \
+support sooner to prevent finances spiralling out of control.\n\nWe provide \
+money advice (omni channel), financial wellbeing workshops, and develop \
+ethical, AI tools that support both clients as well as the advisors \
+delivering frontline services. \n\n\n\nProject Overview\n\nThis project will \
+use data-science methods to explore who is and, crucially, who is not \
+accessing money and debt-advice services across Scotland when they need it. \
+By analysing public datasets (e.g., the Financial Conduct \
+Authority\[AHat]\.80\.99s Financial Lives Survey, the Scottish Index of \
+Multiple Deprivation, local-authority crisis-fund data, and Office for \
+National Statistics wellbeing datasets), students will model demographic and \
+geographic patterns of exclusion - comparing factors such as gender, income, \
+housing status and rurality.\n\nFindings will help identify underserved \
+groups and inform our approach to designing more accessible and inclusive \
+financial wellbeing services.\n\n\n\nMethods\n\nStudents will:\n\n\[AHat]\.80\
+\[Cent]\tClean and prepare multiple open/public datasets\n\n\
+\[AHat]\.80\[Cent]\tMerge datasets and carry out exploratory data analysis \
+(EDA) to identify patterns of exclusion\n\n\[AHat]\.80\[Cent]\tUse regression \
+modelling (e.g., to examine predictors of non-access)\n\n\[AHat]\.80\[Cent]\t\
+Produce geospatial visualisations (e.g., local authority or data-zone maps) \
+showing where exclusion or under-provision is concentrated\n\n\n\nKey \
+Datasets & Links\n\nMoney and Pensions Service (MaPS) \[AHat]\.80\.93 \
+Financial Wellbeing Survey\n\n\[AHat]\.80\[Cent]\tAccess overview (MaPS): \
+https://www.maps.org.uk/en/publications/research/working-with-our-survey-data\
+\n\n\[AHat]\.80\[Cent]\tSegmentation model PDF (UK Data Service): \
+https://doc.ukdataservice.ac.uk/doc/8454/mrdoc/pdf/8454_maps_fin_wellbeing_\
+segmentation.pdf\n\nUniversity of Bristol \[AHat]\.80\.93 Financial Wellbeing \
+/ Financial Fairness Tracker\n\n\[AHat]\.80\[Cent]\tTracker homepage & \
+reports: https://www.bristol.ac.uk/geography/research/pfrc/themes/capability-\
+behaviours-wellbeing/financial-fairness-tracker/\n\n\[AHat]\.80\[Cent]\t2025 \
+report (example): \
+https://www.bristol.ac.uk/media-library/sites/geography/pfrc/documents/\
+Financial_fairness_tracker_W12_June2025.pdf\n\nFCA \[AHat]\.80\.93 Financial \
+Lives Survey\n\n\[AHat]\.80\[Cent]\tSurvey homepage: \
+https://www.fca.org.uk/financial-lives\n\nScottish Index of Multiple \
+Deprivation (SIMD)\n\n\[AHat]\.80\[Cent]\tSIMD homepage: https://simd.scot/\n\
+\nOffice for National Statistics (ONS) \[AHat]\.80\.93 Wellbeing Datasets\n\n\
+\[AHat]\.80\[Cent]\tONS wellbeing hub: \
+https://www.ons.gov.uk/peoplepopulationandcommunity/wellbeing\n\n\n\nExpected \
+Outcomes\n\n\[AHat]\.80\[Cent]\tA brief analytical report summarising \
+demographic and geographic access patterns to debt and wellbeing support\n\n\
+\[AHat]\.80\[Cent]\tVisual outputs (e.g., charts, heatmaps) showing where \
+exclusion or under-provision exists\n\n\[AHat]\.80\[Cent]\tA short \
+recommendations paper (2\[AHat]\.80\.933 pages, plain English) for \
+policymakers and advice-sector partners\n\nThese results will provide us with \
+evidence to guide future service design, outreach strategy, and funding \
+proposals focused on inclusion and early intervention.\n\n", "comments" -> 
+        "No."|>, <|
+       "title" -> 
+        "Machine Learning Analysis of Well-Being and Behaviour Data", 
+        "proposer" -> "Hey Joe (company)", "emailproposer" -> 
+        "m.romano@abdn.ac.uk", "descriptionofproject" -> 
+        "Company Background\n\nHey Joey is a digital companion app designed \
+to support parents of neurodivergent children. The app helps parents record \
+daily mood and sensory data, identify patterns, and receive personalised \
+insights to make everyday life easier.\n\nCurrently in beta testing, Hey Joey \
+aims to launch a scalable version of the platform in early 2026. We are now \
+exploring the use of conversational AI to enhance user experience and \
+engagement.\n\n\n\n\n\nRoles and responsibilities\n\n\[AHat]\.80\[Cent]\t\
+Clean and prepare anonymised synthetic datasets for analysis.\n\n\[AHat]\.80\
+\[Cent]\tApply supervised and/or unsupervised learning techniques to detect \
+correlations and trends (e.g. daily patterns, triggers, or positive periods).\
+\n\n\[AHat]\.80\[Cent]\tDevelop a prototype model or dashboard to visualise \
+findings.\n\n\[AHat]\.80\[Cent]\tEvaluate ethical and privacy implications of \
+predictive features in family wellbeing contexts.\n\n\[AHat]\.80\[Cent]\t\
+Present a final report outlining findings, accuracy, and recommendations for \
+next steps.\n\n", "comments" -> "No"|>, <|
+       "title" -> 
+        "Synthetic Fraud Pattern Modelling & Anomaly Detection for Digital \
+Music Uploads", "proposer" -> "XYNQ / REDFLAG", "emailproposer" -> 
+        "m.romano@abdn.ac.uk", "descriptionofproject" -> 
+        "Brief Abstract\n\nXYNQ Ltd is developing REDFLAG, an AI-driven \
+verification engine designed to detect fraudulent or\n\nmanipulated music \
+uploads before they reach distributors or streaming platforms. One of the \
+core\n\nchallenges in early development is the lack of publicly available \
+fraud-labelled datasets, which limits\n\nexperimentation with anomaly \
+detection techniques.\n\nThis 12-week MSc project will focus on generating \
+synthetic fraud datasets, designing feature\n\nrepresentations for music \
+metadata and behavioural patterns, and prototyping anomaly detection\n\n\
+methods (e.g., statistical baselines, clustering, or ML approaches). The \
+outputs will directly support the\n\nfeasibility stage of REDFLAG and \
+contribute valuable groundwork for our collaborative Interface\n\nresearch \
+project.\n\nThe work is highly aligned with applied data science and gives \
+the student exposure to real-world\n\nanomaly detection and synthetic data \
+engineering challenges.\n\nExpected Outcomes\n\n* Synthetic fraud dataset \
+that simulates:\n\n* Metadata anomalies (e.g., mismatched names, duplicated \
+ISRCs, suspicious title patterns).\n\n* Impersonation attempts (e.g., similar \
+artist names, spoofed profiles).\n\n* Behavioural upload irregularities \
+(e.g., burst uploads, repeated catalogue submissions).\n\n* Bot-like or \
+mass-generated content behaviours.\n\n* Exploratory Data Analysis (EDA) \
+report describing:\n\n* Dataset structure and assumptions.\n\n* Class \
+distributions and anomaly injection strategies.\n\n* Limitations and realism \
+of the synthetic data.\n\n* Prototype anomaly detection approaches, such as:\n\
+\n* Outlier detection (e.g., isolation forests, LOF, statistical thresholds).\
+\n\n* Clustering-based anomaly detection.\n\n* Simple \
+supervised/semisupervised models where labelled anomalies exist.\n\n* \
+Time-series or sequence-based detection for behaviour over time.\n\n* \
+Evaluation and experimentation notebook(s):\n\n* Metrics such as \
+precision/recall, false-positive rates.\n\n* Comparison of different anomaly \
+detection techniques.\n\n* Clear commentary on what works well vs. what \
+fails.\n\n* Final recommendations for:\n\n* Feature engineering for metadata \
+and behaviour modelling.\n\n* Promising model families for REDFLAG\[AHat]\.80\
+\.99s next R&D stage.\n\n* How these results can be integrated into a larger \
+ML pipeline.\n\n\n\nThis work advances REDFLAG from early concept (TRL 2) \
+toward R&D feasibility (TRL 3\[AHat]\.80\.934).\n\nParticipation in \
+Supervision\n\nXYNQ Ltd will actively support the student and academic \
+supervisor through:\n\nFortnightly check-in calls (online) to review progress \
+and unblock issues.\n\nTimely feedback on interim outputs (design choices, \
+EDA, model results).\n\nEmail/Slack-style communication for short questions \
+between meetings.\n\nAttendance at the final presentation/demonstration and \
+feedback on the work.\n\nLead industry supervisor:\n\nLeo Fakhrul \[AHat]\.80\
+\.93 Founder & CEO, XYNQ Ltd\n\nTechnical supervisor:\n\nZiyad Alrasbi \
+\[AHat]\.80\.93 Co-founder & CTO, XYNQ Ltd\n\n\n\n", "comments" -> "No"|>, <|
+       "title" -> 
+        "Spatial Characterisation of Protein Distribution in Muscle Spindles",
+         "proposer" -> "Ekkehard Ullner, Mamen Romano and Guy Bewick", 
+        "emailproposer" -> "e.ullner@abdn.ac.uk", "descriptionofproject" -> 
+        "Project Overview\n\nUnderstanding the structure and function of \
+muscle fibres is critical for advancing our knowledge of motor control and \
+neuromuscular coordination. Muscle spindles, specialised sensory structures \
+embedded within skeletal muscles, play a vital role in proprioception\[AHat]\
+\.80\.94the sense of body position and movement\[AHat]\.80\.94by providing \
+continuous feedback to the nervous system about muscle stretch and tension. \
+This feedback is essential for maintaining posture, coordinating complex \
+movements, and regulating muscle tone. Despite their critical role, the \
+detailed cellular organisation and protein distribution within muscle \
+spindles remain incompletely understood, particularly in comparison to the \
+more abundant extrafusal fibres that generate muscle force.\n\nThis project \
+aims to deepen our understanding of the spatial distribution of proteins \
+within intrafusal fibres of muscle spindles, focusing on their proximity to \
+the cell nuclei, and to compare this distribution with that of the \
+surrounding extrafusal fibres. Such analysis can provide valuable insights \
+into the specialised structure-function relationships in muscle spindles, \
+potentially revealing molecular mechanisms underlying muscle sensitivity and \
+control.\n\nResearch Focus\n\nAdvances in imaging technologies, particularly \
+fluorescence microscopy, have transformed the way we study cellular \
+structures. Fluorescence techniques allow precise visualisation of protein \
+distribution within cells, making it possible to quantify differences in \
+protein expression across muscle fibre types.\n\nIn this project, we will \
+work with sets of three complementary images of muscle cross-sections, \
+capturing different cellular features:\n\n\[AHat]\.80\[Cent]\tBrightfield \
+(light microscopy) image: provides a general structural view of the muscle \
+tissue, highlighting the overall arrangement of muscle fibres.\n\n\[AHat]\.80\
+\[Cent]\tNuclear stain (blue fluorescence) image: shows the distribution and \
+density of cell nuclei within the muscle fibres, which helps distinguish \
+intrafusal fibres within spindles from surrounding extrafusal fibres.\n\n\
+\[AHat]\.80\[Cent]\tProtein of interest (red fluorescence) image: visualises \
+the concentration and spatial distribution of a specific protein, providing \
+insights into its potential functional role within the muscle spindle.\n\n\n\n\
+Project Objectives\n\n\[AHat]\.80\[Cent]\tProtein localisation analysis: \
+characterise the spatial distribution of the protein of interest relative to \
+the nuclei within intrafusal and extrafusal fibres.\n\n\[AHat]\.80\[Cent]\t\
+Quantitative comparison: measure and compare the relative protein \
+concentrations within spindle (intrafusal) and non-spindle (extrafusal) \
+fibres.\n\n\[AHat]\.80\[Cent]\tSpatial pattern identification: use advanced \
+image processing and statistical methods to identify unique spatial patterns \
+in protein distribution that may reflect functional specialisations.\n\n\
+\[AHat]\.80\[Cent]\tBiological insight generation: interpret the findings in \
+the context of muscle spindle function, potentially uncovering molecular \
+features that contribute to muscle sensitivity and reflex control.\n\n\n\n\
+Impact and Relevance\n\nThe insights gained from this project will enhance \
+our understanding of the cellular architecture of muscle spindles, providing \
+a foundation for future studies on muscle function, neuromuscular diseases, \
+and rehabilitation strategies. \n\n", "comments" -> "No."|>, <|
+       "title" -> 
+        "Predicting Length of Stay at Hospital using Natural Language \
+Processing", "proposer" -> "Mamen Romano, Alexander Groh and Binod Bhattarai",
+         "emailproposer" -> "m.romano@abdn.ac.uk", "descriptionofproject" -> 
+        "Developing models that predict the length of stay of patients in \
+hospital is crucial for optimising resource allocation, reducing healthcare \
+costs, and improving patient flow. Accurate predictions enable hospitals to \
+better manage bed availability, staffing, and treatment plans, ultimately \
+enhancing the efficiency and quality of patient care.\n\nIn this project we \
+will apply a Natural Language Processing (NLP) approach to predict the length \
+of stay in hospital of patients. We will use the publicly available MIMIC-III \
+dataset, which comprises deidentified health-related data associated with \
+over forty thousand patients admitted to the Beth Israel Deaconess Medical \
+Center (Boston, USA) between 2001 and 2012.\n\nThe project aims at generating \
+a summary text report from the existing tabular data for each patient. These \
+summaries will then be converted into numerical representations (embeddings) \
+using a language model such as BioBERT. Finally, these embeddings will be \
+input into a neural network model trained to predict each patient\[AHat]\.80\
+\.99s expected length of hospital stay.\n\nThe main objectives of the project \
+are:\n\n\[AHat]\.80\[Cent]\tTo evaluate the effectiveness of Large Language \
+Models (LLMs) in generating text from tabular data, compared to deterministic \
+template-based methods.\n\n\[AHat]\.80\[Cent]\tTo analyse the influence of \
+various demographic and clinical variables on length-of-stay predictions.\n\n\
+\[AHat]\.80\[Cent]\tTo compare the performance of this integrated NLP \
+approach with a more traditional random forest model.\n\nReferences:\n\n\
+Johnson, A., Pollard, T., & Mark, R. (2016). MIMIC-III Clinical Database \
+(version 1.4). PhysioNet. https://doi.org/10.13026/C2XW26.\n\nJinhyuk Lee, \
+Wonjin Yoon, Sungdong Kim, Donghyeon Kim, Sunkyu Kim, Chan Ho So, Jaewoo \
+Kang, BioBERT: a pre-trained biomedical language representation model for \
+biomedical text mining, Bioinformatics, Volume 36, Issue 4, February 2020, \
+Pages 1234\[AHat]\.80\.931240, https://doi.org/10.1093/bioinformatics/btz682\n\
+\n", "comments" -> "No."|>, <|
+       "title" -> 
+        "Smart Home Sensing, Time-Series Analytics, and a Digital Twin for \
+Indoor Climate & Energy", "proposer" -> "Marco Thiel", "emailproposer" -> 
+        "m.thiel@abdn.ac.uk", "descriptionofproject" -> 
+        "The student will design and deploy a small-scale smart-home sensing \
+platform (Arduino/ESP32-based) and build an end-to-end data pipeline to \
+ingest, store, visualise, and analyse multi-sensor time series. The core aim \
+is to turn raw sensor readings into actionable inferences (state estimation, \
+prediction, anomaly detection) \
+and\[AHat]\.80\.94optionally\[AHat]\.80\.94into a digital twin of a \
+room/house subsystem (e.g., indoor thermal dynamics), calibrated from the \
+collected data.\n\n\n\nCore tasks\n\nSensing layer: build 1\[AHat]\.80\.93N \
+sensor nodes (e.g., temperature/humidity, light; optional: CO\[AHat]\.82\.82 \
+proxy / air quality, motion/occupancy proxy) with timestamped telemetry.\n\n\n\
+\nData engineering: stream data to a central machine (laptop/mini-PC) via a \
+message broker/protocol, store in a time-series database, and produce \
+dashboards for live monitoring.\n\n\n\nData science layer: develop and \
+evaluate items like:\n\nshort-horizon forecasting (temperature/humidity),\n\n\
+anomaly detection (sensor drift, \[AHat]\.80\.9cwindow open\[AHat]\.80\.9d \
+events, abnormal heating behaviour),\n\noccupancy inference \
+(privacy-preserving proxies),\n\nmissing-data robustness and sensor fusion.\n\
+\n\n\nDigital twin extension (recommended): construct a simple physics-based \
+model (e.g., RC thermal network), calibrate parameters from data, and use it \
+for prediction and/or control-oriented what-if simulation.\n\n\n\nEvaluation \
+/ success criteria\n\nQuantitative metrics (forecast error, detection \
+delay/false alarm rates, calibration error, energy/comfort trade-offs if \
+control is attempted).\n\nReproducible pipeline (documented deployment, \
+scripts/containers, logged experiments).\n\nClear failure-mode analysis \
+(when/why the models break).\n\n\n\nDeliverables\n\nWorking sensor node(s) + \
+data pipeline, a curated dataset, dashboards, and a well-documented GitHub \
+repository.", "comments" -> "None"|>, <|
+       "title" -> 
+        "Optical Microphone (Laser Mic): Recover Spoken Language/Music from a \
+Photodiode Signal via DSP and System Identification", "proposer" -> 
+        "Marco Thiel", "emailproposer" -> "m.thiel@abdn.ac.uk", 
+        "descriptionofproject" -> 
+        "The student will build a controlled \[AHat]\.80\.9claser microphone\
+\[AHat]\.80\.9d style experiment and develop signal processing methods to \
+recover spoken language or music from an optically measured signal. The \
+experimental setup is intentionally benign and reproducible: build a small \
+box with a plexiglas window, place a phone playing music (or speech) inside, \
+and record the optical receiver output while the measurement system (laser + \
+photodiode/receiver) is located at a distance. The main scientific objective \
+is to reconstruct intelligible audio on a computer by modelling and inverting \
+the measurement chain, then applying modern denoising/enhancement techniques.\
+\n\n\n\nCore tasks\n\nExperimental design: build the plexiglas-window \
+enclosure and create repeatable measurement protocols (distance, angle, \
+surfaces, ambient light conditions).\n\n\n\nData acquisition: collect paired \
+recordings (reference audio from the phone track and the measured \
+optical/receiver signal) to enable objective evaluation.\n\n\n\nSignal \
+processing (minimum expected):\n\npreprocessing (DC drift removal, filtering, \
+normalisation),\n\ndemodulation / reconstruction (envelope/Hilbert approaches \
+as appropriate),\n\ndenoising and enhancement (e.g., Wiener/spectral \
+subtraction; optional learned denoiser on CPU),\n\nsystem identification \
+(estimate an effective transfer function from optical signal \[AHat]\.86\.92 \
+audio).\n\nEvaluation: compare reconstruction pipelines using objective \
+measures (SNR improvement, spectral distortion metrics; \
+intelligibility-focused metrics where feasible) and structured listening \
+tests.\n\n\n\nEthical boundary\n\nThe work must be done only on \
+self-generated signals in a controlled setup (music/speech from the student\
+\[AHat]\.80\.99s own phone in the box), explicitly avoiding any covert or \
+non-consensual recording.\n\n\n\nDeliverables\n\nHardware setup documentation \
+(photos/diagrams, bill of materials, calibration procedure).\n\nDataset (raw \
+measurements + reference audio) and a reproducible reconstruction pipeline.", 
+        "comments" -> "None"|>}, "AllowEmbedding" -> True, "InitialShape" -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "title"} -> 
+        1, {All, "proposer"} -> 1, {All, "emailproposer"} -> 
+        1, {All, "descriptionofproject"} -> 1, {All, "comments"} -> 1|>, 
+       TypeSystem`PackageScope`Limited[
+        TypeSystem`PackageScope`ColumnShape[
+         TypeSystem`PackageScope`Limited[
+          
+          TypeSystem`PackageScope`RowShape[<|
+           "title" -> TypeSystem`PackageScope`AtomShape[560.], "proposer" -> 
+            TypeSystem`PackageScope`AtomShape[403.20000000000005`], 
+            "emailproposer" -> 
+            TypeSystem`PackageScope`AtomShape[336.00000000000006`], 
+            "descriptionofproject" -> TypeSystem`PackageScope`AtomShape[560.],
+             "comments" -> TypeSystem`PackageScope`AtomShape[560.]|>], 
+          DirectedInfinity[1], 5, {All}]], 14, 
+        DirectedInfinity[1], {}]], "InitialType" -> TypeSystem`Vector[
+       TypeSystem`Struct[{
+        "title", "proposer", "emailproposer", "descriptionofproject", 
+         "comments"}, {
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String]}], 14], "Meta" -> <||>, "RowTarget" -> 20, 
+     "ColumnTarget" -> 10, "Shape" -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "title"} -> 
+        1, {All, "proposer"} -> 1, {All, "emailproposer"} -> 
+        1, {All, "descriptionofproject"} -> 1, {All, "comments"} -> 1|>, 
+       TypeSystem`PackageScope`Limited[
+        TypeSystem`PackageScope`ColumnShape[
+         TypeSystem`PackageScope`Limited[
+          
+          TypeSystem`PackageScope`RowShape[<|
+           "title" -> TypeSystem`PackageScope`AtomShape[560.], "proposer" -> 
+            TypeSystem`PackageScope`AtomShape[403.20000000000005`], 
+            "emailproposer" -> 
+            TypeSystem`PackageScope`AtomShape[336.00000000000006`], 
+            "descriptionofproject" -> TypeSystem`PackageScope`AtomShape[560.],
+             "comments" -> TypeSystem`PackageScope`AtomShape[560.]|>], 
+          DirectedInfinity[1], 5, {All}]], 14, 
+        DirectedInfinity[1], {}]], "Type" -> TypeSystem`Vector[
+       TypeSystem`Struct[{
+        "title", "proposer", "emailproposer", "descriptionofproject", 
+         "comments"}, {
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String], 
+         TypeSystem`Atom[String]}], 14], "Path" -> {}, "DisplayedRowCount" -> 
+     14, "DisplayedColumnCount" -> 5, "DataRowCount" -> 14, "DataColumnCount" -> 
+     5, "SortPaths" -> {}, "SortDirections" -> {}, "HiddenItemsMap" -> Null, 
+     "UpdateType" -> 1|>, TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
+    TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
+    TypeSystem`NestedGrid`PackagePrivate`$vPos$$ = 1, 
+    TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1, 
+    TypeSystem`NestedGrid`PackagePrivate`$grid$$ = 
+    DynamicModule[{TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
+        Style[
+         Grid[{{
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover["title", 
+                  Style[
+                  "title", FontColor -> 
+                   RGBColor[
+                    0.2749633796890805, 0.536987306253161, 
+                    0.791992189065661]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
+                   All, "title"}, 1]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
+                All, "title"}, "ColumnHeader", True], "Mouse"], 
+              ImageSize -> {{1, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
+             RGBColor[
+              0.9500473017990948, 0.9500473017990948, 0.9500473017990948], 
+             Alignment -> {Left, Baseline}], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover["proposer", 
+                  Style[
+                  "proposer", FontColor -> 
+                   RGBColor[
+                    0.2749633796890805, 0.536987306253161, 
+                    0.791992189065661]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
+                   All, "proposer"}, 1]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
+                All, "proposer"}, "ColumnHeader", True], "Mouse"], 
+              ImageSize -> {{1, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
+             RGBColor[
+              0.9500473017990948, 0.9500473017990948, 0.9500473017990948], 
+             Alignment -> {Left, Baseline}], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover["emailproposer", 
+                  Style[
+                  "emailproposer", FontColor -> 
+                   RGBColor[
+                    0.2749633796890805, 0.536987306253161, 
+                    0.791992189065661]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
+                   All, "emailproposer"}, 1]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
+                All, "emailproposer"}, "ColumnHeader", True], "Mouse"], 
+              ImageSize -> {{1, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
+             RGBColor[
+              0.9500473017990948, 0.9500473017990948, 0.9500473017990948], 
+             Alignment -> {Left, Baseline}], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover["descriptionofproject", 
+                  Style[
+                  "descriptionofproject", FontColor -> 
+                   RGBColor[
+                    0.2749633796890805, 0.536987306253161, 
+                    0.791992189065661]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
+                   All, "descriptionofproject"}, 1]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
+                All, "descriptionofproject"}, "ColumnHeader", True], "Mouse"],
+               ImageSize -> {{1, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
+             RGBColor[
+              0.9500473017990948, 0.9500473017990948, 0.9500473017990948], 
+             Alignment -> {Left, Baseline}], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover["comments", 
+                  Style[
+                  "comments", FontColor -> 
+                   RGBColor[
+                    0.2749633796890805, 0.536987306253161, 
+                    0.791992189065661]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
+                   All, "comments"}, 1]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
+                All, "comments"}, "ColumnHeader", True], "Mouse"], 
+              ImageSize -> {{1, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
+             RGBColor[
+              0.9500473017990948, 0.9500473017990948, 0.9500473017990948], 
+             Alignment -> {Left, Baseline}]}, {
+            Item[
+             Pane[
+              Annotation["The Science behind Football", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Murilo Baptista & Nicolas Rubido ", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["murilo.baptista@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "In recent years, football analysis has seen rapid growth and \
+has greatly impacted the evaluation of football performance \
+[1]\[AHat]\.80\.93[5]. Several clubs are using the insights from the analysis \
+of data of played games to improve on their performance in future matches. \
+Football is a team sport, and the game has 2 teams, with players trying to \
+score a goal.  To analyse a match, it is important to understand the dynamics \
+of passes, the positioning and the movement of not only the individual \
+players but also the whole team. The interest is to find the emergency of \
+patterns in the collective dynamics of players that lead to goals. \n\n\n\nIn \
+this master project, we will be analysing tracking data provided by the \
+company Statsbomb [6], spanning several decades of tracking data for matches \
+happening in several competitions around the world. The interest will be to \
+construct a network representation of a team, based on the way footballers \
+pass the ball. The players and their average position are the nodes of the \
+network, and the amount of passes one player does to another in the duration \
+of a game representing how well connected a player is with another will be \
+the links of the network.  We hope to find network structures that enhances \
+defensive performance, or those that favours wins. We will also do \
+exploratory, and time-series based analysis of the matches, for example, \
+understanding the properties of the time-series constructed from observing a \
+player or a group of players moving in the pitch during the match. The \
+analysis will firstly be focussed on an individual game (which contains \
+already a very large amount of data), but could also be developed in more \
+than 1 game for example when the interest is to compare the playing styles of \
+the different schools of football happening in different continents and \
+competitions. \n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["no comments ", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Machine-learning guided discovery of novel naturally occurring \
+antimicrobials", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["HAI DENG", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["h.deng@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Bacterial AMR is now the 3rd-leading cause of death globally, \
+behind ischemic heart disease and stroke. The WHO has classified \
+life-threatening community- and hospital-acquired infections due to \
+Gram-negative bacteria, highlighting carbapenem-resistant Enterobacteriaceae \
+(CRE) (including K. pneumoniae and E. coli) and Acinetobacter baumannii \
+(CRAB) as the most critical AMR global health threats.\n\nRecent progress in \
+new antibiotic development has been dominated by incremental improvements in \
+well-established drug classes, such as \[CapitalIHat]\.b2-lactam antibiotics, \
+already impacted by resistance. There are few drugs in development that \
+target a new mode of action, which is essential for combatting the ongoing \
+emergence of bacteria resistant to existing classes of antibiotics. \n\n\
+Antimicrobial natural products, compounds discovered in nature, have been \
+playing critical roles of human medicines and are critical for the \
+development of new therapeutics against multidrug-resistant pathogens. Recent \
+discoveries of antibiotics, including repurposed compounds like hygromycin \
+A,1 and novel agents such as lolamicin 2 and abaucin,3 suggest that many \
+novel antibiotics remain undiscovered.\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "I am a chemistry academic and will need a colleague from Data \
+Science to help cosupervision.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation["Advanced Techniques for Time Series Analysis", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Paco Perez-Reche", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["fperez-reche@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "With the increasing ability to store and process large amounts \
+of data, it is now possible to track a wide range of processes over time. As \
+a result, there is an abundance of data in the form of time series\[AHat]\.80\
+\.94from epidemiological records (e.g. COVID-19 case counts or mortality \
+rates), to physical measurements (e.g. seismic activity), to behavioural data \
+(e.g. the motion of insects).\n\n\n\nWhile time series can be visualised \
+relatively easily, identifying patterns, trends, or anomalies in large and \
+complex datasets remains a significant challenge. Advanced techniques\[AHat]\
+\.80\.94including machine learning methods\[AHat]\.80\.94can automate aspects \
+of this analysis, providing faster and deeper insights. Additionally, \
+alternative representations of time series, such as networks, can reveal \
+structures and properties that may remain hidden in traditional approaches.\n \
+\[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Developing a Retrieval-Augmented Generation (RAG) System for \
+Extraction and Consolidation of Data from Public Sector PDF Documents", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Paco Perez-Reche", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["fperez-reche@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Government and public sector bodies (e.g., Scottish Health \
+Boards, Local Authorities) routinely publish critical operational and \
+financial data within lengthy, unstructured PDF reports. Analysts are \
+frequently required to synthesize key information across multiple documents \
+to answer specific policy or financial questions. This project proposes the \
+development of a fully automated workflow that combines document scraping and \
+state-of-the-art Artificial Intelligence (AI) techniques to build a robust \
+Retrieval-Augmented Generation (RAG) system, drastically reducing manual \
+analysis time and improving data consistency.\n\n\n\nThe primary goal is to \
+create a functional, scalable prototype that can efficiently answer complex, \
+cross-document queries based solely on official PDF documents. More \
+specifically, you will:\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Statistical and Non-linear Analysis of Electroencephalographic \
+signals", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Nicol\[CapitalATilde]\[DownExclamation]s Rubido & Murilo S. \
+Baptista", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["nicolas.rubidoobrer@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Electroencephalography (EEG) is a method to record the \
+spontaneous electrical activity of the brain, which shows a broad range of \
+complex signal behaviours. To understand cortical function, the EEG signal is \
+typically divided into bands by frequency (delta, theta, alpha, beta, and \
+gamma), isolating the rhythmic activity. These bands are related to different \
+physiological functions and produced by different neuronal circuits. However, \
+the bands show different characteristics for different cortical locations and \
+states of mind, such as during the sleep-wake cycle states, which includes \
+the states of wakefulness, rapid-eye movement, and non-rapid-eye movement \
+sleep. Since considerable motivation exists for the development of an \
+adequate statistical model for spontaneous EEG activity, we propose to study \
+the main EEG bands recorded during the sleep-wake state using methods from \
+Statistics and Chaos theory. Those taking on this project will be provided \
+with an EEG dataset, that they will need to filter into frequency bands \
+(pre-processing), obtain the main statistical descriptors for these bands \
+(feature extraction), create surrogate signals for statistical hypothesis \
+testing (statistical modelling), and analyse the phase portraits created by \
+combining some bands (data exploration), which can lead to a state-dependent \
+model for the EEG activity during the sleep-wake cycle and improvements to \
+classification accuracy of machine and deep learning algorithms.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "For enquiries, please email nicolas.rubidoobrer@abdn.ac.uk or \
+murilo.baptista@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation["Artificial Intelligence in Biotechnology", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{6, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Dr Andrew Angel", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{6, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["andrew.angel@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{6, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Background:\n\n\n\nBiotechnology includes the engineering of \
+biological elements to develop products that can improve human life and the \
+application of machine learning is revolutionizing the field.\n \
+\[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{6, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "There is also scope for projects in other areas of \
+biotechnology, for example in drug design.\n", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{6, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation["Waves in the Martian atmosphere", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{7, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Roland Young", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{7, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["roland.young@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{7, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "There are many different types of atmospheric wave, which are \
+periodic disturbances in atmospheric fields such as temperature or density. \
+These range from sound waves, with wavelengths measured in metres or less, to \
+planetary-scale Rossby waves, with wavelengths measured in thousands of \
+kilometres. Intermediate are gravity waves; these have gravity as the \
+restoring force, similar to a wave on the surface of the ocean. Waves are an \
+important part of the climate system as they transport momentum and energy \
+from place to place without bulk motion of the air.\n\n\n\nWaves occur in \
+other planets\[AHat]\.80\.99 atmospheres as well as on Earth. On Mars, the \
+motion of the atmosphere is a major unknown in our understanding of that \
+planet\[AHat]\.80\.99s climate, because it is difficult to measure remotely. \
+Identifying waves can tell us something about how the atmosphere transports \
+momentum and energy, linking remote parts of the atmosphere through the \
+general circulation. \n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{7, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{7, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Evaluating Systemic Inequality in Access to debt advice in \
+Scotland", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{8, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Your Financial Wellbeing (YFW)", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{8, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.romano@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{8, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "About Your Financial Wellbeing (YFW)\n\nYour Financial \
+Wellbeing is a social enterprise working to change how financial wellbeing \
+support is offered to people who are struggling with money. We understand \
+that financial stress affects mental, physical and social wellbeing, and can \
+place huge pressure on individuals, families and communities.\n\nThis is why \
+we design services that are more accessible, reduce barriers, and help people \
+get support sooner to prevent finances spiralling out of control.\n \
+\[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{8, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{8, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Machine Learning Analysis of Well-Being and Behaviour Data", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{9, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Hey Joe (company)", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{9, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.romano@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{9, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Company Background\n\nHey Joey is a digital companion app \
+designed to support parents of neurodivergent children. The app helps parents \
+record daily mood and sensory data, identify patterns, and receive \
+personalised insights to make everyday life easier.\n\nCurrently in beta \
+testing, Hey Joey aims to launch a scalable version of the platform in early \
+2026. We are now exploring the use of conversational AI to enhance user \
+experience and engagement.\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{9, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{9, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Synthetic Fraud Pattern Modelling & Anomaly Detection for \
+Digital Music Uploads", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{10, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["XYNQ / REDFLAG", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{10, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.romano@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{10, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Brief Abstract\n\nXYNQ Ltd is developing REDFLAG, an AI-driven \
+verification engine designed to detect fraudulent or\n\nmanipulated music \
+uploads before they reach distributors or streaming platforms. One of the \
+core\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{10, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{10, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Spatial Characterisation of Protein Distribution in Muscle \
+Spindles", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{11, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Ekkehard Ullner, Mamen Romano and Guy Bewick", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{11, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["e.ullner@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{11, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Project Overview\n\nUnderstanding the structure and function \
+of muscle fibres is critical for advancing our knowledge of motor control and \
+neuromuscular coordination. Muscle spindles, specialised sensory structures \
+embedded within skeletal muscles, play a vital role in proprioception\[AHat]\
+\.80\.94the sense of body position and movement\[AHat]\.80\.94by providing \
+continuous feedback to the nervous system about muscle stretch and tension. \
+This feedback is essential for maintaining posture, coordinating complex \
+movements, and regulating muscle tone. Despite their critical role, the \
+detailed cellular organisation and protein distribution within muscle \
+spindles remain incompletely understood, particularly in comparison to the \
+more abundant extrafusal fibres that generate muscle force.\n\nThis project \
+aims to deepen our understanding of the spatial distribution of proteins \
+within intrafusal fibres of muscle spindles, focusing on their proximity to \
+the cell nuclei, and to compare this distribution with that of the \
+surrounding extrafusal fibres. Such analysis can provide valuable insights \
+into the specialised structure-function relationships in muscle spindles, \
+potentially revealing molecular mechanisms underlying muscle sensitivity and \
+control.\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{11, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{11, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Predicting Length of Stay at Hospital using Natural Language \
+Processing", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{12, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Mamen Romano, Alexander Groh and Binod Bhattarai", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{12, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.romano@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{12, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "Developing models that predict the length of stay of patients \
+in hospital is crucial for optimising resource allocation, reducing \
+healthcare costs, and improving patient flow. Accurate predictions enable \
+hospitals to better manage bed availability, staffing, and treatment plans, \
+ultimately enhancing the efficiency and quality of patient care.\n\nIn this \
+project we will apply a Natural Language Processing (NLP) approach to predict \
+the length of stay in hospital of patients. We will use the publicly \
+available MIMIC-III dataset, which comprises deidentified health-related data \
+associated with over forty thousand patients admitted to the Beth Israel \
+Deaconess Medical Center (Boston, USA) between 2001 and 2012.\n\nThe project \
+aims at generating a summary text report from the existing tabular data for \
+each patient. These summaries will then be converted into numerical \
+representations (embeddings) using a language model such as BioBERT. Finally, \
+these embeddings will be input into a neural network model trained to predict \
+each patient\[AHat]\.80\.99s expected length of hospital stay.\n \
+\[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{12, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["No.", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{12, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Smart Home Sensing, Time-Series Analytics, and a Digital Twin \
+for Indoor Climate & Energy", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{13, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Marco Thiel", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{13, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.thiel@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{13, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "The student will design and deploy a small-scale smart-home \
+sensing platform (Arduino/ESP32-based) and build an end-to-end data pipeline \
+to ingest, store, visualise, and analyse multi-sensor time series. The core \
+aim is to turn raw sensor readings into actionable inferences (state \
+estimation, prediction, anomaly detection) \
+and\[AHat]\.80\.94optionally\[AHat]\.80\.94into a digital twin of a \
+room/house subsystem (e.g., indoor thermal dynamics), calibrated from the \
+collected data.\n\n\n\nCore tasks\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{13, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["None", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{13, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}, {
+            Item[
+             Pane[
+              Annotation[
+              "Optical Microphone (Laser Mic): Recover Spoken Language/Music \
+from a Photodiode Signal via DSP and System Identification", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{14, 
+                 Key["title"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["Marco Thiel", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{14, 
+                 Key["proposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{403.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["m.thiel@abdn.ac.uk", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{14, 
+                 Key["emailproposer"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{336.00000000000006`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+              "The student will build a controlled \[AHat]\.80\.9claser \
+microphone\[AHat]\.80\.9d style experiment and develop signal processing \
+methods to recover spoken language or music from an optically measured \
+signal. The experimental setup is intentionally benign and reproducible: \
+build a small box with a plexiglas window, place a phone playing music (or \
+speech) inside, and record the optical receiver output while the measurement \
+system (laser + photodiode/receiver) is located at a distance. The main \
+scientific objective is to reconstruct intelligible audio on a computer by \
+modelling and inverting the measurement chain, then applying modern \
+denoising/enhancement techniques.\n\n\n\nCore tasks\n \[DescendingEllipsis]", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{14, 
+                 Key["descriptionofproject"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation["None", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{14, 
+                 Key["comments"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}]}}, 
+          BaseStyle -> {
+           ContextMenu -> 
+            Dynamic[TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger; 
+              Which[TypeSystem`NestedGrid`PackagePrivate`$lastOutputID =!= 
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$], {}, 
+                TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger === 
+                TypeSystem`NestedGrid`PackagePrivate`$lastContextMenuTrigger, 
+                TypeSystem`NestedGrid`PackagePrivate`$lastContextMenu, True, 
+                TypeSystem`NestedGrid`PackagePrivate`$lastContextMenuTrigger = 
+                 TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger; 
+                TypeSystem`NestedGrid`PackagePrivate`$lastContextMenu = 
+                 Block[{TypeSystem`NestedGrid`PackagePrivate`$globalScrollPos = \
+{TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$}}, 
+                   
+                   With[{TypeSystem`NestedGrid`PackagePrivate`lastPath$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`lastPathType$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPathType, 
+                    TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`$\
+lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
+                    MatchQ[TypeSystem`NestedGrid`PackagePrivate`$lastPathType, 
+                    Alternatives["RowHeader", "ColumnHeader"]], 
+                    TypeSystem`NestedGrid`PackagePrivate`headerHiddenQ[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$]], 
+                    TypeSystem`NestedGrid`PackagePrivate`allHidden$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`allHiddenQ[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                    TypeSystem`NestedGrid`PackagePrivate`anyHidden$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`anyHiddenQ[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`columnSortDirection[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$[
+                    "SortPaths"], 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$[
+                    "SortDirections"]], 
+                    TypeSystem`NestedGrid`PackagePrivate`haveData$ = Not[
+                    FailureQ[
+                    TypeSystem`NestedGrid`PackagePrivate`datasetInitialData[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$]]], 
+                    TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$ = Not[
+                    FreeQ[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, Keys]]}, 
+                    Join[{
+                    If[
+                    Or[
+                    Not[TypeSystem`NestedGrid`PackagePrivate`haveData$], 
+                    Not[TypeSystem`NestedGrid`PackagePrivate`anyHidden$], 
+                    TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$], 
+                    Nothing, 
+                    MenuItem[
+                    "Show " <> 
+                    Which[TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "Item", "", 
+                    TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "RowHeader", "Row", 
+                    TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "ColumnHeader", "Column", True, ""], 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`updateHiddenItems[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                    TypeSystem`NestedGrid`PackagePrivate`lastPath$, 
+                    "remove"]], MenuEvaluator -> Automatic]], 
+                    If[
+                    Or[
+                    Not[TypeSystem`NestedGrid`PackagePrivate`haveData$], 
+                    TypeSystem`NestedGrid`PackagePrivate`pathEmptyQ[
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                    TypeSystem`NestedGrid`PackagePrivate`isKeyDummy$, 
+                    And[
+                    TypeSystem`NestedGrid`PackagePrivate`allHidden$, 
+                    TypeSystem`NestedGrid`PackagePrivate`headerHidden$]], 
+                    Nothing, 
+                    MenuItem[
+                    "Hide " <> 
+                    Which[TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "Item", "", 
+                    TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "RowHeader", "Row", 
+                    TypeSystem`NestedGrid`PackagePrivate`lastPathType$ == 
+                    "ColumnHeader", "Column", True, ""], 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`updateHiddenItems[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][
+                    TypeSystem`NestedGrid`PackagePrivate`lastPath$, "add"]], 
+                    MenuEvaluator -> Automatic]], Delimiter}, 
+                    If[
+                    And[TypeSystem`NestedGrid`PackagePrivate`haveData$, 
+                    MatchQ[TypeSystem`NestedGrid`PackagePrivate`lastPathType$, 
+                    Alternatives["ColumnHeader", "KeyDummy"]], 
+                    TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$, 
+                    Not[TypeSystem`NestedGrid`PackagePrivate`allHidden$]], {
+                    If[
+                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
+                    "Ascending", 
+                    MenuItem["Sort", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`updateSort[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                    TypeSystem`NestedGrid`PackagePrivate`lastPath$, 
+                    "Ascending"]], MenuEvaluator -> Automatic], Nothing], 
+                    If[
+                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
+                    "Descending", 
+                    MenuItem["Reverse Sort", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`updateSort[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                    TypeSystem`NestedGrid`PackagePrivate`lastPath$, 
+                    "Descending"]], MenuEvaluator -> Automatic], Nothing], 
+                    If[
+                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
+                    None, 
+                    MenuItem["Unsort", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`updateSort[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+                    TypeSystem`NestedGrid`PackagePrivate`lastPath$, None]], 
+                    MenuEvaluator -> Automatic], Nothing], Delimiter}, {}], {
+                    MenuItem["Copy Position to Clipboard", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                    TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                    MenuEvaluator -> Automatic], 
+                    If[TypeSystem`NestedGrid`PackagePrivate`haveData$, 
+                    MenuItem["Copy Data to Clipboard", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                    MenuEvaluator -> Automatic], Nothing], Delimiter, 
+                    MenuItem["Paste Position in New Cell", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                    TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                    MenuEvaluator -> Automatic], 
+                    If[TypeSystem`NestedGrid`PackagePrivate`haveData$, 
+                    MenuItem["Paste Data in New Cell", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                    MenuEvaluator -> Automatic], Nothing]}]]]]], FontFamily -> 
+            "Source Sans Pro", FontSize -> 14, FontWeight -> Plain}, Dividers -> 
+          All, FrameStyle -> 
+          RGBColor[0.749003690406716, 0.749003690406716, 0.749003690406716], 
+          Spacings -> {0, 0}, Alignment -> Left, 
+          BaseStyle -> {
+           FontFamily -> "Source Sans Pro", FontSize -> 14, FontWeight -> 
+            Plain}], LineBreakWithin -> False, ContextMenu -> {}, NumberMarks -> 
+         False, ShowAutoStyles -> False]], 
+      TypeSystem`NestedGrid`PackagePrivate`initialQ = True}, 
+     Dynamic[
+      TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
+      TypeSystem`NestedGrid`PackagePrivate`$path$$, If[
+         Not[TypeSystem`NestedGrid`PackagePrivate`initialQ], 
+         Module[{
+          TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed, 
+           TypeSystem`NestedGrid`PackagePrivate`tmpData$ = 
+           TypeSystem`NestedGrid`PackagePrivate`datasetData[
+            TypeSystem`NestedGrid`PackagePrivate`$state$$]}, 
+          TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = If[
+             FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpData$], 
+             TypeSystem`NestedGrid`PackagePrivate`renderedGrid, 
+             TypeSystem`NestedGrid`PackagePrivate`renderGrid[
+             TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+              TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+              TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+              TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+              TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+              TypeSystem`NestedGrid`PackagePrivate`localHold[
+              TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+             TypeSystem`NestedGrid`PackagePrivate`tmpData$]]; If[
+            Not[
+             FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]], 
+            TypeSystem`NestedGrid`PackagePrivate`renderedGrid = 
+            TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]; Null]]; 
+       TypeSystem`NestedGrid`PackagePrivate`initialQ = False; 
+       TypeSystem`NestedGrid`PackagePrivate`$vPos$$; 
+       TypeSystem`NestedGrid`PackagePrivate`$hPos$$; If[
+         FailureQ[TypeSystem`NestedGrid`PackagePrivate`renderedGrid], 
+         TypeSystem`SparseGrid[
+          TypeSystem`H["(data no longer present)"]], 
+         TypeSystem`NestedGrid`PackagePrivate`renderedGrid]], 
+      TrackedSymbols :> {
+       TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$hPos$$}], 
+     DynamicModuleValues :> {}], 
+    TypeSystem`NestedGrid`PackagePrivate`$topBar$$ = Dynamic[
+     TypeSystem`NestedGrid`PackagePrivate`makeFramedBar[
+      TypeSystem`PackageScope`SubViewPathbar[
+      TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+       TypeSystem`NestedGrid`PackagePrivate`updateState[
+       TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+        TypeSystem`NestedGrid`PackagePrivate`localHold[
+        TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]]], 
+     TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`$path$$}], 
+    TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$ = Dynamic[
+     Replace[
+      Replace[
+      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$, {
+       TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+          TypeSystem`NestedGrid`PackagePrivate`localHold[
+          TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][Null, 
+          Blank[]] -> "", TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+          TypeSystem`NestedGrid`PackagePrivate`localHold[
+          TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
+          Pattern[TypeSystem`NestedGrid`PackagePrivate`path$, 
+           Blank[]], 
+          Pattern[TypeSystem`NestedGrid`PackagePrivate`pathType$, 
+           Blank[]], 
+          Pattern[TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$, 
+           Blank[]]] :> (
+         Increment[TypeSystem`NestedGrid`PackagePrivate`$contextMenuTrigger]; 
+         TypeSystem`NestedGrid`PackagePrivate`$lastPath = 
+          TypeSystem`NestedGrid`PackagePrivate`path$; 
+         TypeSystem`NestedGrid`PackagePrivate`$lastPathType = 
+          TypeSystem`NestedGrid`PackagePrivate`pathType$; 
+         TypeSystem`NestedGrid`PackagePrivate`$lastPathIsLeafHeader = 
+          TypeSystem`NestedGrid`PackagePrivate`isLeafHeader$; 
+         TypeSystem`NestedGrid`PackagePrivate`$lastOutputID = 
+          TypeSystem`NestedGrid`PackagePrivate`localHold[
+           TypeSystem`NestedGrid`PackagePrivate`$outputID$$]; 
+         TypeSystem`NestedGrid`PackagePrivate`makePathTrail[
+          TypeSystem`NestedGrid`PackagePrivate`path$, 
+           TypeSystem`NestedGrid`PackagePrivate`makePathElements]), Null :> 
+        Spacer[10], Blank[] :> Spacer[10]}], 
+      Pattern[TypeSystem`NestedGrid`PackagePrivate`bar, 
+        Except[
+         Alternatives[
+          Blank[Spacer], ""]]] :> 
+      TypeSystem`NestedGrid`PackagePrivate`makeFramedPathbar[
+       TypeSystem`NestedGrid`PackagePrivate`bar]], 
+     TrackedSymbols :> {
+      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$}], 
+    TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = Null}, 
+    DynamicWrapperBox[
+     DynamicBox[ToBoxes[
+       Dataset`DatasetContent[
+       2, "Path" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$path$$], 
+        "Grid" -> Hold[TypeSystem`NestedGrid`PackagePrivate`$grid$$], "State" -> 
+        Hold[TypeSystem`NestedGrid`PackagePrivate`$state$$], "VPos" -> 
+        Hold[TypeSystem`NestedGrid`PackagePrivate`$vPos$$], "HPos" -> 
+        Hold[TypeSystem`NestedGrid`PackagePrivate`$hPos$$], "TopBar" -> 
+        Hold[TypeSystem`NestedGrid`PackagePrivate`$topBar$$], "BottomBar" -> 
+        Hold[TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$], "OutputID" -> 
+        Hold[
+          TypeSystem`NestedGrid`PackagePrivate`localHold[
+          TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]], StandardForm],
+      ImageSizeCache->{
+       4264.880000000001, {1368.045078277588, 1376.642978668213}},
+      TrackedSymbols:>{
+       TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
+     TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = 
+     MouseAnnotation[],
+     ImageSizeCache->{
+      4264.880000000001, {1368.045078277588, 1376.642978668213}}],
+    BaseStyle->{
+     LineBreakWithin -> False, 
+      LightDarkAutoColorRules -> <|"MarkedColors" -> True|>},
+    DynamicModuleValues:>{},
+    Initialization:>(TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = 
+     CreateUUID[]),
+    UnsavedVariables:>{TypeSystem`NestedGrid`PackagePrivate`$outputID$$}],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Dataset`InterpretDataset[1],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.911378409950609*^9, 3.975228201843502*^9},
+ CellLabel->"Out[4]=",ExpressionUUID->"315be85a-3179-44d6-b0ab-cb57c17f6f09"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["This is how to access individual projects:", "Subsection",
+ CellChangeTimes->{{3.79949910536683*^9, 
+  3.799499112722134*^9}},ExpressionUUID->"71985f8f-f432-44db-8860-\
+257f27e96731"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"ds", "[", "k", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"k", ",", "1", ",", 
+     RowBox[{"Length", "[", "ds", "]"}], ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.79949894850662*^9, 3.7994989714251823`*^9}, {
+  3.911378419286591*^9, 3.9113784194063463`*^9}, {3.91137846437341*^9, 
+  3.911378480782132*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"9995ac19-ab63-449f-a7a9-b24de0bdf211"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`k$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`k$$], 1, 14, 1, ControlType -> Manipulator}}, 
+    Typeset`size$$ = {
+    1976.4299999999998`, {178.68281936645508`, 187.28071975708008`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`k$$ = 1}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> $CellContext`ds[$CellContext`k$$], 
+      "Specifications" :> {{$CellContext`k$$, 1, 14, 1}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{1602.08, {248.18859420344234`, 256.78649459406734`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.799498950441759*^9, 3.799498971802024*^9}, {
+   3.799499307061889*^9, 3.7994993218981113`*^9}, 3.799523907310297*^9, 
+   3.799570360627351*^9, 3.85809079053018*^9, {3.911378417221158*^9, 
+   3.911378419791749*^9}, 3.911378481294442*^9, 3.975228209153144*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"d7433601-6bd7-44ea-9d6c-17e0cb5c612c"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.911378417984912*^9, 
+  3.9113784240479517`*^9}},ExpressionUUID->"682ee53a-4438-4eac-af78-\
+e77ec171318e"],
+
+Cell[CellGroupData[{
+
+Cell["Here is the description of the n th project", "Subsubsection",
+ CellChangeTimes->{{3.799499118657281*^9, 3.79949913883424*^9}, {
+  3.975228226834934*^9, 
+  3.975228227245068*^9}},ExpressionUUID->"bb2fcc39-7fc8-4221-8ab3-\
+1a5c4d7178c4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"ds", "[", 
+    RowBox[{"k", ",", "\"\<descriptionofproject\>\""}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"k", ",", "1", ",", 
+     RowBox[{"Length", "[", "ds", "]"}], ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.799498961561992*^9, 3.799499009518417*^9}, {
+   3.799499060686714*^9, 3.799499060964679*^9}, {3.79950140732516*^9, 
+   3.799501407941597*^9}, 3.7995244184095716`*^9, {3.799524495547295*^9, 
+   3.7995244959953337`*^9}, {3.911378428594911*^9, 3.911378455388533*^9}, {
+   3.911378499037525*^9, 3.911378516945812*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"b7b61396-ed25-4d63-aa30-746cbc2fca3e"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`k$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`k$$], 1, 14, 1, ControlType -> Manipulator}}, 
+    Typeset`size$$ = {
+    1275.3000000000006`, {1322.8193057645112`, 19.188038885593414`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`k$$ = 1}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, 
+      "Body" :> $CellContext`ds[$CellContext`k$$, "descriptionofproject"], 
+      "Specifications" :> {{$CellContext`k$$, 1, 14, 1}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{1373.08, {736.2104969667271, 744.8083973573521}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.799498983552773*^9, 3.799499010100934*^9}, {
+   3.7994990579022717`*^9, 3.799499061554191*^9}, {3.799499131288952*^9, 
+   3.799499146068186*^9}, {3.799499309461136*^9, 3.799499318929469*^9}, 
+   3.799501408817665*^9, 3.799524496246787*^9, 3.799570364559349*^9, 
+   3.799570443691974*^9, 3.858090794277139*^9, {3.91137842928528*^9, 
+   3.9113784556990337`*^9}, {3.9113785173499823`*^9, 3.911378521678956*^9}, {
+   3.975228212144079*^9, 3.975228219086681*^9}},
+ CellLabel->"Out[7]=",ExpressionUUID->"dc64ba22-2c0c-4f48-b4f1-80626845cbbf"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1556, 782},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (October 27, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"406f3dbf-21e3-49d8-a5c5-303df6d08362"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 230, 4, 99, "Section",ExpressionUUID->"5a38cfba-19ee-4482-b15e-4703226c3a6d"],
+Cell[813, 28, 679, 11, 116, "Text",ExpressionUUID->"599070be-1519-491e-99b4-3a03b6968bf6"],
+Cell[CellGroupData[{
+Cell[1517, 43, 166, 3, 79, "Subsection",ExpressionUUID->"67b7bf98-7534-44fe-8277-5766eb383959"],
+Cell[1686, 48, 187, 3, 50, "Text",ExpressionUUID->"3cc79731-3c5e-44b7-97a2-b6d2eec16b3f"],
+Cell[1876, 53, 1629, 36, 105, "Input",ExpressionUUID->"1c1087ac-dc27-4907-8be1-9fc2559eadfa"],
+Cell[3508, 91, 170, 3, 50, "Text",ExpressionUUID->"7fe6ca40-dec0-42a8-9907-0b035350c93a"],
+Cell[CellGroupData[{
+Cell[3703, 98, 274, 4, 44, "Input",ExpressionUUID->"47c64114-628d-45bc-b05d-c33396de1a2c"],
+Cell[3980, 104, 117304, 1965, 2770, "Output",ExpressionUUID->"315be85a-3179-44d6-b0ab-cb57c17f6f09"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[121333, 2075, 189, 3, 79, "Subsection",ExpressionUUID->"71985f8f-f432-44db-8860-257f27e96731"],
+Cell[CellGroupData[{
+Cell[121547, 2082, 466, 10, 44, "Input",ExpressionUUID->"9995ac19-ab63-449f-a7a9-b24de0bdf211"],
+Cell[122016, 2094, 2041, 38, 530, "Output",ExpressionUUID->"d7433601-6bd7-44ea-9d6c-17e0cb5c612c"]
+}, Open  ]],
+Cell[124072, 2135, 154, 3, 44, "Input",ExpressionUUID->"682ee53a-4438-4eac-af78-e77ec171318e"],
+Cell[CellGroupData[{
+Cell[124251, 2142, 242, 4, 65, "Subsubsection",ExpressionUUID->"bb2fcc39-7fc8-4221-8ab3-1a5c4d7178c4"],
+Cell[CellGroupData[{
+Cell[124518, 2150, 689, 13, 44, "Input",ExpressionUUID->"b7b61396-ed25-4d63-aa30-746cbc2fca3e"],
+Cell[125210, 2165, 2268, 42, 1506, "Output",ExpressionUUID->"dc64ba22-2c0c-4f48-b4f1-80626845cbbf"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
